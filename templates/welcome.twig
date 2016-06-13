@@ -1,0 +1,37 @@
+{% extends '_layouts/cp' %}
+{% set title = 'Welcome to Instant Analytics!' %}
+
+{% includeCssResource "instantanalytics/css/InstantAnalytics_Style" %}
+{% includeJsResource "instantanalytics/js/InstantAnalytics_Script.js" %}
+
+{% set linkGetStarted = craft.plugins.getPlugin('instantanalytics').getSettingsUrl %}
+{% set docsUrl = "https://github.com/nystudio107/instantanalytics/blob/master/README.md" %}
+
+{% set crumbs = [
+    { label: "Instant Analytics", url: url('instantanalytics') },
+    { label: "Welcome"|t, url: url('instantanalytics/welcome') },
+] %}
+
+{% set content %}
+	<div style="text-align:center; margin:0 auto; padding: 5% 10%;">
+		<img src="{{ resourceUrl('instantanalytics/icon.svg') }}" width="30%" height="auto" />
+		<h2>Thanks for using Instant Analytics!</h2>
+		<p>Instant Analytics lets you track otherwise untrackable assets &amp; events with Google Analytics, and eliminates the need for Javascript tracking.</p>
+		<p>You don't need to include the typical Google Analytics script tag, instead Instant Analytics will automatically send page views when your front-end templates are rendered, or you can do it manually via a simple Twig tag.</p>
+		<p>You can also track asset/media views in Google Analytics, either as PageViews or as Events.  This lets you track otherwise untrackable things such as individual RSS feed accesses, images, PDF files, etc.</p>
+<!--
+		<p>If you are using Craft Commerce, Instant Analytics will automatically send Google Analytics Enhanced eCommerce data to your Google Analytics account as items are added/removed from your cart, and orders are tracked as well.</p>
+-->
+		<p>
+			&nbsp;
+		</p>
+		<p>
+			<a href="{{ linkGetStarted }}"><button class="btn submit">Get Started</button></a>
+		</p>
+	</div>
+	<div style="text-align:center; margin:0 auto; padding: 0;">
+		<p class="instructions">
+			Brought to you by <a href="http://nystudio107.com" target="_blank">nystudio107</a>
+		</p>
+	</div>
+{% endset %}

@@ -1,0 +1,11 @@
+{
+    "name": "nystudio107/instantanalytics",
+	"minimum-stability": "dev",
+    "description": "Instant Analytics lets you track otherwise untrackable assets & events with Google Analytics, and eliminates the need for Javascript tracking",
+    "type": "craft-plugin",
+    "require": {
+        "guzzlehttp/guzzle": "^5.3",
+        "theiconic/php-ga-measurement-protocol": "^1.1",
+        "composer/installers": "~1.0"
+    }
+}

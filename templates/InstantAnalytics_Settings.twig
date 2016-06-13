@@ -1,0 +1,34 @@
+{#
+/**
+ * Instant Analytics plugin for Craft CMS
+ *
+ * Instant Analytics Settings.twig
+ *
+ * @author    nystudio107
+ * @copyright Copyright (c) 2016 nystudio107
+ * @link      http://nystudio107.com
+ * @package   InstantAnalytics
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% includeCssResource "instantanalytics/css/InstantAnalytics_Style.css" %}
+{% includeJsResource "instantanalytics/js/InstantAnalytics_Script.js" %}
+
+{{ forms.textField({
+    label: 'Google Analytics Tracking ID:',
+    instructions: "Enter your Google Analytics Tracking ID here. Only enter the ID, e.g.: UA-XXXXXX-XX, not the entire script code.",
+    id: 'googleAnalyticsTracking',
+    name: 'googleAnalyticsTracking',
+    value: settings['googleAnalyticsTracking']})
+}}
+
+{{ forms.lightswitchField({
+    label: 'Auto Send Page View:',
+    instructions: "If this setting is on, PageViews are automatically sent to Google Analytics whenever your front-end templates are rendered.",
+    id: 'autoSendPageView',
+    name: 'autoSendPageView',
+    on: settings['autoSendPageView']})
+}}
