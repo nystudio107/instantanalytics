@@ -1,6 +1,6 @@
 Google Analytics Measurement Protocol library for PHP
 ===========================
-[![Build Status](https://travis-ci.org/theiconic/php-ga-measurement-protocol.svg?branch=v1.2.0)](https://travis-ci.org/theiconic/php-ga-measurement-protocol) [![Coverage Status](https://img.shields.io/coveralls/theiconic/php-ga-measurement-protocol.svg)](https://coveralls.io/r/theiconic/php-ga-measurement-protocol?branch=v1) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/badges/quality-score.png?b=v1)](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/?branch=master) [![Latest Stable Version](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/v/stable)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Total Downloads](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/downloads)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![License](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/license)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Documentation Status](https://readthedocs.org/projects/php-ga-measurement-protocol/badge/?version=latest)](http://php-ga-measurement-protocol.readthedocs.org/en/latest/) [![Dependency Status](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068)
+[![Build Status](https://travis-ci.org/theiconic/php-ga-measurement-protocol.svg?branch=v2.1.0)](https://travis-ci.org/theiconic/php-ga-measurement-protocol) [![Coverage Status](https://coveralls.io/repos/theiconic/php-ga-measurement-protocol/badge.svg?branch=master&service=github)](https://coveralls.io/github/theiconic/php-ga-measurement-protocol?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/?branch=master) [![Latest Stable Version](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/v/stable)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Total Downloads](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/downloads)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![License](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/license)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Documentation Status](https://readthedocs.org/projects/php-ga-measurement-protocol/badge/?version=latest)](http://php-ga-measurement-protocol.readthedocs.org/en/latest/) [![Dependency Status](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068)
 
 ## Description
 
@@ -27,6 +27,18 @@ Send data to Google Analytics from the server using PHP. This library fully impl
 
 Use Composer to install this package.
 
+If you are using ```PHP 5.5 or above``` and ```Guzzle 6``` then:
+
+```json
+{
+    "require": {
+        "theiconic/php-ga-measurement-protocol": "^2.0"
+    }
+}
+```
+
+Or if you are using ```PHP 5.4 or above``` and ```Guzzle 5``` then:
+
 ```json
 {
     "require": {
@@ -39,6 +51,7 @@ Use Composer to install this package.
 You can use this package on its own, or use a convenient framework integration:
 * Laravel 4/5 - https://github.com/irazasyed/laravel-gamp
 * Yii 2 - https://github.com/baibaratsky/yii2-ga-measurement-protocol
+* Symfony2 - https://github.com/fourlabsldn/GampBundle
 
 Feel free to create an integration with your favourite framework, let us know so we list it here.
 
@@ -152,6 +165,7 @@ $analytics->setEventCategory('Checkout')
 * Juan Falcón - [arcticfalcon](https://github.com/arcticfalcon)
 * Syed Irfaq R. - [irazasyed](https://github.com/irazasyed)
 * Andrei Baibaratsky - [baibaratsky](https://github.com/baibaratsky)
+* Martín Palombo - [lombo](https://github.com/lombo)
 
 ## License
 

@@ -1,8 +1,18 @@
 [
     {
+        "version": "1.0.1",
+        "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
+        "date": "2016-06-14T17:29:17.496Z",
+        "notes": [
+            "[Added] Updated to a newer version of the GAMP lib for PHP, which uses Guzzle 6.x",
+            "[Fixed] No more Composer dependency conflicts with the Oauth 2.0 plugin",
+            "[Improved] Updated README.md",
+        ]
+    },
+    {
         "version": "1.0.0",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
-        "date": "2016-05-21T17:29:17.496Z",
+        "date": "2016-06-13T17:29:17.496Z",
         "notes": [
             "[Added] Initial release"
         ]

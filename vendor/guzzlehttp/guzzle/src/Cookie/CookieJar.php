@@ -1,14 +1,13 @@
 <?php
 namespace GuzzleHttp\Cookie;
 
-use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Message\ResponseInterface;
-use GuzzleHttp\ToArrayInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Cookie jar that stores cookies an an array
+ * Cookie jar that stores cookies as an array
  */
-class CookieJar implements CookieJarInterface, ToArrayInterface
+class CookieJar implements CookieJarInterface
 {
     /** @var SetCookie[] Loaded cookie data */
     private $cookies = [];
@@ -19,8 +18,9 @@ class CookieJar implements CookieJarInterface, ToArrayInterface
     /**
      * @param bool $strictMode   Set to true to throw exceptions when invalid
      *                           cookies are added to the cookie jar.
-     * @param array $cookieArray Array of SetCookie objects or a hash of arrays
-     *                           that can be used with the SetCookie constructor
+     * @param array $cookieArray Array of SetCookie objects or a hash of
+     *                           arrays that can be used with the SetCookie
+     *                           constructor
      */
     public function __construct($strictMode = false, $cookieArray = [])
     {
@@ -58,23 +58,32 @@ class CookieJar implements CookieJarInterface, ToArrayInterface
     }
 
     /**
-     * Quote the cookie value if it is not already quoted and it contains
-     * problematic characters.
-     *
-     * @param string $value Value that may or may not need to be quoted
-     *
-     * @return string
+     * @deprecated
      */
     public static function getCookieValue($value)
     {
-        if (substr($value, 0, 1) !== '"' &&
-            substr($value, -1, 1) !== '"' &&
-            strpbrk($value, ';,')
-        ) {
-            $value = '"' . $value . '"';
+        return $value;
+    }
+
+    /**
+     * Evaluate if this cookie should be persisted to storage
+     * that survives between requests.
+     *
+     * @param SetCookie $cookie Being evaluated.
+     * @param bool $allowSessionCookies If we should persist session cookies
+     * @return bool
+     */
+    public static function shouldPersist(
+        SetCookie $cookie,
+        $allowSessionCookies = false
+    ) {
+        if ($cookie->getExpires() || $allowSessionCookies) {
+            if (!$cookie->getDiscard()) {
+                return true;
+            }
         }
 
-        return $value;
+        return false;
     }
 
     public function toArray()
@@ -128,6 +137,13 @@ class CookieJar implements CookieJarInterface, ToArrayInterface
 
     public function setCookie(SetCookie $cookie)
     {
+        // If the name string is empty (but not 0), ignore the set-cookie
+        // string entirely.
+        $name = $cookie->getName();
+        if (!$name && $name !== '0') {
+            return false;
+        }
+
         // Only allow cookies with set and valid domain, name, value
         $result = $cookie->validate();
         if ($result !== true) {
@@ -194,23 +210,24 @@ class CookieJar implements CookieJarInterface, ToArrayInterface
         RequestInterface $request,
         ResponseInterface $response
     ) {
-        if ($cookieHeader = $response->getHeaderAsArray('Set-Cookie')) {
+        if ($cookieHeader = $response->getHeader('Set-Cookie')) {
             foreach ($cookieHeader as $cookie) {
                 $sc = SetCookie::fromString($cookie);
                 if (!$sc->getDomain()) {
-                    $sc->setDomain($request->getHost());
+                    $sc->setDomain($request->getUri()->getHost());
                 }
                 $this->setCookie($sc);
             }
         }
     }
 
-    public function addCookieHeader(RequestInterface $request)
+    public function withCookieHeader(RequestInterface $request)
     {
         $values = [];
-        $scheme = $request->getScheme();
-        $host = $request->getHost();
-        $path = $request->getPath();
+        $uri = $request->getUri();
+        $scheme = $uri->getScheme();
+        $host = $uri->getHost();
+        $path = $uri->getPath() ?: '/';
 
         foreach ($this->cookies as $cookie) {
             if ($cookie->matchesPath($path) &&
@@ -219,13 +236,13 @@ class CookieJar implements CookieJarInterface, ToArrayInterface
                 (!$cookie->getSecure() || $scheme == 'https')
             ) {
                 $values[] = $cookie->getName() . '='
-                    . self::getCookieValue($cookie->getValue());
+                    . $cookie->getValue();
             }
         }
 
-        if ($values) {
-            $request->setHeader('Cookie', implode('; ', $values));
-        }
+        return $values
+            ? $request->withHeader('Cookie', implode('; ', $values))
+            : $request;
     }
 
     /**

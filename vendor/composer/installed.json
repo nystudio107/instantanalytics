@@ -109,18 +109,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/finder.git",
-            "reference": "830e9945800eb93a51a26d1d9012af2fb62da18b"
+            "reference": "3ec095fab1800222732ca522a95dce8fa124007b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/finder/zipball/830e9945800eb93a51a26d1d9012af2fb62da18b",
-            "reference": "830e9945800eb93a51a26d1d9012af2fb62da18b",
+            "url": "https://api.github.com/repos/symfony/finder/zipball/3ec095fab1800222732ca522a95dce8fa124007b",
+            "reference": "3ec095fab1800222732ca522a95dce8fa124007b",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.9"
         },
-        "time": "2016-05-13 15:38:45",
+        "time": "2016-06-06 11:11:27",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -154,34 +154,92 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "react/promise",
-        "version": "v2.4.1",
-        "version_normalized": "2.4.1.0",
+        "name": "psr/http-message",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/reactphp/promise.git",
-            "reference": "8025426794f1944de806618671d4fa476dc7626f"
+            "url": "https://github.com/php-fig/http-message.git",
+            "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/reactphp/promise/zipball/8025426794f1944de806618671d4fa476dc7626f",
-            "reference": "8025426794f1944de806618671d4fa476dc7626f",
+            "url": "https://api.github.com/repos/php-fig/http-message/zipball/85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
+            "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.4.0"
+            "php": ">=5.3.0"
         },
-        "time": "2016-05-03 17:50:52",
+        "time": "2015-05-04 20:22:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "2.0-dev"
+                "dev-master": "1.0.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
-                "React\\Promise\\": "src/"
+                "Psr\\Http\\Message\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interface for HTTP messages",
+        "keywords": [
+            "http",
+            "http-message",
+            "psr",
+            "psr-7",
+            "request",
+            "response"
+        ]
+    },
+    {
+        "name": "guzzlehttp/psr7",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/guzzle/psr7.git",
+            "reference": "58828615f7bb87013ce6365e9b1baa08580c7fc8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/guzzle/psr7/zipball/58828615f7bb87013ce6365e9b1baa08580c7fc8",
+            "reference": "58828615f7bb87013ce6365e9b1baa08580c7fc8",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0",
+            "psr/http-message": "~1.0"
+        },
+        "provide": {
+            "psr/http-message-implementation": "1.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2016-06-07 17:55:54",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.4-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "GuzzleHttp\\Psr7\\": "src/"
             },
             "files": [
                 "src/functions_include.php"
@@ -193,103 +251,55 @@
         ],
         "authors": [
             {
-                "name": "Jan Sorgalla",
-                "email": "jsorgalla@gmail.com"
-            }
-        ],
-        "description": "A lightweight implementation of CommonJS Promises/A for PHP"
-    },
-    {
-        "name": "guzzlehttp/streams",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/guzzle/streams.git",
-            "reference": "d99a261c616210618ab94fd319cb17eda458cc3e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/streams/zipball/d99a261c616210618ab94fd319cb17eda458cc3e",
-            "reference": "d99a261c616210618ab94fd319cb17eda458cc3e",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2016-04-13 16:32:01",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.0-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "GuzzleHttp\\Stream\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
                 "name": "Michael Dowling",
                 "email": "mtdowling@gmail.com",
                 "homepage": "https://github.com/mtdowling"
             }
         ],
-        "description": "Provides a simple abstraction over streams of data",
-        "homepage": "http://guzzlephp.org/",
+        "description": "PSR-7 message implementation",
         "keywords": [
-            "Guzzle",
-            "stream"
+            "http",
+            "message",
+            "stream",
+            "uri"
         ]
     },
     {
-        "name": "guzzlehttp/ringphp",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "name": "guzzlehttp/promises",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/guzzle/RingPHP.git",
-            "reference": "9465032ac5d6beaa55f10923403e6e1c36018d9c"
+            "url": "https://github.com/guzzle/promises.git",
+            "reference": "c10d860e2a9595f8883527fa0021c7da9e65f579"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/RingPHP/zipball/9465032ac5d6beaa55f10923403e6e1c36018d9c",
-            "reference": "9465032ac5d6beaa55f10923403e6e1c36018d9c",
+            "url": "https://api.github.com/repos/guzzle/promises/zipball/c10d860e2a9595f8883527fa0021c7da9e65f579",
+            "reference": "c10d860e2a9595f8883527fa0021c7da9e65f579",
             "shasum": ""
         },
         "require": {
-            "guzzlehttp/streams": "~3.0",
-            "php": ">=5.4.0",
-            "react/promise": "~2.0"
+            "php": ">=5.5.0"
         },
         "require-dev": {
-            "ext-curl": "*",
             "phpunit/phpunit": "~4.0"
         },
-        "suggest": {
-            "ext-curl": "Guzzle will use specific adapters if cURL is present"
-        },
-        "time": "2015-05-21 17:23:02",
+        "time": "2016-05-18 16:56:05",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.1-dev"
+                "dev-master": "1.0-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "GuzzleHttp\\Ring\\": "src/"
-            }
+                "GuzzleHttp\\Promise\\": "src/"
+            },
+            "files": [
+                "src/functions_include.php"
+            ]
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
@@ -302,35 +312,48 @@
                 "homepage": "https://github.com/mtdowling"
             }
         ],
-        "description": "Provides a simple API and specification that abstracts away the details of HTTP into a single PHP function."
+        "description": "Guzzle promises library",
+        "keywords": [
+            "promise"
+        ]
     },
     {
         "name": "guzzlehttp/guzzle",
-        "version": "5.3.x-dev",
-        "version_normalized": "5.3.9999999.9999999-dev",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "4afc9682f51b2880c6417e9f4aa19c26b53472e9"
+            "reference": "eeff956f2c60d3283869d0874353794dedb26865"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/4afc9682f51b2880c6417e9f4aa19c26b53472e9",
-            "reference": "4afc9682f51b2880c6417e9f4aa19c26b53472e9",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/eeff956f2c60d3283869d0874353794dedb26865",
+            "reference": "eeff956f2c60d3283869d0874353794dedb26865",
             "shasum": ""
         },
         "require": {
-            "guzzlehttp/ringphp": "^1.1",
-            "php": ">=5.4.0"
+            "guzzlehttp/promises": "~1.0",
+            "guzzlehttp/psr7": "~1.1",
+            "php": ">=5.5.0"
         },
         "require-dev": {
             "ext-curl": "*",
-            "phpunit/phpunit": "^4.0"
+            "phpunit/phpunit": "~4.0",
+            "psr/log": "~1.0"
         },
-        "time": "2016-02-08 19:23:30",
+        "time": "2016-06-12 23:58:31",
         "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "6.2-dev"
+            }
+        },
         "installation-source": "source",
         "autoload": {
+            "files": [
+                "src/functions_include.php"
+            ],
             "psr-4": {
                 "GuzzleHttp\\": "src/"
             }
@@ -346,7 +369,7 @@
                 "homepage": "https://github.com/mtdowling"
             }
         ],
-        "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+        "description": "Guzzle is a PHP HTTP client library",
         "homepage": "http://guzzlephp.org/",
         "keywords": [
             "client",
@@ -360,31 +383,31 @@
     },
     {
         "name": "theiconic/php-ga-measurement-protocol",
-        "version": "1.x-dev",
-        "version_normalized": "1.9999999.9999999.9999999-dev",
+        "version": "v2.1.1",
+        "version_normalized": "2.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/theiconic/php-ga-measurement-protocol.git",
-            "reference": "8be7db4fe6eea23e65f90e789b479ed13f186a90"
+            "reference": "5170394f0d917d8dde32a9444d38a8382d446d66"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/theiconic/php-ga-measurement-protocol/zipball/8be7db4fe6eea23e65f90e789b479ed13f186a90",
-            "reference": "8be7db4fe6eea23e65f90e789b479ed13f186a90",
+            "url": "https://api.github.com/repos/theiconic/php-ga-measurement-protocol/zipball/5170394f0d917d8dde32a9444d38a8382d446d66",
+            "reference": "5170394f0d917d8dde32a9444d38a8382d446d66",
             "shasum": ""
         },
         "require": {
-            "guzzlehttp/guzzle": "^5.2",
-            "php": ">=5.4",
+            "guzzlehttp/guzzle": "^6.0",
+            "php": ">=5.5",
             "symfony/finder": "^2.5"
         },
         "require-dev": {
             "phpunit/phpunit": "4.7.*",
             "satooshi/php-coveralls": "dev-master"
         },
-        "time": "2015-07-18 14:23:09",
+        "time": "2015-11-25 10:01:27",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "TheIconic\\Tracking\\GoogleAnalytics\\": "src/"
