@@ -154,7 +154,7 @@ class InstantAnalyticsPlugin extends BasePlugin
     public function onBeforeInstall()
     {
         $result = true;
-        if (version_compare(PHP_VERSION, '5.4', '<'))
+        if (version_compare(PHP_VERSION, '5.5', '<'))
         {
             $result = false;
             $error = "Instant Analytics requires php 5.4.0 or later to operate";
