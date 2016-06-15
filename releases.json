@@ -6,7 +6,7 @@
         "notes": [
             "[Added] Updated to a newer version of the GAMP lib for PHP, which uses Guzzle 6.x",
             "[Fixed] No more Composer dependency conflicts with the Oauth 2.0 plugin",
-            "[Improved] Updated README.md",
+            "[Improved] Updated README.md"
         ]
     },
     {
