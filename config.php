@@ -12,7 +12,7 @@
 return array(
 
 /**
- * Controls whether Instant Analytics will send analytics data when `devMode` is one.
+ * Controls whether Instant Analytics will send analytics data when `devMode` is on.
  */
     "sendAnalyticsInDevMode" => true,
 );
