@@ -12,6 +12,11 @@
 return array(
 
 /**
+ * Controls whether Instant Analytics will send analytics data.
+ */
+    "sendAnalyticsData" => true,
+
+/**
  * Controls whether Instant Analytics will send analytics data when `devMode` is on.
  */
     "sendAnalyticsInDevMode" => true,

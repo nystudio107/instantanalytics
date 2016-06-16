@@ -139,6 +139,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
     private function _shouldSendAnalytics()
     {
         $result = true;
+        if (!craft()->config->get("sendAnalyticsData", "instantanalytics"))
+            $result = false;
         if (!craft()->config->get("sendAnalyticsInDevMode", "instantanalytics") && craft()->config->get('devMode'))
             $result = false;
         if (craft()->isConsole())

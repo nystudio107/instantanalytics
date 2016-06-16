@@ -170,6 +170,7 @@ Some things to do, and ideas for potential features:
 ### 1.0.2 -- 2016.06.16
 
 * [Fixed] The UserAgent is now set to the client UserAgent by default
+* [Improved] Added a sendAnalyticsData setting to config.php
 * [Improved] Updated README.md
 
 ### 1.0.1 -- 2016.06.14
