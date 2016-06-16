@@ -164,6 +164,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 $analytics->setProtocolVersion('1')
                     ->setTrackingId($settings['googleAnalyticsTracking'])
                     ->setIpOverride($_SERVER['REMOTE_ADDR'])
+                    ->setUserAgentOverride($_SERVER['HTTP_USER_AGENT'])
                     ->setAsyncRequest(true)
                     ->setClientId($this->gaParseCookie());
 

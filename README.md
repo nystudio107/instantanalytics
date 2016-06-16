@@ -167,6 +167,11 @@ Some things to do, and ideas for potential features:
 
 ## Instant Analytics Changelog
 
+### 1.0.2 -- 2016.06.16
+
+* [Fixed] The UserAgent is now set to the client UserAgent by default
+* [Improved] Updated README.md
+
 ### 1.0.1 -- 2016.06.14
 
 * [Added] Updated to a newer version of the GAMP lib for PHP, which uses Guzzle 6.x

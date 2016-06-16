@@ -1,5 +1,14 @@
 [
     {
+        "version": "1.0.2",
+        "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
+        "date": "2016-06-16T17:29:17.496Z",
+        "notes": [
+            "[Fixed] The UserAgent is now set to the client UserAgent by default",
+            "[Improved] Updated README.md"
+        ]
+    },
+    {
         "version": "1.0.1",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2016-06-14T17:29:17.496Z",
