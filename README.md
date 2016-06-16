@@ -80,6 +80,7 @@ It does not send any Google Analytics data if:
 * You are viewing templates in Live Preview
 * `devMode` is on (you can change this behavior in the `config.php` file)
 * The request is a CP or Console request
+* If you have `sendAnalyticsData` set to false in the `config.php` file
 
 If you want to manually send a page view, you can do that via either:
 
