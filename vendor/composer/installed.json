@@ -324,12 +324,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "eeff956f2c60d3283869d0874353794dedb26865"
+            "reference": "61b1d4986f0aeb9ce9fe133a7e089a361b864854"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/eeff956f2c60d3283869d0874353794dedb26865",
-            "reference": "eeff956f2c60d3283869d0874353794dedb26865",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/61b1d4986f0aeb9ce9fe133a7e089a361b864854",
+            "reference": "61b1d4986f0aeb9ce9fe133a7e089a361b864854",
             "shasum": ""
         },
         "require": {
@@ -342,7 +342,7 @@
             "phpunit/phpunit": "~4.0",
             "psr/log": "~1.0"
         },
-        "time": "2016-06-12 23:58:31",
+        "time": "2016-06-17 17:47:21",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -424,5 +424,55 @@
             }
         ],
         "description": "Send data to Google Analytics from the server using PHP. This library fully implements GA measurement protocol."
+    },
+    {
+        "name": "jaybizzle/crawler-detect",
+        "version": "v1.2.4",
+        "version_normalized": "1.2.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/JayBizzle/Crawler-Detect.git",
+            "reference": "99dadbea540442dda9cab1ea5452f0fc8c8a84d3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/99dadbea540442dda9cab1ea5452f0fc8c8a84d3",
+            "reference": "99dadbea540442dda9cab1ea5452f0fc8c8a84d3",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "*"
+        },
+        "time": "2016-06-08 18:37:36",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Jaybizzle\\CrawlerDetect\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mark Beech",
+                "email": "m@rkbee.ch",
+                "role": "Developer"
+            }
+        ],
+        "description": "CrawlerDetect is a PHP class for detecting bots/crawlers/spiders via the user agent",
+        "homepage": "https://github.com/JayBizzle/Crawler-Detect/",
+        "keywords": [
+            "crawler",
+            "crawler detect",
+            "crawler detector",
+            "crawlerdetect",
+            "php crawler detect"
+        ]
     }
 ]

@@ -1,5 +1,14 @@
 [
     {
+        "version": "1.0.3",
+        "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
+        "date": "2016-06-19T17:29:17.496Z",
+        "notes": [
+            "[Improved] Added a bot UserAgent filter list (on by default), configurable via filterBotUserAgents in config.php",
+            "[Improved] Updated README.md"
+        ]
+    },
+    {
         "version": "1.0.2",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2016-06-16T17:29:17.496Z",

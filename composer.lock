@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "180beee9cb46dac6869c8621a8950a82",
-    "content-hash": "972613f9363798bbef86c3d29086f03f",
+    "hash": "6c6729fbcb810d0c1e6a5f7577b0903d",
+    "content-hash": "934a87fcb611a1c92735e56d9a6cfa5a",
     "packages": [
         {
             "name": "composer/installers",
@@ -114,12 +114,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "eeff956f2c60d3283869d0874353794dedb26865"
+                "reference": "61b1d4986f0aeb9ce9fe133a7e089a361b864854"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/eeff956f2c60d3283869d0874353794dedb26865",
-                "reference": "eeff956f2c60d3283869d0874353794dedb26865",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/61b1d4986f0aeb9ce9fe133a7e089a361b864854",
+                "reference": "61b1d4986f0aeb9ce9fe133a7e089a361b864854",
                 "shasum": ""
             },
             "require": {
@@ -168,7 +168,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-06-12 23:58:31"
+            "time": "2016-06-17 17:47:21"
         },
         {
             "name": "guzzlehttp/promises",
@@ -278,6 +278,54 @@
                 "uri"
             ],
             "time": "2016-06-07 17:55:54"
+        },
+        {
+            "name": "jaybizzle/crawler-detect",
+            "version": "v1.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JayBizzle/Crawler-Detect.git",
+                "reference": "99dadbea540442dda9cab1ea5452f0fc8c8a84d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/99dadbea540442dda9cab1ea5452f0fc8c8a84d3",
+                "reference": "99dadbea540442dda9cab1ea5452f0fc8c8a84d3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jaybizzle\\CrawlerDetect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Beech",
+                    "email": "m@rkbee.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CrawlerDetect is a PHP class for detecting bots/crawlers/spiders via the user agent",
+            "homepage": "https://github.com/JayBizzle/Crawler-Detect/",
+            "keywords": [
+                "crawler",
+                "crawler detect",
+                "crawler detector",
+                "crawlerdetect",
+                "php crawler detect"
+            ],
+            "time": "2016-06-08 18:37:36"
         },
         {
             "name": "psr/http-message",

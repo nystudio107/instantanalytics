@@ -25,6 +25,10 @@ class ComposerStaticInit8affa9463b5953e58ed567bbbc4d55d9
         array (
             'Psr\\Http\\Message\\' => 17,
         ),
+        'J' => 
+        array (
+            'Jaybizzle\\CrawlerDetect\\' => 24,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
@@ -49,6 +53,10 @@ class ComposerStaticInit8affa9463b5953e58ed567bbbc4d55d9
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Jaybizzle\\CrawlerDetect\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

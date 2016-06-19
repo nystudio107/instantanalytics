@@ -168,6 +168,11 @@ Some things to do, and ideas for potential features:
 
 ## Instant Analytics Changelog
 
+### 1.0.3 -- 2016.06.19
+
+* [Improved] Added a bot UserAgent filter list (on by default), configurable via filterBotUserAgents in config.php
+* [Improved] Updated README.md
+
 ### 1.0.2 -- 2016.06.16
 
 * [Fixed] The UserAgent is now set to the client UserAgent by default

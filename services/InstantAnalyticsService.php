@@ -14,6 +14,7 @@
 namespace Craft;
 
 use \TheIconic\Tracking\GoogleAnalytics\Analytics;
+use \Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 class InstantAnalyticsService extends BaseApplicationComponent
 {
@@ -139,6 +140,13 @@ class InstantAnalyticsService extends BaseApplicationComponent
     private function _shouldSendAnalytics()
     {
         $result = true;
+        if (craft()->config->get("filterBotUserAgents", "instantanalytics"))
+        {
+            $CrawlerDetect = new CrawlerDetect;
+// Check the user agent of the current 'visitor'
+            if ($CrawlerDetect->isCrawler())
+                $result = false;
+        }
         if (!craft()->config->get("sendAnalyticsData", "instantanalytics"))
             $result = false;
         if (!craft()->config->get("sendAnalyticsInDevMode", "instantanalytics") && craft()->config->get('devMode'))
