@@ -140,23 +140,69 @@ class InstantAnalyticsService extends BaseApplicationComponent
     private function _shouldSendAnalytics()
     {
         $result = true;
+
+        if (!craft()->config->get("sendAnalyticsData", "instantanalytics"))
+            return false;
+        if (!craft()->config->get("sendAnalyticsInDevMode", "instantanalytics") && craft()->config->get('devMode'))
+            return false;
+        if (craft()->isConsole())
+            return false;
+        if (craft()->request->isCpRequest())
+            return false;
+        if (craft()->request->isLivePreview())
+            return false;
+
+/* -- Check the $_SERVER[] super-global exclusions */
+
+        $exclusions = craft()->config->get("serverExcludes", "instantanalytics");
+        if (isset($exclusions) && is_array($exclusions))
+        {
+            foreach ($exclusions as $match => $matchArray)
+            {
+                if (isset($_SERVER[$match]))
+                {
+                    foreach ($matchArray as $matchItem)
+                    {
+                        if (preg_match($matchItem, $_SERVER[$match]))
+                            return false;
+                    }
+                }
+            }
+        }
+
+/* -- Filter out bot/spam requests via UserAgent */
+
         if (craft()->config->get("filterBotUserAgents", "instantanalytics"))
         {
             $CrawlerDetect = new CrawlerDetect;
 // Check the user agent of the current 'visitor'
             if ($CrawlerDetect->isCrawler())
-                $result = false;
+                return false;
         }
-        if (!craft()->config->get("sendAnalyticsData", "instantanalytics"))
-            $result = false;
-        if (!craft()->config->get("sendAnalyticsInDevMode", "instantanalytics") && craft()->config->get('devMode'))
-            $result = false;
-        if (craft()->isConsole())
-            $result = false;
-        if (craft()->request->isCpRequest())
-            $result = false;
-        if (craft()->request->isLivePreview())
-            $result = false;
+
+/* -- Filter by user group */
+
+        $session = craft()->userSession;
+        if ($session)
+        {
+            $user = $session->getUser();
+            $exclusions = craft()->config->get("groupExcludes", "instantanalytics");
+
+            if ($user && isset($exclusions) && is_array($exclusions))
+            {
+                if ($session->isLoggedIn())
+                {
+                    foreach ($exclusions as $matchItem)
+                    {
+                        if ($user->isInGroup($matchItem))
+                            return false;
+                        if ($matchItem == "admin" && $session->isAdmin())
+                            return false;
+                    }
+                }
+            }
+        }
+
         return $result;
     }
     /**

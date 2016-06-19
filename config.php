@@ -20,8 +20,32 @@ return array(
  * Controls whether Instant Analytics will send analytics data when `devMode` is on.
  */
     "sendAnalyticsInDevMode" => true,
+
 /**
  * Controls whether we should filter out bot UserGents.
  */
     "filterBotUserAgents" => true,
+
+/**
+ * Contains an array of Craft user group handles to exclude from Analytics tracking.  If there's a match
+ * for any of them, analytics data is not sent.
+ */
+    "groupExcludes" => array(
+            "admin",
+        ),
+
+/**
+ * Contains an array of keys that correspond to $_SERVER[] super-global array keys to test against.
+ * Each item in the sub-array is tested against the $_SERVER[] super-global key via RegEx; if there's
+ * a match for any of them, analytics data is not sent.  This allows you to filter based on whatever
+ * information you want.
+ * Reference: http://php.net/manual/en/reserved.variables.server.php
+ * RegEx tester: http://regexr.com
+ */
+    "serverExcludes" => array(
+        'REMOTE_ADDR' => array(
+            "/^localhost$|^127(?:\.[0-9]+){0,2}\.[0-9]+$|^(?:0*\:)*?:?0*1$/",
+            ),
+        ),
+
 );

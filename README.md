@@ -170,7 +170,10 @@ Some things to do, and ideas for potential features:
 
 ### 1.0.3 -- 2016.06.19
 
-* [Improved] Added a bot UserAgent filter list (on by default), configurable via filterBotUserAgents in config.php
+* [Added] Added a bot UserAgent filter list (on by default), configurable via filterBotUserAgents in config.php
+* [Added] Added groupExcludes setting in config.php that has an array of Craft user group handles for Analytics data exclusion
+* [Added] Added serverExcludes setting in config.php that has arrays of $_SERVER[] superglobal RegEx tests for Analytics data exclusion
+* [Improved] The various _shouldSendAnalytics() tests now short-circuit, returning as soon as a false condition is met
 * [Improved] Updated README.md
 
 ### 1.0.2 -- 2016.06.16
