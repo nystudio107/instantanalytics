@@ -68,6 +68,10 @@ If you have the [SEOmatic](https://github.com/nystudio107/seomatic) plugin insta
 * In [SEOmatic](https://github.com/nystudio107/seomatic) turn off **Automatically send Google Analytics PageView**
 * If you don't use SEOmatic, remove the line `ga('send', 'pageview');` from your Google Analytics Tracking Code Javascript tag
 
+### Customizing via the config.php file
+
+Instant Analytics has a number of other configuration options that can be customized on a per-environment basis via the `config.php` file.  Don't edit this file, instead copy it to `craft/config` as `instantanalytics.php` (rename it) and make your changes there.
+
 ## Using Instant Analytics
 
 ### Simple Page Tracking
@@ -167,6 +171,11 @@ Some things to do, and ideas for potential features:
 * Release it
 
 ## Instant Analytics Changelog
+
+### 1.0.4 -- 2016.07.08
+
+* [Added] Added an adminExclude setting in config.php for anyone logged in using an admin for Analytics data exclusion
+* [Improved] Updated README.md
 
 ### 1.0.3 -- 2016.06.19
 

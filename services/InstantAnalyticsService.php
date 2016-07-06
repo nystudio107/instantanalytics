@@ -188,6 +188,9 @@ class InstantAnalyticsService extends BaseApplicationComponent
             $user = $session->getUser();
             $exclusions = craft()->config->get("groupExcludes", "instantanalytics");
 
+            if (craft()->config->get("adminExclude", "instantanalytics") && $session->isAdmin())
+                return false;
+
             if ($user && isset($exclusions) && is_array($exclusions))
             {
                 if ($session->isLoggedIn())
@@ -195,8 +198,6 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     foreach ($exclusions as $matchItem)
                     {
                         if ($user->isInGroup($matchItem))
-                            return false;
-                        if ($matchItem == "admin" && $session->isAdmin())
                             return false;
                     }
                 }

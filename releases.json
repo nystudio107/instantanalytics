@@ -1,5 +1,14 @@
 [
     {
+        "version": "1.0.4",
+        "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
+        "date": "2016-07-08T17:29:17.496Z",
+        "notes": [
+            "[Added] Added an adminExclude setting in config.php for anyone logged in using an admin for Analytics data exclusion",
+            "[Improved] Updated README.md"
+        ]
+    },
+    {
         "version": "1.0.3",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2016-06-19T17:29:17.496Z",

@@ -27,11 +27,16 @@ return array(
     "filterBotUserAgents" => true,
 
 /**
+ * Controls whether we should exclude users logged into an admin account from Analytics tracking.
+ */
+    "adminExclude" => false,
+
+/**
  * Contains an array of Craft user group handles to exclude from Analytics tracking.  If there's a match
  * for any of them, analytics data is not sent.
  */
     "groupExcludes" => array(
-            "admin",
+            "some_user_group_handle",
         ),
 
 /**
