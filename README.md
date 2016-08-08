@@ -172,9 +172,10 @@ Some things to do, and ideas for potential features:
 
 ## Instant Analytics Changelog
 
-### 1.0.4 -- 2016.07.08
+### 1.0.4 -- 2016.08.08
 
 * [Added] Added an adminExclude setting in config.php for anyone logged in using an admin for Analytics data exclusion
+* [Improved] AI now ensures that the pageview URLs are not absolute URLs
 * [Improved] Updated README.md
 
 ### 1.0.3 -- 2016.06.19

@@ -2,9 +2,10 @@
     {
         "version": "1.0.4",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
-        "date": "2016-07-08T17:29:17.496Z",
+        "date": "2016-08-08T17:29:17.496Z",
         "notes": [
             "[Added] Added an adminExclude setting in config.php for anyone logged in using an admin for Analytics data exclusion",
+            "[Improved] AI now ensures that the pageview URLs are not absolute URLs",
             "[Improved] Updated README.md"
         ]
     },

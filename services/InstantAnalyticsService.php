@@ -38,6 +38,29 @@ class InstantAnalyticsService extends BaseApplicationComponent
         {
             if ($url == "")
                 $url = craft()->request->url;
+
+/* -- We want to send just a path to GA for page views */
+
+            if (UrlHelper::isAbsoluteUrl($url))
+            {
+                $urlParts = parse_url($url);
+                if (isset($urlParts['path']))
+                    $url = $urlParts['path'];
+                else
+                    $url = "/";
+                if (isset($urlParts['query']))
+                    $url = $url . "?" . $urlParts['query'];
+            }
+
+/* -- We don't want to send protocol-relative URLs either */
+
+            if (UrlHelper::isProtocolRelativeUrl($url))
+            {
+                $url = substr($url, 1);
+            }
+
+/* -- Prepare the Analytics object, and send the pageview */
+
             $analytics = $this->_getAnalyticsObj();
             if ($analytics)
             {
