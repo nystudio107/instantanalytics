@@ -36,7 +36,12 @@ class InstantAnalyticsTwigExtension extends \Twig_Extension
 
         $settings = craft()->plugins->getPlugin('instantanalytics')->getSettings();
         if (isset($settings) && isset($settings['autoSendPageView']) && $settings['autoSendPageView'])
-            craft()->instantAnalytics->sendPageView();
+        {
+            $title = craft()->templates->getRenderingTemplate();
+            if (!is_string($title))
+                $title = "";
+            craft()->instantAnalytics->sendPageView("", $title);
+        }
 
         return array(
         );
