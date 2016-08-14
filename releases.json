@@ -5,6 +5,7 @@
         "date": "2016-08-14T17:29:17.496Z",
         "notes": [
             "[Fixed] If there is no _ga cookie set, we generate a UUID and set it, to allow sessions to work correctly",
+            "[Added] Added the $title parameter to sendPageView()",
             "[Improved] Updated README.md"
         ]
     },

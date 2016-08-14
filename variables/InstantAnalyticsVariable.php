@@ -44,9 +44,9 @@ class InstantAnalyticsVariable
      * @param  string $url the URL to track
      * @return string the tracking URL
      */
-    function getPageViewTrackingUrl($url)
+    function getPageViewTrackingUrl($url="", $title="")
     {
-        return craft()->instantAnalytics->getPageViewTrackingUrl($url);
+        return craft()->instantAnalytics->getPageViewTrackingUrl($url, $title);
     } /* -- getPageViewTrackingUrl */
 
     /**

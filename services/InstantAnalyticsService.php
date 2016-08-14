@@ -32,7 +32,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
     /**
      * Send a PageView
      */
-    function sendPageView($url="")
+    function sendPageView($url="", $title="")
     {
         if ($this->_shouldSendAnalytics())
         {
@@ -65,6 +65,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
             if ($analytics)
             {
                 $analytics->setDocumentPath($url)
+                    ->setDocumentTitle($title)
                     ->sendPageView();
             }
         }

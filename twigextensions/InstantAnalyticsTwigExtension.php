@@ -81,9 +81,9 @@ class InstantAnalyticsTwigExtension extends \Twig_Extension
     /**
      * Send a PageView
      */
-    public function sendPageView($url="")
+    public function sendPageView($url="", $title="")
     {
-        return craft()->instantAnalytics->sendPageView($url);
+        return craft()->instantAnalytics->sendPageView($url, $title);
     }
 
     /**
