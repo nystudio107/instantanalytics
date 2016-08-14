@@ -172,6 +172,11 @@ Some things to do, and ideas for potential features:
 
 ## Instant Analytics Changelog
 
+### 1.0.5 -- 2016.08.14
+
+* [Fixed] If there is no _ga cookie set, we generate a UUID and set it, to allow sessions to work correctly
+* [Improved] Updated README.md
+
 ### 1.0.4 -- 2016.08.08
 
 * [Added] Added an adminExclude setting in config.php for anyone logged in using an admin for Analytics data exclusion
