@@ -88,11 +88,11 @@ It does not send any Google Analytics data if:
 
 If you want to manually send a page view, you can do that via either:
 
-    {{ sendPageView(URL) }}
+    {{ sendPageView(URL, TITLE) }}
     -OR-
-    {{ craft.instantAnalytics.sendPageView(URL) }}
-    
-By default if you provide no `URL` parameter, the current request is used, so it's as simple as just: `{{ sendPageView }}`
+    {{ craft.instantAnalytics.sendPageView(URL, TITLE) }}
+
+By default if you provide no `URL` parameter, the current request is used.  `TITLE` is the title of the page as it should appear in Google Analytics.  So you can do just `{{ sendPageView("", "Some Title") }}` to send a page view for the current page.  If you're using [SEOmatic](https://github.com/nystudio107/seomatic), you might do: `{{ sendPageView("", seomaticMeta.seoTitle) }}`
 
 ### Sending Events
 
@@ -172,7 +172,7 @@ Some things to do, and ideas for potential features:
 
 ## Instant Analytics Changelog
 
-### 1.0.5 -- 2016.08.14
+### 1.0.5 -- 2016.08.16
 
 * [Fixed] If there is no _ga cookie set, we generate a UUID and set it, to allow sessions to work correctly
 * [Added] Added the $title parameter to sendPageView()

@@ -2,7 +2,7 @@
     {
         "version": "1.0.5",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
-        "date": "2016-08-14T17:29:17.496Z",
+        "date": "2016-08-16T17:29:17.496Z",
         "notes": [
             "[Fixed] If there is no _ga cookie set, we generate a UUID and set it, to allow sessions to work correctly",
             "[Added] Added the $title parameter to sendPageView()",
