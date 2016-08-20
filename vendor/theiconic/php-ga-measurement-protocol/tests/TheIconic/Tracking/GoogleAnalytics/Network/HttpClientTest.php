@@ -2,6 +2,7 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics\Network;
 
+use TheIconic\Tracking\GoogleAnalytics\Parameters\General\CacheBuster;
 use TheIconic\Tracking\GoogleAnalytics\Tests\CompoundParameterTestCollection;
 use TheIconic\Tracking\GoogleAnalytics\Tests\CompoundTestParameter;
 use TheIconic\Tracking\GoogleAnalytics\Tests\SingleTestParameter;
@@ -24,6 +25,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $this->httpClient = new HttpClient();
 
         $mockResponse = $this->getMockBuilder('GuzzleHttp\Psr7\Response')
+            ->setMethods(['getStatusCode'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -34,7 +36,6 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $mockPromise->expects($this->exactly(3))
             ->method('wait')
             ->will($this->returnValue($mockResponse));
-
 
         $guzzleClient = $this->getMockBuilder('GuzzleHttp\Client')
             ->setMethods(['sendAsync'])
@@ -47,7 +48,6 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($mockPromise));
 
         $this->httpClient->setClient($guzzleClient);
-
 
         $this->mockHttpClient = $this->getMockBuilder('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient')
             ->setMethods(['getAnalyticsResponse'])
@@ -66,7 +66,9 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $singleParameter->setValue('hey');
         $singleParameterIdx = new SingleTestParameterIndexed(4);
         $singleParameterIdx->setValue(9);
-        $singles = [$singleParameter, $singleParameterIdx];
+        $cacheBuster = new CacheBuster();
+        $cacheBuster->setValue('123');
+        $singles = [$singleParameter, $cacheBuster, $singleParameterIdx];
 
         $compoundCollection = new CompoundParameterTestCollection(6);
         $compoundParameter = new CompoundTestParameter(['sku' => 555, 'name' => 'cathy']);
@@ -82,7 +84,6 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $responseAsync = $this->mockHttpClient->post('http://test-collector.com', $singles, $compounds, true);
         $this->assertInstanceOf('GuzzleHttp\Promise\PromiseInterface', $responseAsync);
 
-
         $response = $this->httpClient->post('http://test-collector.com', $singles, $compounds);
 
         $this->assertInstanceOf('TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse', $response);
@@ -96,10 +97,21 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             'cp6t1nm' => 'cathy',
             'cp6t2id' => 666,
             'cp6t2nm' => 'isa',
+            'z' => '123'
         ];
 
         $this->assertEquals($expect, $payload);
 
+        // assets cache buster is last element
+        $count = 1;
+        foreach ($payload as $key => $value) {
+            if ($count === 7) {
+                $this->assertEquals('z', $key);
+                $this->assertEquals('123', $value);
+            }
+
+            $count++;
+        }
 
         // Promises should be unwrapped on the object destruction
         $this->httpClient = null;

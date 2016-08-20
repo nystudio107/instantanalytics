@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6c6729fbcb810d0c1e6a5f7577b0903d",
-    "content-hash": "934a87fcb611a1c92735e56d9a6cfa5a",
+    "hash": "67cc597d9fbd87f426ac90e5ecb983de",
+    "content-hash": "6faa052185ce1dcd10a02587ea2c7ff6",
     "packages": [
         {
             "name": "composer/installers",
@@ -427,26 +427,25 @@
         },
         {
             "name": "theiconic/php-ga-measurement-protocol",
-            "version": "v2.1.1",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/theiconic/php-ga-measurement-protocol.git",
-                "reference": "5170394f0d917d8dde32a9444d38a8382d446d66"
+                "reference": "6f9089147b4ed12e55c604dd3ed35886631421ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/theiconic/php-ga-measurement-protocol/zipball/5170394f0d917d8dde32a9444d38a8382d446d66",
-                "reference": "5170394f0d917d8dde32a9444d38a8382d446d66",
+                "url": "https://api.github.com/repos/theiconic/php-ga-measurement-protocol/zipball/6f9089147b4ed12e55c604dd3ed35886631421ca",
+                "reference": "6f9089147b4ed12e55c604dd3ed35886631421ca",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^6.0",
-                "php": ">=5.5",
-                "symfony/finder": "^2.5"
+                "php": ">=5.5"
             },
             "require-dev": {
                 "phpunit/phpunit": "4.7.*",
-                "satooshi/php-coveralls": "dev-master"
+                "satooshi/php-coveralls": "1.0.1"
             },
             "type": "library",
             "autoload": {
@@ -465,7 +464,7 @@
                 }
             ],
             "description": "Send data to Google Analytics from the server using PHP. This library fully implements GA measurement protocol.",
-            "time": "2015-11-25 10:01:27"
+            "time": "2016-07-31 13:58:12"
         }
     ],
     "packages-dev": [],

@@ -47,6 +47,8 @@ Or if you are using ```PHP 5.4 or above``` and ```Guzzle 5``` then:
 }
 ```
 
+Take notice v1 won't receive more updates, you are encourage to update to v2.
+
 ## Integrations
 You can use this package on its own, or use a convenient framework integration:
 * Laravel 4/5 - https://github.com/irazasyed/laravel-gamp
@@ -111,15 +113,15 @@ $analytics->setProtocolVersion('1')
     ->setTrackingId('UA-26293624-12')
     ->setClientId('12345678')
     ->setUserId('123');
-    
-// Then, include the transaction data 
+
+// Then, include the transaction data
 $analytics->setTransactionId('7778922')
     ->setAffiliation('THE ICONIC')
     ->setRevenue(250.0)
     ->setTax(25.0)
     ->setShipping(15.0)
     ->setCouponCode('MY_COUPON');
-    
+
 // Include a product, only required fields are SKU and Name
 $productData1 = [
     'sku' => 'AAAA-6666',
@@ -159,6 +161,28 @@ $analytics->setEventCategory('Checkout')
     ->sendEvent();
 ```
 
+### Validating Hits
+
+From Google Developer Guide:
+
+> The Google Analytics Measurement Protocol does not return HTTP error codes, even if a Measurement Protocol hit is malformed or missing required parameters. To ensure that your hits are correctly formatted and contain all required parameters, you can test them against the validation server before deploying them to production.
+
+To send a validation hit, turn on debug mode like this
+
+```php
+// Make sure AsyncRequest is set to false (it defaults to false)
+$response = $analytics
+              ->setDebug($debug)
+              ->sendPageview();
+
+$debugResponse = $response->getDebugResponse();
+
+// The debug response is an associative array, you could use print_r to view its contents
+print_r($debugResponse);
+```
+
+GA actually returns a JSON that is parsed into an associative array. Read ([here](https://developers.google.com/analytics/devguides/collection/protocol/v1/validating-hits)) to understand how to interpret response.
+
 ## Contributors
 
 * Jorge A. Borges - Lead Developer ([http://jorgeborges.me](http://jorgeborges.me))
@@ -166,6 +190,7 @@ $analytics->setEventCategory('Checkout')
 * Syed Irfaq R. - [irazasyed](https://github.com/irazasyed)
 * Andrei Baibaratsky - [baibaratsky](https://github.com/baibaratsky)
 * Martín Palombo - [lombo](https://github.com/lombo)
+* Amit Rana - [amit0rana](https://github.com/amit0rana)
 
 ## License
 
