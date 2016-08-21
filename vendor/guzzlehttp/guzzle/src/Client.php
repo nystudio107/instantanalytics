@@ -9,18 +9,18 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @method ResponseInterface get($uri, array $options = [])
- * @method ResponseInterface head($uri, array $options = [])
- * @method ResponseInterface put($uri, array $options = [])
- * @method ResponseInterface post($uri, array $options = [])
- * @method ResponseInterface patch($uri, array $options = [])
- * @method ResponseInterface delete($uri, array $options = [])
- * @method Promise\PromiseInterface getAsync($uri, array $options = [])
- * @method Promise\PromiseInterface headAsync($uri, array $options = [])
- * @method Promise\PromiseInterface putAsync($uri, array $options = [])
- * @method Promise\PromiseInterface postAsync($uri, array $options = [])
- * @method Promise\PromiseInterface patchAsync($uri, array $options = [])
- * @method Promise\PromiseInterface deleteAsync($uri, array $options = [])
+ * @method ResponseInterface get(string|UriInterface $uri, array $options = [])
+ * @method ResponseInterface head(string|UriInterface $uri, array $options = [])
+ * @method ResponseInterface put(string|UriInterface $uri, array $options = [])
+ * @method ResponseInterface post(string|UriInterface $uri, array $options = [])
+ * @method ResponseInterface patch(string|UriInterface $uri, array $options = [])
+ * @method ResponseInterface delete(string|UriInterface $uri, array $options = [])
+ * @method Promise\PromiseInterface getAsync(string|UriInterface $uri, array $options = [])
+ * @method Promise\PromiseInterface headAsync(string|UriInterface $uri, array $options = [])
+ * @method Promise\PromiseInterface putAsync(string|UriInterface $uri, array $options = [])
+ * @method Promise\PromiseInterface postAsync(string|UriInterface $uri, array $options = [])
+ * @method Promise\PromiseInterface patchAsync(string|UriInterface $uri, array $options = [])
+ * @method Promise\PromiseInterface deleteAsync(string|UriInterface $uri, array $options = [])
  */
 class Client implements ClientInterface
 {
@@ -138,11 +138,14 @@ class Client implements ClientInterface
 
     private function buildUri($uri, array $config)
     {
-        if (!isset($config['base_uri'])) {
-            return $uri instanceof UriInterface ? $uri : new Psr7\Uri($uri);
+        // for BC we accept null which would otherwise fail in uri_for
+        $uri = Psr7\uri_for($uri === null ? '' : $uri);
+
+        if (isset($config['base_uri'])) {
+            $uri = Psr7\Uri::resolve(Psr7\uri_for($config['base_uri']), $uri);
         }
 
-        return Psr7\Uri::resolve(Psr7\uri_for($config['base_uri']), $uri);
+        return $uri->getScheme() === '' ? $uri->withScheme('http') : $uri;
     }
 
     /**
@@ -160,9 +163,13 @@ class Client implements ClientInterface
             'cookies'         => false
         ];
 
-        // Use the standard Linux HTTP_PROXY and HTTPS_PROXY if set
-        if ($proxy = getenv('HTTP_PROXY')) {
-            $defaults['proxy']['http'] = $proxy;
+        // Use the standard Linux HTTP_PROXY and HTTPS_PROXY if set.
+
+        // We can only trust the HTTP_PROXY environment variable in a CLI
+        // process due to the fact that PHP has no reliable mechanism to
+        // get environment variables that start with "HTTP_".
+        if (php_sapi_name() == 'cli' && getenv('HTTP_PROXY')) {
+            $defaults['proxy']['http'] = getenv('HTTP_PROXY');
         }
 
         if ($proxy = getenv('HTTPS_PROXY')) {

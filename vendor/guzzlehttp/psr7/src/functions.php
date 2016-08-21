@@ -371,25 +371,24 @@ function copy_to_stream(
     StreamInterface $dest,
     $maxLen = -1
 ) {
+    $bufferSize = 8192;
+
     if ($maxLen === -1) {
         while (!$source->eof()) {
-            if (!$dest->write($source->read(1048576))) {
+            if (!$dest->write($source->read($bufferSize))) {
                 break;
             }
         }
-        return;
-    }
-
-    $bytes = 0;
-    while (!$source->eof()) {
-        $buf = $source->read($maxLen - $bytes);
-        if (!($len = strlen($buf))) {
-            break;
-        }
-        $bytes += $len;
-        $dest->write($buf);
-        if ($bytes == $maxLen) {
-            break;
+    } else {
+        $remaining = $maxLen;
+        while ($remaining > 0 && !$source->eof()) {
+            $buf = $source->read(min($bufferSize, $remaining));
+            $len = strlen($buf);
+            if (!$len) {
+                break;
+            }
+            $remaining -= $len;
+            $dest->write($buf);
         }
     }
 }
@@ -559,7 +558,7 @@ function parse_query($str, $urlEncoding = true)
 /**
  * Build a query string from an array of key value pairs.
  *
- * This function can use the return value of parseQuery() to build a query
+ * This function can use the return value of parse_query() to build a query
  * string. This function does not modify the provided keys when an array is
  * encountered (like http_build_query would).
  *
@@ -577,9 +576,9 @@ function build_query(array $params, $encoding = PHP_QUERY_RFC3986)
 
     if ($encoding === false) {
         $encoder = function ($str) { return $str; };
-    } elseif ($encoding == PHP_QUERY_RFC3986) {
+    } elseif ($encoding === PHP_QUERY_RFC3986) {
         $encoder = 'rawurlencode';
-    } elseif ($encoding == PHP_QUERY_RFC1738) {
+    } elseif ($encoding === PHP_QUERY_RFC1738) {
         $encoder = 'urlencode';
     } else {
         throw new \InvalidArgumentException('Invalid type');

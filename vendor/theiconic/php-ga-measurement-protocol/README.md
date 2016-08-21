@@ -1,6 +1,6 @@
 Google Analytics Measurement Protocol library for PHP
 ===========================
-[![Build Status](https://travis-ci.org/theiconic/php-ga-measurement-protocol.svg?branch=v2.1.0)](https://travis-ci.org/theiconic/php-ga-measurement-protocol) [![Coverage Status](https://coveralls.io/repos/theiconic/php-ga-measurement-protocol/badge.svg?branch=master&service=github)](https://coveralls.io/github/theiconic/php-ga-measurement-protocol?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/?branch=master) [![Latest Stable Version](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/v/stable)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Total Downloads](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/downloads)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![License](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/license)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Documentation Status](https://readthedocs.org/projects/php-ga-measurement-protocol/badge/?version=latest)](http://php-ga-measurement-protocol.readthedocs.org/en/latest/) [![Dependency Status](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068)
+[![Build Status](https://travis-ci.org/theiconic/php-ga-measurement-protocol.svg?branch=v2.3.0)](https://travis-ci.org/theiconic/php-ga-measurement-protocol) [![Coverage Status](https://coveralls.io/repos/theiconic/php-ga-measurement-protocol/badge.svg?branch=master&service=github)](https://coveralls.io/github/theiconic/php-ga-measurement-protocol?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/?branch=master) [![Latest Stable Version](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/v/stable)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Total Downloads](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/downloads)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![License](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/license)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Documentation Status](https://readthedocs.org/projects/php-ga-measurement-protocol/badge/?version=latest)](http://php-ga-measurement-protocol.readthedocs.org/en/latest/) [![Dependency Status](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068)
 
 ## Description
 
@@ -47,6 +47,8 @@ Or if you are using ```PHP 5.4 or above``` and ```Guzzle 5``` then:
 }
 ```
 
+Take notice v1 won't receive more updates, you are encourage to update to v2.
+
 ## Integrations
 You can use this package on its own, or use a convenient framework integration:
 * Laravel 4/5 - https://github.com/irazasyed/laravel-gamp
@@ -76,7 +78,7 @@ $analytics
 // When you finish bulding the payload send a hit (such as an pageview or event)
 $analytics->sendPageview();
 ```
-The hit should have arrived to the GA property UA-26293728-11. You can verify this in your Real Time dashboard.
+The hit should have arrived to the GA property UA-26293728-11. You can verify this in your Real Time dashboard. Take notice, if you need GA reports to tie this event with previous user actions you must get and set the ClientId to be same as the GA Cookie. Read ([here](https://developers.google.com/analytics/devguides/collection/analyticsjs/cookies-user-id#getting_the_client_id_from_the_cookie)).
 
 The library is 100% done, full documentation is a work in progress, but basically all parameters can be set the same way.
 
@@ -106,20 +108,22 @@ use TheIconic\Tracking\GoogleAnalytics\Analytics;
 $analytics = new Analytics();
 
 // Build the order data programmatically, including each order product in the payload
+// Take notice, if you want GA reports to tie this event with previous user actions
+// you must get and set the same ClientId from the GA Cookie
 // First, general and required hit data
 $analytics->setProtocolVersion('1')
     ->setTrackingId('UA-26293624-12')
-    ->setClientId('12345678')
+    ->setClientId('2133506694.1448249699')
     ->setUserId('123');
-    
-// Then, include the transaction data 
+
+// Then, include the transaction data
 $analytics->setTransactionId('7778922')
     ->setAffiliation('THE ICONIC')
     ->setRevenue(250.0)
     ->setTax(25.0)
     ->setShipping(15.0)
     ->setCouponCode('MY_COUPON');
-    
+
 // Include a product, only required fields are SKU and Name
 $productData1 = [
     'sku' => 'AAAA-6666',
@@ -159,6 +163,28 @@ $analytics->setEventCategory('Checkout')
     ->sendEvent();
 ```
 
+### Validating Hits
+
+From Google Developer Guide:
+
+> The Google Analytics Measurement Protocol does not return HTTP error codes, even if a Measurement Protocol hit is malformed or missing required parameters. To ensure that your hits are correctly formatted and contain all required parameters, you can test them against the validation server before deploying them to production.
+
+To send a validation hit, turn on debug mode like this
+
+```php
+// Make sure AsyncRequest is set to false (it defaults to false)
+$response = $analytics
+              ->setDebug(true)
+              ->sendPageview();
+
+$debugResponse = $response->getDebugResponse();
+
+// The debug response is an associative array, you could use print_r to view its contents
+print_r($debugResponse);
+```
+
+GA actually returns a JSON that is parsed into an associative array. Read ([here](https://developers.google.com/analytics/devguides/collection/protocol/v1/validating-hits)) to understand how to interpret response.
+
 ## Contributors
 
 * Jorge A. Borges - Lead Developer ([http://jorgeborges.me](http://jorgeborges.me))
@@ -166,6 +192,8 @@ $analytics->setEventCategory('Checkout')
 * Syed Irfaq R. - [irazasyed](https://github.com/irazasyed)
 * Andrei Baibaratsky - [baibaratsky](https://github.com/baibaratsky)
 * Martín Palombo - [lombo](https://github.com/lombo)
+* Amit Rana - [amit0rana](https://github.com/amit0rana)
+* Stefan Zweifel - [stefanzweifel](https://github.com/stefanzweifel)
 
 ## License
 

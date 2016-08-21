@@ -30,6 +30,13 @@ class AnalyticsResponse
     protected $requestUrl;
 
     /**
+     * Response body.
+     *
+     * @var string
+     */
+    protected $responseBody;
+
+    /**
      * Gets the relevant data from the Guzzle clients.
      *
      * @param RequestInterface $request
@@ -39,15 +46,17 @@ class AnalyticsResponse
     {
         if ($response instanceof ResponseInterface) {
             $this->httpStatusCode = $response->getStatusCode();
+            $this->responseBody = $response->getBody()->getContents();
         } elseif ($response instanceof PromiseInterface) {
             $this->httpStatusCode = null;
+            $this->responseBody = null;
         } else {
             throw new \InvalidArgumentException(
                 'Second constructor argument "response" must be instance of ResponseInterface or PromiseInterface'
             );
         }
 
-        $this->requestUrl = (string)$request->getUri();
+        $this->requestUrl = (string) $request->getUri();
     }
 
     /**
@@ -69,5 +78,22 @@ class AnalyticsResponse
     public function getRequestUrl()
     {
         return $this->requestUrl;
+    }
+
+    /**
+     * Gets the debug response. Returns empty array if no response found.
+     *
+     * @return array
+     */
+    public function getDebugResponse()
+    {
+        $debugResponse = [];
+
+        if (!empty($this->responseBody)) {
+            $debugResponse = json_decode($this->responseBody, true);
+            $debugResponse = (is_array($debugResponse)) ? $debugResponse : [];
+        }
+
+        return $debugResponse;
     }
 }
