@@ -172,6 +172,13 @@ Some things to do, and ideas for potential features:
 
 ## Instant Analytics Changelog
 
+### 1.0.6 -- 2016.08.24
+
+* [Added] Automatic Google Enhanced Ecommerce tracking of Craft Commerce OrderComplete
+* [Added] Automatic Google Enhanced Ecommerce tracking of Craft Commerce AddToCart
+* [Improved] Added debug logging when in `devMode` for any Analytics data that is sent
+* [Improved] Updated README.md
+
 ### 1.0.5 -- 2016.08.16
 
 * [Fixed] If there is no _ga cookie set, we generate a UUID and set it, to allow sessions to work correctly
