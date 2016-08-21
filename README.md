@@ -177,6 +177,7 @@ Some things to do, and ideas for potential features:
 * [Added] Automatic Google Enhanced Ecommerce tracking of Craft Commerce OrderComplete
 * [Added] Automatic Google Enhanced Ecommerce tracking of Craft Commerce AddToCart
 * [Added] Automatic Google Enhanced Ecommerce tracking of Craft Commerce RemoveFromCart
+* [Improved] Updated to the latest Google Measurement Protocol (2.3.0)
 * [Improved] Added debug logging when in `devMode` for any Analytics data that is sent
 * [Improved] Updated README.md
 
