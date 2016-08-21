@@ -136,21 +136,68 @@ class InstantAnalyticsService extends BaseApplicationComponent
             $analytics = $this->_getAnalyticsObj();
             if ($analytics)
             {
-            // Then, include the transaction data
-            $analytics->setTransactionId($orderModel->number)
-                ->setRevenue($orderModel->totalPrice)
-                ->setTax($orderModel->TotalTax)
-                ->setShipping($orderModel->totalShippingCost);
+                // Then, include the transaction data
+                $analytics->setTransactionId($orderModel->number)
+                    ->setRevenue($orderModel->totalPrice)
+                    ->setTax($orderModel->TotalTax)
+                    ->setShipping($orderModel->totalShippingCost);
 
-            // Coupon code?
-            if ($orderModel->couponCode)
-                $analytics->setCouponCode($orderModel->couponCode);
+                // Coupon code?
+                if ($orderModel->couponCode)
+                    $analytics->setCouponCode($orderModel->couponCode);
 
-            // Add each line item in the transaction
-            // Two cases - variant and non variant products
-            foreach ($orderModel->lineItems as $key => $lineItem)
+                // Add each line item in the transaction
+                // Two cases - variant and non variant products
+                foreach ($orderModel->lineItems as $key => $lineItem)
+                {
+
+                    //This is the same for both variant and non variant products
+                    $productData = [
+                        'sku' => $lineItem->purchasable->sku,
+                        'price' => $lineItem->salePrice,
+                        'quantity' => $lineItem->qty,
+                    ];
+
+                    if (!$lineItem->purchasable->product->type->hasVariants)
+                    {
+                    //No variants (i.e. default variant)
+                        $productData['name'] = $lineItem->purchasable->title;
+                    }
+                    else
+                    {
+                    // Product with variants
+                        $productData['name'] = $lineItem->purchasable->product->title;
+                        $productData['variant'] = $lineItem->purchasable->title;
+                    }
+
+                    //Add each product to the hit to be sent
+                    $analytics->addProduct($productData);
+                }
+
+                // Don't forget to set the product action, in this case to PURCHASE
+                $analytics->setProductActionToPurchase();
+
+                // Finally, you must send a hit, in this case we send an Event
+                $analytics->setEventCategory('Commerce')
+                    ->setEventAction('Purchase')
+                    ->setEventLabel($orderModel->number)
+                    ->setEventValue($orderModel->totalPrice)
+                    ->sendEvent();
+                InstantAnalyticsPlugin::log("orderComplete for `Commerce` - `Purchase` - `" . $orderModel->number . "` - `" . $orderModel->totalPrice . "`", LogLevel::Info, false);
+            }
+        }
+    } /* -- orderComplete */
+
+    /**
+     * Send analytics information for the item added to the cart
+     */
+    public function addToCart($orderModel = null, $lineItem = null)
+    {
+        if ($lineItem)
+        {
+            $analytics = $this->_getAnalyticsObj();
+            if ($analytics)
             {
-
                 //This is the same for both variant and non variant products
                 $productData = [
                     'sku' => $lineItem->purchasable->sku,
@@ -172,65 +219,19 @@ class InstantAnalyticsService extends BaseApplicationComponent
 
                 //Add each product to the hit to be sent
                 $analytics->addProduct($productData);
+
+                // Don't forget to set the product action, in this case to ADD
+                $analytics->setProductActionToAdd();
+
+                // Finally, you must send a hit, in this case we send an Event
+                $analytics->setEventCategory('Commerce')
+                    ->setEventAction('Add to Cart')
+                    ->setEventLabel($productData['name'])
+                    ->setEventValue($productData['quantity'])
+                    ->sendEvent();
+
+                InstantAnalyticsPlugin::log("addToCart for `Commerce` - `Add to Cart` - `" . $productData['name'] . "` - `" . $productData['quantity'] . "`", LogLevel::Info, false);
             }
-
-            // Don't forget to set the product action, in this case to PURCHASE
-            $analytics->setProductActionToPurchase();
-
-            // Finally, you must send a hit, in this case we send an Event
-            $analytics->setEventCategory('Commerce')
-                ->setEventAction('Purchase')
-                ->setEventLabel($orderModel->number)
-                ->setEventValue($orderModel->totalPrice)
-                ->sendEvent();
-            InstantAnalyticsPlugin::log("orderComplete for `Commerce` - `Purchase` - `" . $orderModel->number . "` - `" . $orderModel->totalPrice . "`", LogLevel::Info, false);
-            }
-        }
-    } /* -- orderComplete */
-
-    /**
-     * Send analytics information for the item added to the cart
-     */
-    public function addToCart($orderModel = null, $lineItem = null)
-    {
-        if ($lineItem)
-        {
-            $analytics = $this->_getAnalyticsObj();
-            if ($analytics)
-            {
-            //This is the same for both variant and non variant products
-            $productData = [
-                'sku' => $lineItem->purchasable->sku,
-                'price' => $lineItem->salePrice,
-                'quantity' => $lineItem->qty,
-            ];
-
-            if (!$lineItem->purchasable->product->type->hasVariants)
-            {
-            //No variants (i.e. default variant)
-                $productData['name'] = $lineItem->purchasable->title;
-            }
-            else
-            {
-            // Product with variants
-                $productData['name'] = $lineItem->purchasable->product->title;
-                $productData['variant'] = $lineItem->purchasable->title;
-            }
-
-            //Add each product to the hit to be sent
-            $analytics->addProduct($productData);            }
-
-            // Don't forget to set the product action, in this case to PURCHASE
-            $analytics->setProductActionToRemove();
-
-            // Finally, you must send a hit, in this case we send an Event
-            $analytics->setEventCategory('Commerce')
-                ->setEventAction('Add to Cart')
-                ->setEventLabel($productData['name'])
-                ->setEventValue($productData['quantity'])
-                ->sendEvent();
-
-            InstantAnalyticsPlugin::log("addToCart for `Commerce` - `Add to Cart` - `" . $productData['name'] . "` - `" . $productData['quantity'] . "`", LogLevel::Info, false);
         }
     } /* -- addToCart */
 
@@ -239,9 +240,48 @@ class InstantAnalyticsService extends BaseApplicationComponent
      */
     public function removeFromCart($orderModel = null, $lineItemId = 0)
     {
-        $analytics = $this->_getAnalyticsObj();
-        if ($analytics)
+        if ($lineItemId)
         {
+            $analytics = $this->_getAnalyticsObj();
+            if ($analytics)
+            {
+    /* Somehow, we need to get information on the lineItem that was removed from a lineItemId
+                //This is the same for both variant and non variant products
+                $productData = [
+                    'sku' => $lineItem->purchasable->sku,
+                    'price' => $lineItem->salePrice,
+                    'quantity' => $lineItem->qty,
+                ];
+
+                if (!$lineItem->purchasable->product->type->hasVariants)
+                {
+                //No variants (i.e. default variant)
+                    $productData['name'] = $lineItem->purchasable->title;
+                }
+                else
+                {
+                // Product with variants
+                    $productData['name'] = $lineItem->purchasable->product->title;
+                    $productData['variant'] = $lineItem->purchasable->title;
+                }
+
+                //Add each product to the hit to be sent
+                $analytics->addProduct($productData);            }
+    */
+                // Don't forget to set the product action, in this case to REMOVE
+                $analytics->setProductActionToRemove();
+
+                // Finally, you must send a hit, in this case we send an Event
+                $analytics->setEventCategory('Commerce')
+                    ->setEventAction('Remove from Cart')
+    /*
+                    ->setEventLabel($productData['name'])
+                    ->setEventValue($productData['quantity'])
+    */
+                    ->sendEvent();
+
+                InstantAnalyticsPlugin::log("removeFromCart for `Commerce` - `Remove from Cart` - `" . $lineItemId . "`", LogLevel::Info, false);
+            }
         }
     } /* -- removeFromCart */
 
