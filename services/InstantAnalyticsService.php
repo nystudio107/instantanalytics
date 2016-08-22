@@ -366,10 +366,13 @@ class InstantAnalyticsService extends BaseApplicationComponent
             $analytics = new Analytics();
             if ($analytics)
             {
+                $userAgent = "User-Agent:Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13\r\n";
+                if (isset($_SERVER['HTTP_USER_AGENT']))
+                    $userAgent = $_SERVER['HTTP_USER_AGENT'];
                 $analytics->setProtocolVersion('1')
                     ->setTrackingId($settings['googleAnalyticsTracking'])
                     ->setIpOverride($_SERVER['REMOTE_ADDR'])
-                    ->setUserAgentOverride($_SERVER['HTTP_USER_AGENT'])
+                    ->setUserAgentOverride($userAgent)
                     ->setAsyncRequest(true)
                     ->setClientId($this->gaParseCookie());
 
