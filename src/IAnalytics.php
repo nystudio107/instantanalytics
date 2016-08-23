@@ -17,10 +17,8 @@ use \TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 class IAnalytics extends Analytics
 {
-    /*
     public function __toString()
     {
         return "";
     }
-    */
 }

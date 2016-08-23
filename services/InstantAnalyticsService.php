@@ -22,6 +22,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
 {
 
     protected $cachedAnalytics = null;
+    protected $cachedCrawlerDetect = null;
 
     /**
      * Get the global variables for our Twig context
@@ -30,6 +31,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
     public function getGlobals($title)
     {
         $result = array();
+        if (!$this->cachedCrawlerDetect)
+            $this->cachedCrawlerDetect = new CrawlerDetect;
 
         if ($this->cachedAnalytics)
             $analytics = $this->cachedAnalytics;
@@ -339,7 +342,14 @@ class InstantAnalyticsService extends BaseApplicationComponent
 
         if (craft()->config->get("filterBotUserAgents", "instantanalytics"))
         {
-            $CrawlerDetect = new CrawlerDetect;
+
+            if ($this->cachedCrawlerDetect)
+                $CrawlerDetect = $this->cachedCrawlerDetect;
+            else
+                {
+                    $this->cachedCrawlerDetect = new CrawlerDetect;
+                    $CrawlerDetect = $this->cachedCrawlerDetect;
+                }
 // Check the user agent of the current 'visitor'
             if ($CrawlerDetect->isCrawler())
                 return false;
