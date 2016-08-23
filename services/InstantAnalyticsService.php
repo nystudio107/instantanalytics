@@ -49,7 +49,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
      * Get a PageView analytics object
      * @return Analytics object
      */
-    function pageViewAnalytics($url="", $title="")
+    public function pageViewAnalytics($url="", $title="")
     {
         $result = null;
         $analytics = $this->analytics();
@@ -92,7 +92,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
      * Get an Event analytics object
      * @return Analytics object
      */
-    function eventAnalytics($eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
+    public function eventAnalytics($eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
     {
         $result = null;
         $analytics = $this->analytics();
@@ -126,7 +126,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
      * @param  string $title the page title
      * @return string the tracking URL
      */
-    function pageViewTrackingUrl($url, $title)
+    public function pageViewTrackingUrl($url, $title)
     {
         $urlParams = array(
             'url' => urlencode($url),
@@ -135,6 +135,15 @@ class InstantAnalyticsService extends BaseApplicationComponent
         $trackingUrl = UrlHelper::getActionUrl('instantAnalytics/trackPageViewUrl', $urlParams);
         return $trackingUrl;
     } /* -- pageViewTrackingUrl */
+
+    public function sendPageView($analytics = null)
+    {
+        if ($analytics)
+        {
+            if ($this->_shouldSendAnalytics())
+                $analytics->sendPageView();
+        }
+    }
 
     /**
      * Get an Event tracking URL
@@ -145,7 +154,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
      * @param  string $eventValue the event value
      * @return string the tracking URL
      */
-    function eventTrackingUrl($url, $eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
+    public function eventTrackingUrl($url, $eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
     {
         $urlParams = array(
             'url' => urlencode($url),
@@ -290,10 +299,10 @@ class InstantAnalyticsService extends BaseApplicationComponent
     } /* -- removeFromCart */
 
     /**
-     * shouldSendAnalytics determines whether we should be sending Google Analytics data
+     * _shouldSendAnalytics determines whether we should be sending Google Analytics data
      * @return bool
      */
-    public function shouldSendAnalytics()
+    private function _shouldSendAnalytics()
     {
         $result = true;
 
@@ -361,7 +370,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
         }
 
         return $result;
-    } /* -- shouldSendAnalytics */
+    } /* -- _shouldSendAnalytics */
 
     /**
      * Get the Google Analytics object, primed with the default values

@@ -46,8 +46,7 @@ class InstantAnalyticsPlugin extends BasePlugin
 
     /* -- Send the page view */
 
-                    if (craft()->instantAnalytics->shouldSendAnalytics())
-                        $analytics->sendPageView();
+                    craft()->instantAnalytics->sendPageView($analytics);
                 }
             }
             return "";
