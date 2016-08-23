@@ -16,28 +16,31 @@ namespace Craft;
 class InstantAnalyticsVariable
 {
     /**
-     * Return an Analytics object
+     * Get a PageView analytics object
+     * @return Analytics object
      */
-    public function analytics()
+    public function getPageViewObject($url="", $title="")
     {
-        return craft()->instantAnalytics->analytics();
-    }
+        return craft()->instantAnalytics->getPageViewObject($url, $title);
+    } /* -- getPageViewObject */
 
     /**
-     * Send a PageView
+     * Get an Event analytics object
+     * @return Analytics object
      */
-    public function sendPageView($url="")
+    function getEventObject($eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
     {
-        return craft()->instantAnalytics->sendPageView($url);
-    }
+        return craft()->instantAnalytics->getEventObject($eventCategory, $eventAction, $eventLabel, $eventValue);
+    } /* -- getEventObject */
 
     /**
-     * Send an Event
+     * Return an analytics object
+     * @return Analytics object
      */
-    function sendEvent($eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
+    public function getAnalyticsObject()
     {
-        return craft()->instantAnalytics->sendEvent($eventCategory, $eventAction, $eventLabel, $eventValue);
-    } /* -- sendEvent */
+        return craft()->instantAnalytics->getAnalyticsObject();
+    } /* -- getAnalyticsObject */
 
     /**
      * Get a PageView tracking URL

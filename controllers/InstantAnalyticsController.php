@@ -29,7 +29,8 @@ class InstantAnalyticsController extends BaseController
     public function actionTrackPageViewUrl()
     {
         $url = urldecode(craft()->request->getParam('url'));
-        craft()->instantAnalytics->sendPageView($url);
+        $title = urldecode(craft()->request->getParam('title'));
+        craft()->instantAnalytics->sendPageView($url, $title);
         craft()->request->redirect($url, true, 200);
     } /* -- actionTrackPageViewUrl */
 

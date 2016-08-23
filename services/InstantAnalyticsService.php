@@ -22,21 +22,14 @@ class InstantAnalyticsService extends BaseApplicationComponent
 {
 
     /**
-     * analytics() return an analytics object
+     * Get a PageView analytics object
      * @return Analytics object
      */
-    public function analytics()
+    function getPageViewObject($url="", $title="")
     {
-        $analytics = $this->_getAnalyticsObj();
-        return $analytics;
-    } /* -- analytics */
-
-    /**
-     * Send a PageView
-     */
-    function sendPageView($url="", $title="")
-    {
-        if ($this->_shouldSendAnalytics())
+        $result = null;
+        $analytics = $this->getAnalyticsObject();
+        if ($analytics)
         {
             if ($url == "")
                 $url = craft()->request->url;
@@ -63,46 +56,60 @@ class InstantAnalyticsService extends BaseApplicationComponent
 
 /* -- Prepare the Analytics object, and send the pageview */
 
-            $analytics = $this->_getAnalyticsObj();
-            if ($analytics)
-            {
-                $analytics->setDocumentPath($url)
-                    ->setDocumentTitle($title)
-                    ->sendPageView();
-                InstantAnalyticsPlugin::log("sendPageView for `" . $url . "` - `" . $title . "`", LogLevel::Info, false);
-            }
+            $analytics->setDocumentPath($url)
+                ->setDocumentTitle($title);
+            $result = $analytics;
+            InstantAnalyticsPlugin::log("sendPageView for `" . $url . "` - `" . $title . "`", LogLevel::Info, false);
         }
-    } /* -- sendPageView */
+        return $result;
+    } /* -- getPageViewObject */
 
     /**
-     * Send an Event
+     * Get an Event analytics object
+     * @return Analytics object
      */
-    function sendEvent($eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
+    function getEventObject($eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
     {
+        $result = null;
+        $analytics = $this->getAnalyticsObject();
+        if ($analytics)
+        {
+            $analytics->setEventCategory($eventCategory)
+                ->setEventAction($eventAction)
+                ->setEventLabel($eventLabel)
+                ->setEventValue($eventValue);
+            $result = $analytics;
+            InstantAnalyticsPlugin::log("sendEvent for `" . $eventCategory . "` - `" . $eventAction . "` - `" . $eventLabel . "` - `" . $eventValue . "`", LogLevel::Info, false);
+        }
+        return $result;
+    } /* -- getEventObject */
+
+    /**
+     * getAnalyticsObject() return an analytics object
+     * @return Analytics object
+     */
+    public function getAnalyticsObject()
+    {
+        $result = null;
         if ($this->_shouldSendAnalytics())
         {
             $analytics = $this->_getAnalyticsObj();
-            if ($analytics)
-            {
-                $analytics->setEventCategory($eventCategory)
-                    ->setEventAction($eventAction)
-                    ->setEventLabel($eventLabel)
-                    ->setEventValue($eventValue)
-                    ->sendEvent();
-                InstantAnalyticsPlugin::log("sendEvent for `" . $eventCategory . "` - `" . $eventAction . "` - `" . $eventLabel . "` - `" . $eventValue . "`", LogLevel::Info, false);
-            }
+            $result = $analytics;
         }
-    } /* -- sendEvent */
+        return $result;
+    } /* -- getAnalyticsObject */
 
     /**
      * Get a PageView tracking URL
      * @param  string $url the URL to track
+     * @param  string $title the page title
      * @return string the tracking URL
      */
-    function getPageViewTrackingUrl($url)
+    function getPageViewTrackingUrl($url, $title)
     {
         $urlParams = array(
             'url' => urlencode($url),
+            'title' => urlencode($title),
             );
         $trackingUrl = UrlHelper::getActionUrl('instantAnalytics/trackPageViewUrl', $urlParams);
         return $trackingUrl;
@@ -285,6 +292,10 @@ class InstantAnalyticsService extends BaseApplicationComponent
         }
     } /* -- removeFromCart */
 
+    /**
+     * _shouldSendAnalytics determines whether we should be sending Google Analytics data
+     * @return bool
+     */
     private function _shouldSendAnalytics()
     {
         $result = true;
@@ -353,9 +364,11 @@ class InstantAnalyticsService extends BaseApplicationComponent
         }
 
         return $result;
-    }
+    } /* -- _shouldSendAnalytics */
+
     /**
      * Get the Google Analytics object, primed with the default values
+     * @return Analytics object
      */
     private function _getAnalyticsObj()
     {
@@ -374,9 +387,9 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     ->setIpOverride($_SERVER['REMOTE_ADDR'])
                     ->setUserAgentOverride($userAgent)
                     ->setAsyncRequest(true)
-                    ->setClientId($this->gaParseCookie());
+                    ->setClientId($this->_gaParseCookie());
 
-                $gclid = $this->getGclid();
+                $gclid = $this->_getGclid();
                 if ($gclid)
                     $analytics->GoogleAdwordsId($gclid);
 
@@ -387,9 +400,9 @@ class InstantAnalyticsService extends BaseApplicationComponent
     } /* -- _getAnalyticsObj */
 
     /**
-     * setGclid set the 'gclid' cookie
+     * _getGclid get the `gclid` and sets the 'gclid' cookie
      */
-    function getGclid()
+    private function _getGclid()
     {
         $gclid = "";
         if (isset($_GET['gclid']))
@@ -401,13 +414,13 @@ class InstantAnalyticsService extends BaseApplicationComponent
             }
         }
         return $gclid;
-    } /* -- setGclid */
+    } /* -- _getGclid */
 
     /**
-     * gaParseCookie Handle the parsing of the _ga cookie or setting it to a unique identifier
+     * _gaParseCookie handles the parsing of the _ga cookie or setting it to a unique identifier
      * @return string the cid
      */
-    function gaParseCookie()
+    private function _gaParseCookie()
     {
         if (isset($_COOKIE['_ga']))
         {
@@ -420,17 +433,17 @@ class InstantAnalyticsService extends BaseApplicationComponent
             if (isset($_COOKIE['_ia']) && $_COOKIE['_ia'] !='' )
                 $cid = $_COOKIE['_ia'];
             else
-                $cid = $this->gaGenUUID();
+                $cid = $this->_gaGenUUID();
         }
         setcookie('_ia', $cid, time()+60*60*24*730); // Two years
         return $cid;
-    } /* -- gaParseCookie */
+    } /* -- _gaParseCookie */
 
     /**
-     * gaGenUUID Generate UUID v4 function - needed to generate a CID when one isn't available
+     * _gaGenUUID Generate UUID v4 function - needed to generate a CID when one isn't available
      * @return string The generated UUID
      */
-    function gaGenUUID()
+    private function _gaGenUUID()
     {
         return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
                 // 32 bits for "time_low"
@@ -447,6 +460,6 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 // 48 bits for "node"
                 mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
         );
-    } /* -- gaGenUUID */
+    } /* -- _gaGenUUID */
 
 }
