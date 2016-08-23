@@ -31,20 +31,16 @@ class InstantAnalyticsTwigExtension extends \Twig_Extension
      */
     public function getGlobals()
     {
-
-/* -- Send an automatic pageView if it's set to in our config */
-
-        $settings = craft()->plugins->getPlugin('instantanalytics')->getSettings();
-        if (isset($settings) && isset($settings['autoSendPageView']) && $settings['autoSendPageView'])
+        $result = array();
+        if (craft()->request->isSiteRequest() && !craft()->isConsole())
         {
-            $title = craft()->templates->getRenderingTemplate();
-            if (!is_string($title))
-                $title = "";
-            craft()->instantAnalytics->sendPageView("", $title);
-        }
 
-        return array(
-        );
+/* -- Return our Analytics object as a Twig global */
+
+            $currentTemplate = $this->_get_current_template_path();
+            $result = craft()->instantAnalytics->getGlobals($currentTemplate);
+        }
+        return $result;
     }
 
     /**
@@ -53,11 +49,11 @@ class InstantAnalyticsTwigExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
+            'pageViewAnalytics' => new \Twig_Filter_Method($this, 'pageViewAnalytics'),
+            'eventAnalytics' => new \Twig_Filter_Method($this, 'eventAnalytics'),
             'analytics' => new \Twig_Filter_Method($this, 'analytics'),
-            'sendPageView' => new \Twig_Filter_Method($this, 'sendPageView'),
-            'sendEvent' => new \Twig_Filter_Method($this, 'sendEvent'),
-            'getPageViewTrackingUrl' => new \Twig_Filter_Method($this, 'getPageViewTrackingUrl'),
-            'getEventTrackingUrl' => new \Twig_Filter_Method($this, 'getEventTrackingUrl'),
+            'pageViewTrackingUrl' => new \Twig_Filter_Method($this, 'pageViewTrackingUrl'),
+            'eventTrackingUrl' => new \Twig_Filter_Method($this, 'eventTrackingUrl'),
         );
     }
 
@@ -67,13 +63,31 @@ class InstantAnalyticsTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
+            'pageViewAnalytics' => new \Twig_Function_Method($this, 'pageViewAnalytics'),
+            'eventAnalytics' => new \Twig_Function_Method($this, 'eventAnalytics'),
             'analytics' => new \Twig_Function_Method($this, 'analytics'),
-            'sendPageView' => new \Twig_Function_Method($this, 'sendPageView'),
-            'sendEvent' => new \Twig_Function_Method($this, 'sendEvent'),
-            'getPageViewTrackingUrl' => new \Twig_Function_Method($this, 'getPageViewTrackingUrl'),
-            'getEventTrackingUrl' => new \Twig_Function_Method($this, 'getEventTrackingUrl'),
+            'pageViewTrackingUrl' => new \Twig_Function_Method($this, 'pageViewTrackingUrl'),
+            'eventTrackingUrl' => new \Twig_Function_Method($this, 'eventTrackingUrl'),
         );
     }
+
+    /**
+     * Get a PageView analytics object
+     * @return Analytics object
+     */
+    function pageViewAnalytics($url="", $title="")
+    {
+        return craft()->instantAnalytics->pageViewAnalytics($url, $title);
+    } /* -- pageViewAnalytics */
+
+    /**
+     * Get an Event analytics object
+     * @return Analytics object
+     */
+    function eventAnalytics($eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
+    {
+        return craft()->instantAnalytics->eventAnalytics($eventCategory, $eventAction, $eventLabel, $eventValue);
+    } /* -- eventAnalytics */
 
     /**
      * Return an Analytics object
@@ -84,39 +98,52 @@ class InstantAnalyticsTwigExtension extends \Twig_Extension
     }
 
     /**
-     * Send a PageView
-     */
-    public function sendPageView($url="", $title="")
-    {
-        return craft()->instantAnalytics->sendPageView($url, $title);
-    }
-
-    /**
-     * Send an Event
-     */
-    function sendEvent($eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
-    {
-        return craft()->instantAnalytics->sendEvent($eventCategory, $eventAction, $eventLabel, $eventValue);
-    } /* -- sendEvent */
-
-    /**
      * Get a PageView tracking URL
      * @param  string $url the URL to track
+     * @param  string $title the page title
      * @return string the tracking URL
      */
-    function getPageViewTrackingUrl($url)
+    function pageViewTrackingUrl($url)
     {
-        return craft()->instantAnalytics->getPageViewTrackingUrl($url);
-    } /* -- getPageViewTrackingUrl */
+        return craft()->instantAnalytics->pageViewTrackingUrl($url);
+    } /* -- pageViewTrackingUrl */
 
     /**
      * Get an Event tracking URL
      * @param  string $url the URL to track
+     * @param  string $eventCategory the event category
+     * @param  string $eventAction the event action
+     * @param  string $eventLabel the event label
+     * @param  string $eventValue the event value
      * @return string the tracking URL
      */
-    function getEventTrackingUrl($url, $eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
+    function eventTrackingUrl($url, $eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
     {
-        return craft()->instantAnalytics->getEventTrackingUrl($url, $eventCategory, $eventAction, $eventLabel, $eventValue);
-    } /* -- getEventTrackingUrl */
+        return craft()->instantAnalytics->eventTrackingUrl($url, $eventCategory, $eventAction, $eventLabel, $eventValue);
+    } /* -- eventTrackingUrl */
+
+    /**
+     * Get the current template path
+     * @return string the template path
+     */
+    private function _get_current_template_path()
+    {
+        $result = "";
+        $currentTemplate = craft()->templates->getRenderingTemplate();
+        $templatesPath = method_exists(craft()->templates, 'getTemplatesPath') ? craft()->templates->getTemplatesPath() : craft()->path->getTemplatesPath();
+
+        $path_parts = pathinfo($currentTemplate);
+
+        if ($path_parts && isset($path_parts['dirname'])  && isset($path_parts['filename']))
+        {
+            $result = $path_parts['dirname'] . "/" . $path_parts['filename'];
+
+            if (substr($result, 0, strlen($templatesPath)) == $templatesPath)
+                {
+                    $result = substr($result, strlen($templatesPath));
+                }
+        }
+        return $result;
+    } /* -- _get_current_template_path */
 
 }

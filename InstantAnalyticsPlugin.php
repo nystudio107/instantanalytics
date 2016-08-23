@@ -21,6 +21,37 @@ class InstantAnalyticsPlugin extends BasePlugin
     public function init()
     {
         require_once __DIR__ . '/vendor/autoload.php';
+        Craft::import('plugins.InstantAnalytics.src.IAnalytics');
+
+/* -- This is the hook that triggers a PageView to be sent */
+
+        craft()->templates->hook('iaSendPageView', function(&$context)
+        {
+            if (craft()->request->isSiteRequest() && !craft()->isConsole())
+            {
+                if (isset($context['instantAnalytics']))
+                {
+
+    /* -- Get the Analytics object from the Twig context */
+
+                    $analytics = $context['instantAnalytics'];
+
+    /* -- If SEOmatic is installed, set the page title from it */
+
+                    if ((craft()->plugins->getPlugin('Seomatic')) && (isset($context['seomaticMeta'])))
+                    {
+                        $seomaticMeta = $context['seomaticMeta'];
+                        $analytics->setDocumentTitle($seomaticMeta['seoTitle']);
+                    }
+
+    /* -- Send the page view */
+
+                    if (craft()->instantAnalytics->shouldSendAnalytics())
+                        $analytics->sendPageView();
+                }
+            }
+            return "";
+        });
 
 /* -- Only install these listeners if Craft Commerce is installed */
 
@@ -51,19 +82,25 @@ class InstantAnalyticsPlugin extends BasePlugin
                 craft()->instantAnalytics->addToCart($orderModel, $lineItem);
             });
 
-    /* -- Listen for items deleted from the Craft Commerce cart */
+    /* -- Listen for items removed from the Craft Commerce cart */
 
-            craft()->on('commerce_cart.onRemoveFromCart', function(Event $e)
-            {
-                $orderModel = null;
-                $lineItemId = 0;
+                if (craft()->commerce_cart->hasEvent('onBeforeRemoveFromCart'))
+                {
+                    craft()->on('commerce_cart.onBeforeRemoveFromCart', function(Event $e)
+                    {
+                        $orderModel = null;
+                        $lineItem = null;
 
-                if (isset($e->params['cart']))
-                    $orderModel = $e->params['cart'];
-                if (isset($e->params['lineItemId']))
-                    $lineItem = $e->params['lineItemId'];
-                craft()->instantAnalytics->removeFromCart($orderModel, $lineItemId);
-            });
+                        if (isset($e->params['cart']))
+                            $orderModel = $e->params['cart'];
+                        if (isset($e->params['lineItem']))
+                            $lineItem = $e->params['lineItem'];
+                        craft()->instantAnalytics->removeFromCart($orderModel, $lineItem);
+                    });
+                }
+                else
+                    InstantAnalyticsPlugin::log("commerce_cart.onBeforeRemoveFromCart doesn't exist", LogLevel::Info, false);
+
         }
     }
 

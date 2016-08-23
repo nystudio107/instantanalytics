@@ -19,47 +19,51 @@ class InstantAnalyticsVariable
      * Get a PageView analytics object
      * @return Analytics object
      */
-    public function getPageViewObject($url="", $title="")
+    function pageViewAnalytics($url="", $title="")
     {
-        return craft()->instantAnalytics->getPageViewObject($url, $title);
-    } /* -- getPageViewObject */
+        return craft()->instantAnalytics->pageViewAnalytics($url, $title);
+    } /* -- pageViewAnalytics */
 
     /**
      * Get an Event analytics object
      * @return Analytics object
      */
-    function getEventObject($eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
+    function eventAnalytics($eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
     {
-        return craft()->instantAnalytics->getEventObject($eventCategory, $eventAction, $eventLabel, $eventValue);
-    } /* -- getEventObject */
+        return craft()->instantAnalytics->eventAnalytics($eventCategory, $eventAction, $eventLabel, $eventValue);
+    } /* -- eventAnalytics */
 
     /**
-     * Return an analytics object
-     * @return Analytics object
+     * Return an Analytics object
      */
-    public function getAnalyticsObject()
+    public function analytics()
     {
-        return craft()->instantAnalytics->getAnalyticsObject();
-    } /* -- getAnalyticsObject */
+        return craft()->instantAnalytics->analytics();
+    }
 
     /**
      * Get a PageView tracking URL
      * @param  string $url the URL to track
+     * @param  string $title the page title
      * @return string the tracking URL
      */
-    function getPageViewTrackingUrl($url="", $title="")
+    function pageViewTrackingUrl($url)
     {
-        return craft()->instantAnalytics->getPageViewTrackingUrl($url, $title);
-    } /* -- getPageViewTrackingUrl */
+        return craft()->instantAnalytics->pageViewTrackingUrl($url);
+    } /* -- pageViewTrackingUrl */
 
     /**
      * Get an Event tracking URL
      * @param  string $url the URL to track
+     * @param  string $eventCategory the event category
+     * @param  string $eventAction the event action
+     * @param  string $eventLabel the event label
+     * @param  string $eventValue the event value
      * @return string the tracking URL
      */
-    function getEventTrackingUrl($url, $eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
+    function eventTrackingUrl($url, $eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
     {
-        return craft()->instantAnalytics->getEventTrackingUrl($url, $eventCategory, $eventAction, $eventLabel, $eventValue);
-    } /* -- getEventTrackingUrl */
+        return craft()->instantAnalytics->eventTrackingUrl($url, $eventCategory, $eventAction, $eventLabel, $eventValue);
+    } /* -- eventTrackingUrl */
 
 }

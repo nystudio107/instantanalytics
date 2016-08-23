@@ -21,14 +21,38 @@ use \Jaybizzle\CrawlerDetect\CrawlerDetect;
 class InstantAnalyticsService extends BaseApplicationComponent
 {
 
+    protected $cachedAnalytics = null;
+
+    /**
+     * Get the global variables for our Twig context
+     * @return array with 'instantAnalytics' => Analytics object
+     */
+    public function getGlobals($title)
+    {
+        $result = array();
+
+        if ($this->cachedAnalytics)
+            $analytics = $this->cachedAnalytics;
+        else
+        {
+            $analytics = $this->pageViewAnalytics("", $title);
+            $this->cachedAnalytics = $analytics;
+        }
+
+/* -- Return our global variables */
+
+        $result['instantAnalytics'] = $analytics;
+        return $result;
+    } /* -- getGlobals */
+
     /**
      * Get a PageView analytics object
      * @return Analytics object
      */
-    function getPageViewObject($url="", $title="")
+    function pageViewAnalytics($url="", $title="")
     {
         $result = null;
-        $analytics = $this->getAnalyticsObject();
+        $analytics = $this->analytics();
         if ($analytics)
         {
             if ($url == "")
@@ -62,16 +86,16 @@ class InstantAnalyticsService extends BaseApplicationComponent
             InstantAnalyticsPlugin::log("sendPageView for `" . $url . "` - `" . $title . "`", LogLevel::Info, false);
         }
         return $result;
-    } /* -- getPageViewObject */
+    } /* -- pageViewAnalytics */
 
     /**
      * Get an Event analytics object
      * @return Analytics object
      */
-    function getEventObject($eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
+    function eventAnalytics($eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
     {
         $result = null;
-        $analytics = $this->getAnalyticsObject();
+        $analytics = $this->analytics();
         if ($analytics)
         {
             $analytics->setEventCategory($eventCategory)
@@ -82,22 +106,19 @@ class InstantAnalyticsService extends BaseApplicationComponent
             InstantAnalyticsPlugin::log("sendEvent for `" . $eventCategory . "` - `" . $eventAction . "` - `" . $eventLabel . "` - `" . $eventValue . "`", LogLevel::Info, false);
         }
         return $result;
-    } /* -- getEventObject */
+    } /* -- eventAnalytics */
 
     /**
      * getAnalyticsObject() return an analytics object
      * @return Analytics object
      */
-    public function getAnalyticsObject()
+    public function analytics()
     {
         $result = null;
-        if ($this->_shouldSendAnalytics())
-        {
-            $analytics = $this->_getAnalyticsObj();
-            $result = $analytics;
-        }
+        $analytics = $this->_getAnalyticsObj();
+        $result = $analytics;
         return $result;
-    } /* -- getAnalyticsObject */
+    } /* -- analytics */
 
     /**
      * Get a PageView tracking URL
@@ -105,7 +126,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
      * @param  string $title the page title
      * @return string the tracking URL
      */
-    function getPageViewTrackingUrl($url, $title)
+    function pageViewTrackingUrl($url, $title)
     {
         $urlParams = array(
             'url' => urlencode($url),
@@ -113,14 +134,18 @@ class InstantAnalyticsService extends BaseApplicationComponent
             );
         $trackingUrl = UrlHelper::getActionUrl('instantAnalytics/trackPageViewUrl', $urlParams);
         return $trackingUrl;
-    } /* -- getPageViewTrackingUrl */
+    } /* -- pageViewTrackingUrl */
 
     /**
      * Get an Event tracking URL
      * @param  string $url the URL to track
+     * @param  string $eventCategory the event category
+     * @param  string $eventAction the event action
+     * @param  string $eventLabel the event label
+     * @param  string $eventValue the event value
      * @return string the tracking URL
      */
-    function getEventTrackingUrl($url, $eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
+    function eventTrackingUrl($url, $eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
     {
         $urlParams = array(
             'url' => urlencode($url),
@@ -131,19 +156,56 @@ class InstantAnalyticsService extends BaseApplicationComponent
             );
         $trackingUrl = UrlHelper::getActionUrl('instantAnalytics/trackEventUrl', $urlParams);
         return $trackingUrl;
-    } /* -- getEventTrackingUrl */
+    } /* -- eventTrackingUrl */
 
     /**
-     * Send analytics information for the completed order
+     * Add a Craft Commerce LineItem to an Analytics object
+     * @return string the title of the product
      */
-    public function orderComplete($orderModel = null)
+    public function addProductDataFromLineItem($analytics = null, $lineItem = null)
+    {
+        $result = "";
+        if ($lineItem)
+        {
+            if ($analytics)
+            {
+                //This is the same for both variant and non variant products
+                $productData = [
+                    'sku' => $lineItem->purchasable->sku,
+                    'price' => $lineItem->salePrice,
+                    'quantity' => $lineItem->qty,
+                ];
+
+                if (!$lineItem->purchasable->product->type->hasVariants)
+                {
+                //No variants (i.e. default variant)
+                    $productData['name'] = $lineItem->purchasable->title;
+                }
+                else
+                {
+                // Product with variants
+                    $productData['name'] = $lineItem->purchasable->product->title;
+                    $productData['variant'] = $lineItem->purchasable->title;
+                }
+
+                $result = $productData['name'];
+                //Add each product to the hit to be sent
+                $analytics->addProduct($productData);
+            }
+        }
+        return $result;
+    } /* -- addProductDataFromLineItem */
+
+    /**
+     * Add a Craft Commerce OrderModel to an Analytics object
+     */
+    public function addCommerceOrderToAnalytics($analytics = null, $orderModel = null)
     {
         if ($orderModel)
         {
-            $analytics = $this->_getAnalyticsObj();
             if ($analytics)
             {
-                // Then, include the transaction data
+                // First, include the transaction data
                 $analytics->setTransactionId($orderModel->number)
                     ->setRevenue($orderModel->totalPrice)
                     ->setTax($orderModel->TotalTax)
@@ -156,40 +218,26 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 // Add each line item in the transaction
                 // Two cases - variant and non variant products
                 foreach ($orderModel->lineItems as $key => $lineItem)
-                {
+                    $this->addProductDataFromLineItem($analytics, $lineItem);
+            }
+        }
+    } /* -- addCommerceOrderToAnalytics */
 
-                    //This is the same for both variant and non variant products
-                    $productData = [
-                        'sku' => $lineItem->purchasable->sku,
-                        'price' => $lineItem->salePrice,
-                        'quantity' => $lineItem->qty,
-                    ];
-
-                    if (!$lineItem->purchasable->product->type->hasVariants)
-                    {
-                    //No variants (i.e. default variant)
-                        $productData['name'] = $lineItem->purchasable->title;
-                    }
-                    else
-                    {
-                    // Product with variants
-                        $productData['name'] = $lineItem->purchasable->product->title;
-                        $productData['variant'] = $lineItem->purchasable->title;
-                    }
-
-                    //Add each product to the hit to be sent
-                    $analytics->addProduct($productData);
-                }
-
+    /**
+     * Send analytics information for the completed order
+     */
+    public function orderComplete($orderModel = null)
+    {
+        if ($orderModel)
+        {
+            $analytics = $this->eventAnalytics("Commerce", "Purchase", $orderModel->number, $orderModel->totalPrice);
+            if ($analytics)
+            {
+                $this->addCommerceOrderToObject($analytics, $orderModel);
                 // Don't forget to set the product action, in this case to PURCHASE
                 $analytics->setProductActionToPurchase();
+                $analytics->sendEvent();
 
-                // Finally, you must send a hit, in this case we send an Event
-                $analytics->setEventCategory('Commerce')
-                    ->setEventAction('Purchase')
-                    ->setEventLabel($orderModel->number)
-                    ->setEventValue($orderModel->totalPrice)
-                    ->sendEvent();
                 InstantAnalyticsPlugin::log("orderComplete for `Commerce` - `Purchase` - `" . $orderModel->number . "` - `" . $orderModel->totalPrice . "`", LogLevel::Info, false);
             }
         }
@@ -202,42 +250,18 @@ class InstantAnalyticsService extends BaseApplicationComponent
     {
         if ($lineItem)
         {
-            $analytics = $this->_getAnalyticsObj();
+            $title = $lineItem->purchasable->title;
+            $quantity = $lineItem->qty;
+            $analytics = $this->eventAnalytics("Commerce", "Add to Cart", $title, $quantity);
             if ($analytics)
             {
-                //This is the same for both variant and non variant products
-                $productData = [
-                    'sku' => $lineItem->purchasable->sku,
-                    'price' => $lineItem->salePrice,
-                    'quantity' => $lineItem->qty,
-                ];
-
-                if (!$lineItem->purchasable->product->type->hasVariants)
-                {
-                //No variants (i.e. default variant)
-                    $productData['name'] = $lineItem->purchasable->title;
-                }
-                else
-                {
-                // Product with variants
-                    $productData['name'] = $lineItem->purchasable->product->title;
-                    $productData['variant'] = $lineItem->purchasable->title;
-                }
-
-                //Add each product to the hit to be sent
-                $analytics->addProduct($productData);
-
+                $title = $this->addProductDataFromLineItem($analytics, $lineItem);
+                $analytics->setEventLabel($title);
                 // Don't forget to set the product action, in this case to ADD
                 $analytics->setProductActionToAdd();
+                $analytics->sendEvent();
 
-                // Finally, you must send a hit, in this case we send an Event
-                $analytics->setEventCategory('Commerce')
-                    ->setEventAction('Add to Cart')
-                    ->setEventLabel($productData['name'])
-                    ->setEventValue($productData['quantity'])
-                    ->sendEvent();
-
-                InstantAnalyticsPlugin::log("addToCart for `Commerce` - `Add to Cart` - `" . $productData['name'] . "` - `" . $productData['quantity'] . "`", LogLevel::Info, false);
+                InstantAnalyticsPlugin::log("addToCart for `Commerce` - `Add to Cart` - `" . $title . "` - `" . $quantity . "`", LogLevel::Info, false);
             }
         }
     } /* -- addToCart */
@@ -245,58 +269,31 @@ class InstantAnalyticsService extends BaseApplicationComponent
     /**
      * Send analytics information for the item removed from the cart
      */
-    public function removeFromCart($orderModel = null, $lineItemId = 0)
+    public function removeFromCart($orderModel = null, $lineItem = null)
     {
-        if ($lineItemId)
+        if ($lineItem)
         {
-            $analytics = $this->_getAnalyticsObj();
+            $title = $lineItem->purchasable->title;
+            $quantity = $lineItem->qty;
+            $analytics = $this->eventAnalytics("Commerce", "Remove from Cart", $title, $quantity);
             if ($analytics)
             {
-    /* Somehow, we need to get information on the lineItem that was removed from a lineItemId
-                //This is the same for both variant and non variant products
-                $productData = [
-                    'sku' => $lineItem->purchasable->sku,
-                    'price' => $lineItem->salePrice,
-                    'quantity' => $lineItem->qty,
-                ];
-
-                if (!$lineItem->purchasable->product->type->hasVariants)
-                {
-                //No variants (i.e. default variant)
-                    $productData['name'] = $lineItem->purchasable->title;
-                }
-                else
-                {
-                // Product with variants
-                    $productData['name'] = $lineItem->purchasable->product->title;
-                    $productData['variant'] = $lineItem->purchasable->title;
-                }
-
-                //Add each product to the hit to be sent
-                $analytics->addProduct($productData);            }
-    */
-                // Don't forget to set the product action, in this case to REMOVE
+                $title = $this->addProductDataFromLineItem($analytics, $lineItem);
+                $analytics->setEventLabel($title);
+                // Don't forget to set the product action, in this case to ADD
                 $analytics->setProductActionToRemove();
+                $analytics->sendEvent();
 
-                // Finally, you must send a hit, in this case we send an Event
-                $analytics->setEventCategory('Commerce')
-                    ->setEventAction('Remove from Cart')
-    /*
-                    ->setEventLabel($productData['name'])
-                    ->setEventValue($productData['quantity'])
-    */
-                    ->sendEvent();
-
-                InstantAnalyticsPlugin::log("removeFromCart for `Commerce` - `Remove from Cart` - `" . $lineItemId . "`", LogLevel::Info, false);
+                InstantAnalyticsPlugin::log("removeFromCart for `Commerce` - `Remove from Cart` - `" . $title . "` - `" . $quantity . "`", LogLevel::Info, false);
             }
         }
     } /* -- removeFromCart */
 
     /**
-     * _shouldSendAnalytics determines whether we should be sending Google Analytics data
+     * shouldSendAnalytics determines whether we should be sending Google Analytics data
      * @return bool
      */
-    private function _shouldSendAnalytics()
+    public function shouldSendAnalytics()
     {
         $result = true;
 
@@ -364,7 +361,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
         }
 
         return $result;
-    } /* -- _shouldSendAnalytics */
+    } /* -- shouldSendAnalytics */
 
     /**
      * Get the Google Analytics object, primed with the default values
@@ -376,7 +373,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
         $settings = craft()->plugins->getPlugin('instantanalytics')->getSettings();
         if (isset($settings) && isset($settings['googleAnalyticsTracking']) && $settings['googleAnalyticsTracking'] != "")
         {
-            $analytics = new Analytics();
+            $analytics = new IAnalytics();
             if ($analytics)
             {
                 $userAgent = "User-Agent:Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13\r\n";
