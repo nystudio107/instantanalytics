@@ -17,8 +17,24 @@ use \TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 class IAnalytics extends Analytics
 {
+    /**
+     * Turn an empty value so the twig tags {{ }} can be used
+     * @return string ""
+     */
     public function __toString()
     {
         return "";
-    }
+    } /* -- __toString */
+
+    /**
+     * Add a product impression to the object
+     * @param Commerce_ProductModel $product the product to add an impression for
+     */
+    public function addProductImpression($product = null)
+    {
+        if ($product)
+        {
+            craft()->instantAnalytics->addProductImpression($this, $product);
+        }
+    } /* -- addProductImpression */
 }

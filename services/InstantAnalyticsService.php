@@ -171,6 +171,37 @@ class InstantAnalyticsService extends BaseApplicationComponent
     } /* -- eventTrackingUrl */
 
     /**
+     * Add a product impression from a Craft Commerce Product or Variant
+     * @param IAnalytics $analytics the Analytics object
+     * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
+     */
+    public function addProductImpression($analytics = null, $productVariant = null)
+    {
+        if ($productVariant)
+        {
+            if (is_object($productVariant) && $productVariant->getElementType() == "Commerce_Product")
+                $productVariant = $productVariant->variants[0];
+            if ($analytics)
+            {
+                $productData = [
+                    'id' => $productVariant['sku'],
+                    'name' => $productVariant['title'],
+                    'price' => $productVariant['price'],
+                    'category' => "",
+                    'brand' => "",
+                    'variant' => "",
+                    'list' => "",
+                    'position' => "",
+                ];
+
+                //Add the product to the hit to be sent
+                $analytics->addProductImpression($productData);
+
+            }
+        }
+    } /* -- addProductImpression */
+
+    /**
      * Add a Craft Commerce LineItem to an Analytics object
      * @return string the title of the product
      */
@@ -183,7 +214,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
             {
                 //This is the same for both variant and non variant products
                 $productData = [
-                    'sku' => $lineItem->purchasable->sku,
+                    'id' => $lineItem->purchasable->sku,
                     'price' => $lineItem->salePrice,
                     'quantity' => $lineItem->qty,
                 ];
