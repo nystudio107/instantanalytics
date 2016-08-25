@@ -428,6 +428,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
         if ($this->cachedShouldSendAnalytics !== null)
             return $this->cachedShouldSendAnalytics;
 
+        $this->cachedShouldSendAnalytics = false;
         if (!craft()->config->get("sendAnalyticsData", "instantanalytics"))
             return false;
         if (!craft()->config->get("sendAnalyticsInDevMode", "instantanalytics") && craft()->config->get('devMode'))
@@ -461,12 +462,13 @@ class InstantAnalyticsService extends BaseApplicationComponent
 
         if (craft()->config->get("filterBotUserAgents", "instantanalytics"))
         {
-
+/*
             $CrawlerDetect = new CrawlerDetect;
 
 // Check the user agent of the current 'visitor'
             if ($CrawlerDetect->isCrawler())
                 return false;
+*/
         }
 
 /* -- Filter by user group */
