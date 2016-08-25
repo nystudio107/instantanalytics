@@ -104,7 +104,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
             $analytics->setEventCategory($eventCategory)
                 ->setEventAction($eventAction)
                 ->setEventLabel($eventLabel)
-                ->setEventValue($eventValue);
+                ->setEventValue(inval($eventValue));
             $result = $analytics;
             InstantAnalyticsPlugin::log("sendEvent for `" . $eventCategory . "` - `" . $eventAction . "` - `" . $eventLabel . "` - `" . $eventValue . "`", LogLevel::Info, false);
         }
@@ -364,7 +364,10 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 $this->addCommerceOrderToObject($analytics, $orderModel);
                 // Don't forget to set the product action, in this case to PURCHASE
                 $analytics->setProductActionToPurchase();
-                $analytics->sendEvent();
+                $response = $analytics->setDebug(true)
+                    ->sendEvent();
+                $debugResponse = $response->getDebugResponse();
+                InstantAnalyticsPlugin::log(print_r($debugResponse, true), LogLevel::Info, false);
 
                 InstantAnalyticsPlugin::log("orderComplete for `Commerce` - `Purchase` - `" . $orderModel->number . "` - `" . $orderModel->totalPrice . "`", LogLevel::Info, false);
             }
