@@ -139,8 +139,9 @@ class InstantAnalyticsService extends BaseApplicationComponent
         return $trackingUrl;
     } /* -- pageViewTrackingUrl */
 
-    public function sendPageView($analytics = null)
+    public function sendPageView()
     {
+        $analytics = $this->cachedAnalytics;
         if ($analytics)
         {
             if ($this->_shouldSendAnalytics())
@@ -462,13 +463,12 @@ class InstantAnalyticsService extends BaseApplicationComponent
 
         if (craft()->config->get("filterBotUserAgents", "instantanalytics"))
         {
-/*
+
             $CrawlerDetect = new CrawlerDetect;
 
 // Check the user agent of the current 'visitor'
             if ($CrawlerDetect->isCrawler())
                 return false;
-*/
         }
 
 /* -- Filter by user group */
