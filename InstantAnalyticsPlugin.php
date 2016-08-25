@@ -21,7 +21,7 @@ class InstantAnalyticsPlugin extends BasePlugin
     public function init()
     {
         require_once __DIR__ . '/vendor/autoload.php';
-        Craft::import('plugins.InstantAnalytics.src.IAnalytics');
+        Craft::import('plugins.instantanalytics.src.IAnalytics');
 
 /* -- This is the hook that triggers a PageView to be sent */
 
