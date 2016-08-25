@@ -30,7 +30,7 @@ class IAnalytics extends Analytics
      * Add a product impression to the object
      * @param Commerce_ProductModel $product the product to add an impression for
      */
-    public function addProductImpression($product = null)
+    public function addProductImpressionToPageView($product = null)
     {
         if ($product)
         {

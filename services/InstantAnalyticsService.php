@@ -179,21 +179,30 @@ class InstantAnalyticsService extends BaseApplicationComponent
     {
         if ($productVariant)
         {
-            if (is_object($productVariant) && $productVariant->getElementType() == "Commerce_Product")
-                $productVariant = $productVariant->variants[0];
             if ($analytics)
             {
+                if (is_object($productVariant) && $productVariant->getElementType() == "Commerce_Product")
+                {
+                    $productType = craft()->commerce_productTypes->getProductTypeById($productVariant->typeId);
+                    if ($productType->hasVariants)
+                        $productVariant = ArrayHelper::getFirstValue($productVariant->getVariants());
+                }
+
+                if (!is_object($productVariant))
+                {
+                    Craft::dd($productVariant);
+                }
                 $productData = [
-                    'id' => $productVariant['sku'],
-                    'name' => $productVariant['title'],
-                    'price' => $productVariant['price'],
+                    'sku' => $productVariant->sku,
+                    'name' => $productVariant->title,
+                    'price' => number_format($productVariant->price, 2, '.', ''),
                     'category' => "",
                     'brand' => "",
                     'variant' => "",
                     'list' => "",
                     'position' => "",
                 ];
-
+Craft::dump($productData);
                 //Add the product to the hit to be sent
                 $analytics->addProductImpression($productData);
 
@@ -214,7 +223,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
             {
                 //This is the same for both variant and non variant products
                 $productData = [
-                    'id' => $lineItem->purchasable->sku,
+                    'sku' => $lineItem->purchasable->sku,
                     'price' => $lineItem->salePrice,
                     'quantity' => $lineItem->qty,
                 ];
