@@ -41,7 +41,7 @@ class InstantAnalyticsPlugin extends BasePlugin
                     if ((craft()->plugins->getPlugin('Seomatic')) && (isset($context['seomaticMeta'])))
                     {
                         $seomaticMeta = $context['seomaticMeta'];
-//                        $analytics->setDocumentTitle($seomaticMeta['seoTitle']);
+                        $analytics->setDocumentTitle($seomaticMeta['seoTitle']);
                     }
 
     /* -- Send the page view */
