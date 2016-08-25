@@ -171,44 +171,115 @@ class InstantAnalyticsService extends BaseApplicationComponent
     } /* -- eventTrackingUrl */
 
     /**
+     * Extract product data from a Craft Commerce Product or Variant
+     * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
+     * @return array the product data
+     */
+    public function getProductDataFromProduct($productVariant = null)
+    {
+        $result = array();
+        if ($productVariant)
+        {
+            if (is_object($productVariant) && $productVariant->getElementType() == "Commerce_Product")
+            {
+                $productType = craft()->commerce_productTypes->getProductTypeById($productVariant->typeId);
+                if ($productType->hasVariants)
+                    $productVariant = ArrayHelper::getFirstValue($productVariant->getVariants());
+                else
+                    $productVariant = craft()->commerce_variants->getVariantById($productVariant->defaultVariantId);
+            }
+
+            if (!is_object($productVariant))
+            {
+                Craft::dd($productVariant);
+            }
+            $productData = [
+                'sku' => $productVariant->sku,
+                'name' => $productVariant->title,
+                'price' => number_format($productVariant->price, 2, '.', ''),
+/*
+                'category' => "",
+                'brand' => "",
+                'variant' => "",
+                'list' => "",
+                'position' => "",
+*/
+            ];
+            $result = $productData;
+        }
+        return $result;
+    } /* -- getProductData */
+
+    /**
      * Add a product impression from a Craft Commerce Product or Variant
      * @param IAnalytics $analytics the Analytics object
      * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
      */
-    public function addProductImpression($analytics = null, $productVariant = null)
+    public function addCommerceProductImpression($analytics = null, $productVariant = null)
     {
         if ($productVariant)
         {
             if ($analytics)
             {
-                if (is_object($productVariant) && $productVariant->getElementType() == "Commerce_Product")
-                {
-                    $productType = craft()->commerce_productTypes->getProductTypeById($productVariant->typeId);
-                    if ($productType->hasVariants)
-                        $productVariant = ArrayHelper::getFirstValue($productVariant->getVariants());
-                }
+                $productData = $this->getProductDataFromProduct($productVariant);
 
-                if (!is_object($productVariant))
-                {
-                    Craft::dd($productVariant);
-                }
-                $productData = [
-                    'sku' => $productVariant->sku,
-                    'name' => $productVariant->title,
-                    'price' => number_format($productVariant->price, 2, '.', ''),
-                    'category' => "",
-                    'brand' => "",
-                    'variant' => "",
-                    'list' => "",
-                    'position' => "",
-                ];
-Craft::dump($productData);
                 //Add the product to the hit to be sent
                 $analytics->addProductImpression($productData);
-
+                InstantAnalyticsPlugin::log("addCommerceProductDetailView for `" . $productData['sku'] . "` - `" . $productData['name'] . "` - `" . $productData['name'] . "`", LogLevel::Info, false);
             }
         }
-    } /* -- addProductImpression */
+    } /* -- addCommerceProductImpression */
+
+    /**
+     * Add a product detail view from a Craft Commerce Product or Variant
+     * @param IAnalytics $analytics the Analytics object
+     * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
+     */
+    public function addCommerceProductDetailView($analytics = null, $productVariant = null)
+    {
+        if ($productVariant)
+        {
+            if ($analytics)
+            {
+                $productData = $this->getProductDataFromProduct($productVariant);
+
+                // Don't forget to set the product action, in this case to DETAIL
+                $analytics->setProductActionToDetail();
+
+                //Add the product to the hit to be sent
+                $analytics->addProduct($productData);
+                InstantAnalyticsPlugin::log("addCommerceProductDetailView for `" . $productData['sku'] . "` - `" . $productData['name'] . "` - `" . $productData['name'] . "`", LogLevel::Info, false);
+            }
+        }
+    } /* -- addCommerceProductDetailView */
+
+    /**
+     * Add a checkout step and option to an Analytics object
+     * @param IAnalytics $analytics the Analytics object
+     * @param Commerce_OrderModel  $orderModel the Product or Variant
+     * @param int $step the checkout step
+     * @param string $option the checkout option
+     */
+    public function addCommerceCheckoutStep($analytics = null, $orderModel = null, $step = 1, $option = "")
+    {
+        if ($orderModel)
+        {
+            if ($analytics)
+            {
+                // Add each line item in the transaction
+                // Two cases - variant and non variant products
+                foreach ($orderModel->lineItems as $key => $lineItem)
+                    $this->addProductDataFromLineItem($analytics, $lineItem);
+                $analytics->setCheckoutStep($step);
+                if ($option)
+                    $analytics->setCheckoutStepOption($option);
+
+                // Don't forget to set the product action, in this case to CHECKOUT
+                $analytics->setProductActionToCheckout();
+                InstantAnalyticsPlugin::log("addCommerceCheckoutStep step: `" . $step . "` with option: `" . $option . "`", LogLevel::Info, false);
+           }
+        }
+    } /* -- addCommerceCheckoutStep */
 
     /**
      * Add a Craft Commerce LineItem to an Analytics object
@@ -250,6 +321,8 @@ Craft::dump($productData);
 
     /**
      * Add a Craft Commerce OrderModel to an Analytics object
+     * @param IAnalytics $analytics the Analytics object
+     * @param Commerce_OrderModel  $orderModel the Product or Variant
      */
     public function addCommerceOrderToAnalytics($analytics = null, $orderModel = null)
     {
@@ -277,6 +350,8 @@ Craft::dump($productData);
 
     /**
      * Send analytics information for the completed order
+     * @param IAnalytics $analytics the Analytics object
+     * @param Commerce_OrderModel  $orderModel the Product or Variant
      */
     public function orderComplete($orderModel = null)
     {
@@ -297,6 +372,8 @@ Craft::dump($productData);
 
     /**
      * Send analytics information for the item added to the cart
+     * @param Commerce_OrderModel  $orderModel the Product or Variant
+     * @param Commerce_LineItemModel  $lineItem the line item that was added
      */
     public function addToCart($orderModel = null, $lineItem = null)
     {

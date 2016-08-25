@@ -2,11 +2,15 @@
     {
         "version": "1.0.6",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
-        "date": "2016-08-24T17:29:17.496Z",
+        "date": "2016-08-26T17:29:17.496Z",
         "notes": [
+            "[Added] Refactored the code so that an `instantAnalytics` object is now injected into your templates so you can manipulate it as you see fit, and then use `{% hook 'iaSendPageView' %}` to send the PageView",
             "[Added] Automatic Google Enhanced Ecommerce tracking of Craft Commerce OrderComplete",
             "[Added] Automatic Google Enhanced Ecommerce tracking of Craft Commerce AddToCart",
             "[Added] Automatic Google Enhanced Ecommerce tracking of Craft Commerce RemoveFromCart",
+            "[Added] Added addCommerceProductImpression() to the IAnalytics object to allow for sending of product impressions",
+            "[Added] Added addCommerceProductDetailView() to the IAnalytics object to allow for sending of product detail views",
+            "[Added] Added addCommerceCheckoutStep() to the IAnalytics object to allow for sending of cart checkout steps",
             "[Improved] Updated to the latest Google Measurement Protocol (2.3.0)",
             "[Improved] Added debug logging when in `devMode` for any Analytics data that is sent",
             "[Improved] Fall back on a default User Agent when `$_SERVER['HTTP_USER_AGENT']` is not set",

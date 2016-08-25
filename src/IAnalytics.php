@@ -27,14 +27,39 @@ class IAnalytics extends Analytics
     } /* -- __toString */
 
     /**
-     * Add a product impression to the object
-     * @param Commerce_ProductModel $product the product to add an impression for
+     * Add a product impression to the Analytics object
+     * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
      */
-    public function addProductImpressionToPageView($product = null)
+    public function addCommerceProductImpression($productVariant = null)
     {
-        if ($product)
+        if ($productVariant)
         {
-            craft()->instantAnalytics->addProductImpression($this, $product);
+            craft()->instantAnalytics->addCommerceProductImpression($this, $productVariant);
         }
-    } /* -- addProductImpression */
+    } /* -- addCommerceProductImpression */
+
+    /**
+     * Add a product detail view to the Analytics object
+     * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
+     */
+    public function addCommerceProductDetailView($productVariant = null)
+    {
+        if ($productVariant)
+        {
+            craft()->instantAnalytics->addCommerceProductDetailView($this, $productVariant);
+        }
+    } /* -- addCommerceProductDetailView */
+
+    /**
+     * Add a checkout step to the Analytics object
+     * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
+     */
+    public function addCommerceCheckoutStep($orderModel = null, $step = 1, $option = "")
+    {
+        if ($orderModel)
+        {
+            craft()->instantAnalytics->addCommerceCheckoutStep($this, $orderModel, $step, $option);
+        }
+    } /* -- addCommerceCheckoutStep */
+
 }
