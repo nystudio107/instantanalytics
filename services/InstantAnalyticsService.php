@@ -22,7 +22,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
 {
 
     protected $cachedAnalytics = null;
-    protected $cachedCrawlerDetect = null;
+    protected $cachedShouldSendAnalytics = null;
 
     /**
      * Get the global variables for our Twig context
@@ -31,8 +31,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
     public function getGlobals($title)
     {
         $result = array();
-        if (!$this->cachedCrawlerDetect)
-            $this->cachedCrawlerDetect = new CrawlerDetect;
+        $shouldSend = $this->_shouldSendAnalytics();
+        $this->cachedShouldSendAnalytics = $shouldSend;
 
         if ($this->cachedAnalytics)
             $analytics = $this->cachedAnalytics;
@@ -425,6 +425,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
     private function _shouldSendAnalytics()
     {
         $result = true;
+        if ($this->cachedShouldSendAnalytics !== null)
+            return $this->cachedShouldSendAnalytics;
 
         if (!craft()->config->get("sendAnalyticsData", "instantanalytics"))
             return false;
@@ -460,13 +462,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
         if (craft()->config->get("filterBotUserAgents", "instantanalytics"))
         {
 
-            if ($this->cachedCrawlerDetect)
-                $CrawlerDetect = $this->cachedCrawlerDetect;
-            else
-                {
-                    $this->cachedCrawlerDetect = new CrawlerDetect;
-                    $CrawlerDetect = $this->cachedCrawlerDetect;
-                }
+            $CrawlerDetect = new CrawlerDetect;
+
 // Check the user agent of the current 'visitor'
             if ($CrawlerDetect->isCrawler())
                 return false;
@@ -495,6 +492,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 }
             }
         }
+        $this->cachedShouldSendAnalytics = $result;
 
         return $result;
     } /* -- _shouldSendAnalytics */
