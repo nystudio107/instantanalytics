@@ -166,9 +166,9 @@ You simply need to enable Enhanced Ecommerce in your Google Analytics Admin area
 
 That's it!  It'll just work.  In addition to the basic automatic tracking that Instant Analytics does, you can use the `instantAnalytics` object to send additional data to Google Analytics Enhanced Ecommerce:
 
-* `{% do addCommerceProductImpression(PRODUCT_VARIANT) %}` - This will add an _impression_ for a given Craft Commerce `Product` or `Variant` (you can pass in either in `PRODUCT_VARIANT`).  This should be used on product listing pages to indicate that the user has been shown a particular product.
-*  `{% do addCommerceProductDetailView(PRODUCT_VARIANT) %}` - This will add a _product detail view_ for a given Craft Commerce `Product` or `Variant` (you can pass in either in `PRODUCT_VARIANT`).  This should be used when the user is shown the detail view of a product.
-*  `{% do addCommerceCheckoutStep(CART, STEP, OPTION) %}` - This will add a _checkout step_ for a given Craft Commerce `CART` (obtained via `craft.commerce.cart`).  The `STEP` parameter lets you specify which step in the checkout process you are on, and the `OPTION` parameter is optional information you can associate with this checkout step, e.g.: `Shipping Info` or `VISA`.
+* `{% do instantAnalytics.addCommerceProductImpression(PRODUCT_VARIANT) %}` - This will add an _impression_ for a given Craft Commerce `Product` or `Variant` (you can pass in either in `PRODUCT_VARIANT`).  This should be used on product listing pages that show a number of products, to indicate that the user has been shown a particular product.
+*  `{% do instantAnalytics.addCommerceProductDetailView(PRODUCT_VARIANT) %}` - This will add a _product detail view_ for a given Craft Commerce `Product` or `Variant` (you can pass in either in `PRODUCT_VARIANT`).  This should be used when the user is shown the detail view of a product.
+*  `{% do instantAnalytics.addCommerceCheckoutStep(CART, STEP, OPTION) %}` - This will add a _checkout step_ for a given Craft Commerce `CART` (obtained via `craft.commerce.cart`).  The `STEP` parameter lets you specify which step in the checkout process you are on, and the `OPTION` parameter is optional information you can associate with this checkout step, e.g.: `Shipping Info` or `VISA`.
 
 You can set up names for each of the Checkout Steps in your Google Analytics Admin area for your website's property:
 
