@@ -362,15 +362,10 @@ class InstantAnalyticsService extends BaseApplicationComponent
             if ($analytics)
             {
                 $this->addCommerceOrderToAnalytics($analytics, $orderModel);
-            $analytics->sendEvent();
-            return;
                 // Don't forget to set the product action, in this case to PURCHASE
                 $analytics->setProductActionToPurchase();
-                $response = $analytics->setDebug(true)
-                    ->sendEvent();
-                $debugResponse = $response->getDebugResponse();
-                InstantAnalyticsPlugin::log(print_r($response, true), LogLevel::Info, false);
-                InstantAnalyticsPlugin::log(print_r($debugResponse, true), LogLevel::Info, false);
+
+                $analytics->sendEvent();
 
                 InstantAnalyticsPlugin::log("orderComplete for `Commerce` - `Purchase` - `" . $orderModel->number . "` - `" . $orderModel->totalPrice . "`", LogLevel::Info, false);
             }
