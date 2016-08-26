@@ -66,4 +66,8 @@ class InstantAnalyticsVariable
         return craft()->instantAnalytics->eventTrackingUrl($url, $eventCategory, $eventAction, $eventLabel, $eventValue);
     } /* -- eventTrackingUrl */
 
+    function orderComplete($orderModel = null)
+    {
+        return craft()->instantAnalytics->orderComplete($orderModel);
+    }
 }
