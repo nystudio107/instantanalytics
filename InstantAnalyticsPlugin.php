@@ -46,7 +46,7 @@ class InstantAnalyticsPlugin extends BasePlugin
 
     /* -- Send the page view */
 
-                    craft()->instantAnalytics->sendPageView();
+                    $analytics->sendPageView();
                 }
             }
             return "";
@@ -54,7 +54,8 @@ class InstantAnalyticsPlugin extends BasePlugin
 
 /* -- Only install these listeners if Craft Commerce is installed */
 
-        if (craft()->plugins->getPlugin('Commerce'))
+        $settings = $this->getSettings();
+        if (craft()->plugins->getPlugin('Commerce') && $settings['autoSendCommerceAnalytics'])
         {
     /* -- Listen for completed Craft Commerce orders */
 
@@ -116,7 +117,7 @@ class InstantAnalyticsPlugin extends BasePlugin
      */
     public function getDescription()
     {
-        return Craft::t('Instant Analytics lets you track otherwise untrackable assets & events with Google Analytics, and eliminates the need for Javascript tracking');
+        return Craft::t('Instant Analytics brings full Google Analytics support to your Twig templates and automatic Craft Commerce integration with Google Enhanced Ecommerce.');
     }
 
     /**
@@ -140,7 +141,7 @@ class InstantAnalyticsPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.6';
+        return '1.1.0';
     }
 
     /**
@@ -193,7 +194,7 @@ class InstantAnalyticsPlugin extends BasePlugin
         if (version_compare(PHP_VERSION, '5.5', '<'))
         {
             $result = false;
-            $error = "Instant Analytics requires php 5.4.0 or later to operate";
+            $error = "Instant Analytics requires php 5.5.0 or later to operate";
             if (version_compare(craft()->getVersion(), '2.5', '<'))
                 throw new Exception($error);
             else
@@ -238,7 +239,7 @@ class InstantAnalyticsPlugin extends BasePlugin
 
         return array(
             'googleAnalyticsTracking' => array(AttributeType::String, 'label' => 'Google Analytics Tracking ID:', 'default' => $defaultTrackingId),
-            'autoSendPageView' => array(AttributeType::String, 'label' => 'Auto Send Page View:', 'default' => true),
+            'autoSendCommerceAnalytics' => array(AttributeType::String, 'label' => 'Auto Send Page View:', 'default' => true),
         );
     }
 

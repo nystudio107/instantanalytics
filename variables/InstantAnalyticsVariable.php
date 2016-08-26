@@ -47,9 +47,9 @@ class InstantAnalyticsVariable
      * @param  string $title the page title
      * @return string the tracking URL
      */
-    function pageViewTrackingUrl($url)
+    function pageViewTrackingUrl($url, $title)
     {
-        return craft()->instantAnalytics->pageViewTrackingUrl($url);
+        return craft()->instantAnalytics->pageViewTrackingUrl($url, $title);
     } /* -- pageViewTrackingUrl */
 
     /**
@@ -66,8 +66,4 @@ class InstantAnalyticsVariable
         return craft()->instantAnalytics->eventTrackingUrl($url, $eventCategory, $eventAction, $eventLabel, $eventValue);
     } /* -- eventTrackingUrl */
 
-    function orderComplete($orderModel = null)
-    {
-        return craft()->instantAnalytics->orderComplete($orderModel);
-    }
 }

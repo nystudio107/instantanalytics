@@ -17,6 +17,20 @@ use \TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 class IAnalytics extends Analytics
 {
+
+    protected $shouldSendAnalytics = null;
+
+    /**
+     * Override __construct() to store whether or not we should be sending Analytics data
+     *
+     * @param bool $isSsl
+     */
+    public function __construct($isSsl = false)
+    {
+        $this->shouldSendAnalytics = craft()->instantAnalytics->shouldSendAnalytics();
+        return parent::__construct($isSsl);
+    } /* -- __construct */
+
     /**
      * Turn an empty value so the twig tags {{ }} can be used
      * @return string ""
@@ -25,6 +39,20 @@ class IAnalytics extends Analytics
     {
         return "";
     } /* -- __toString */
+
+    /**
+     * Override sendHit() so that we can prevent Analytics data from being sent
+     *
+     * @param $methodName
+     * @return AnalyticsResponse
+     */
+    private function sendHit($methodName)
+    {
+        if ($this->shouldSendAnalytics)
+            return parent::sendHit($methodName);
+        else
+            return null;
+    } /* -- sendHit */
 
     /**
      * Add a product impression to the Analytics object

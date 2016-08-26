@@ -22,7 +22,6 @@ class InstantAnalyticsService extends BaseApplicationComponent
 {
 
     protected $cachedAnalytics = null;
-    protected $cachedShouldSendAnalytics = null;
 
     /**
      * Get the global variables for our Twig context
@@ -31,8 +30,6 @@ class InstantAnalyticsService extends BaseApplicationComponent
     public function getGlobals($title)
     {
         $result = array();
-        $shouldSend = $this->_shouldSendAnalytics();
-        $this->cachedShouldSendAnalytics = $shouldSend;
 
         if ($this->cachedAnalytics)
             $analytics = $this->cachedAnalytics;
@@ -86,7 +83,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
             $analytics->setDocumentPath($url)
                 ->setDocumentTitle($title);
             $result = $analytics;
-            InstantAnalyticsPlugin::log("sendPageView for `" . $url . "` - `" . $title . "`", LogLevel::Info, false);
+            InstantAnalyticsPlugin::log("Created sendPageView for `" . $url . "` - `" . $title . "`", LogLevel::Info, false);
         }
         return $result;
     } /* -- pageViewAnalytics */
@@ -106,7 +103,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 ->setEventLabel($eventLabel)
                 ->setEventValue(intval($eventValue));
             $result = $analytics;
-            InstantAnalyticsPlugin::log("sendEvent for `" . $eventCategory . "` - `" . $eventAction . "` - `" . $eventLabel . "` - `" . $eventValue . "`", LogLevel::Info, false);
+            InstantAnalyticsPlugin::log("Created sendEvent for `" . $eventCategory . "` - `" . $eventAction . "` - `" . $eventLabel . "` - `" . $eventValue . "`", LogLevel::Info, false);
         }
         return $result;
     } /* -- eventAnalytics */
@@ -120,6 +117,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
         $result = null;
         $analytics = $this->_getAnalyticsObj();
         $result = $analytics;
+        InstantAnalyticsPlugin::log("Created genertic analytics object", LogLevel::Info, false);
         return $result;
     } /* -- analytics */
 
@@ -136,18 +134,9 @@ class InstantAnalyticsService extends BaseApplicationComponent
             'title' => urlencode($title),
             );
         $trackingUrl = UrlHelper::getActionUrl('instantAnalytics/trackPageViewUrl', $urlParams);
+        InstantAnalyticsPlugin::log("Created pageViewTrackingUrl for " . $trackingUrl, LogLevel::Info, false);
         return $trackingUrl;
     } /* -- pageViewTrackingUrl */
-
-    public function sendPageView()
-    {
-        $analytics = $this->cachedAnalytics;
-        if ($analytics)
-        {
-            if ($this->_shouldSendAnalytics())
-                $analytics->sendPageView();
-        }
-    }
 
     /**
      * Get an Event tracking URL
@@ -168,6 +157,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
             'eventValue' => urlencode($eventValue),
             );
         $trackingUrl = UrlHelper::getActionUrl('instantAnalytics/trackEventUrl', $urlParams);
+        InstantAnalyticsPlugin::log("Created eventTrackingUrl for " . $trackingUrl, LogLevel::Info, false);
         return $trackingUrl;
     } /* -- eventTrackingUrl */
 
@@ -424,13 +414,10 @@ class InstantAnalyticsService extends BaseApplicationComponent
      * _shouldSendAnalytics determines whether we should be sending Google Analytics data
      * @return bool
      */
-    private function _shouldSendAnalytics()
+    public function shouldSendAnalytics()
     {
         $result = true;
-        if ($this->cachedShouldSendAnalytics !== null)
-            return $this->cachedShouldSendAnalytics;
 
-        $this->cachedShouldSendAnalytics = false;
         if (!craft()->config->get("sendAnalyticsData", "instantanalytics"))
             return false;
         if (!craft()->config->get("sendAnalyticsInDevMode", "instantanalytics") && craft()->config->get('devMode'))
@@ -495,7 +482,6 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 }
             }
         }
-        $this->cachedShouldSendAnalytics = $result;
 
         return $result;
     } /* -- _shouldSendAnalytics */
@@ -525,7 +511,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
 
                 $gclid = $this->_getGclid();
                 if ($gclid)
-                    $analytics->GoogleAdwordsId($gclid);
+                    $analytics->setGoogleAdwordsId($gclid);
 
             }
         }

@@ -30,7 +30,8 @@ class InstantAnalyticsController extends BaseController
     {
         $url = urldecode(craft()->request->getParam('url'));
         $title = urldecode(craft()->request->getParam('title'));
-        craft()->instantAnalytics->sendPageView($url, $title);
+        $analytics = craft()->instantAnalytics->pageViewAnalytics($url, $title);
+        $analytics->sendPageView();
         craft()->request->redirect($url, true, 200);
     } /* -- actionTrackPageViewUrl */
 
@@ -43,7 +44,8 @@ class InstantAnalyticsController extends BaseController
         $eventAction = urldecode(craft()->request->getParam('eventAction'));
         $eventLabel = urldecode(craft()->request->getParam('eventLabel'));
         $eventValue = urldecode(craft()->request->getParam('eventValue'));
-        craft()->instantAnalytics->sendEvent($eventCategory, $eventAction, $eventLabel, $eventValue);
+        $analytics = craft()->instantAnalytics->eventTrackingUrl($eventCategory, $eventAction, $eventLabel, $eventValue);
+        $analytics->sendEvent();
         craft()->request->redirect($url, true, 200);
     } /* -- actionTrackPageViewUrl */
 

@@ -51,7 +51,9 @@ class InstantAnalyticsTwigExtension extends \Twig_Extension
         return array(
             'pageViewAnalytics' => new \Twig_Filter_Method($this, 'pageViewAnalytics'),
             'eventAnalytics' => new \Twig_Filter_Method($this, 'eventAnalytics'),
+/* -- For namespacing reasons, perhaps we should not do this
             'analytics' => new \Twig_Filter_Method($this, 'analytics'),
+*/
             'pageViewTrackingUrl' => new \Twig_Filter_Method($this, 'pageViewTrackingUrl'),
             'eventTrackingUrl' => new \Twig_Filter_Method($this, 'eventTrackingUrl'),
         );
@@ -103,9 +105,9 @@ class InstantAnalyticsTwigExtension extends \Twig_Extension
      * @param  string $title the page title
      * @return string the tracking URL
      */
-    function pageViewTrackingUrl($url)
+    function pageViewTrackingUrl($url, $title)
     {
-        return craft()->instantAnalytics->pageViewTrackingUrl($url);
+        return craft()->instantAnalytics->pageViewTrackingUrl($url, $title);
     } /* -- pageViewTrackingUrl */
 
     /**
