@@ -98,7 +98,7 @@ Instant Analytics has a number of other configuration options that can be custom
 
 ### Simple Page Tracking
 
-Once you've entered your **Google Analytics Tracking ID** you just need to add a call to `{% hook 'iaSendPageView' %}` to your front-end templates to send PageView tracking to Google Analytics.  We recommend that you do this in a block at the bottom of your `layout.twig` template that other templates extend, like this:
+Once you've entered your **Google Analytics Tracking ID** you just need to add a call to `{% hook 'iaSendPageView' %}` to your front-end templates to send PageView tracking to Google Analytics.  We recommend that you do this in a block at the bottom of your `layout.twig` template that other templates extend, right before the `</body>` tag, like this:
 
     {% block analytics %}
         {% hook 'iaSendPageView' %}
