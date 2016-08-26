@@ -28,6 +28,8 @@ You don't need to include the typical Google Analytics script tag on your pages,
 
 You can also track asset/media views in Google Analytics, either as PageViews or as Events. This lets you track otherwise untrackable things such as individual RSS feed accesses, images, PDF files, etc.
 
+Instant Analytics is implemented on the demo site [Brads for Men](https://bradsformen.com)
+
 ## Use Cases
 
 ### Simple Page Tracking
@@ -86,6 +88,8 @@ However, to prevent duplicate data from being sent, if you use Instant Analytics
 * In [SEOmatic](https://github.com/nystudio107/seomatic) turn off **Automatically send Google Analytics PageView**
 * If you don't use SEOmatic, remove the line `ga('send', 'pageview');` from your Google Analytics Tracking Code Javascript tag
 
+Then you can still use the `ga()` calls to send events to Google Analytics.  Or, if you don't send events via Javascript, you can just remove the Google Analytics tag/Javascript from your page entirely.
+
 ### Customizing via the config.php file
 
 Instant Analytics has a number of other configuration options that can be customized on a per-environment basis via the `config.php` file.  Don't edit this file, instead copy it to `craft/config` as `instantanalytics.php` (rename it) and make your changes there.
@@ -94,7 +98,7 @@ Instant Analytics has a number of other configuration options that can be custom
 
 ### Simple Page Tracking
 
-Once you've entered your **Google Analytics Tracking ID** you just need to add a call to `{% hook 'iaSendPageView' %}` to your front-end templates.  We recommend that you do this in a block at the bottom of your `layout.twig` template that other templates extend, like this:
+Once you've entered your **Google Analytics Tracking ID** you just need to add a call to `{% hook 'iaSendPageView' %}` to your front-end templates to send PageView tracking to Google Analytics.  We recommend that you do this in a block at the bottom of your `layout.twig` template that other templates extend, like this:
 
     {% block analytics %}
         {% hook 'iaSendPageView' %}
