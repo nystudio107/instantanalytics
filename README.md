@@ -139,6 +139,7 @@ By default, the injected `instantAnalytics` object is filled in with the followi
 * `instantAnalytics.setTrackingId(YOUR_TRACKING_ID)`
 * `instantAnalytics.setIpOverride($_SERVER['REMOTE_ADDR'])`
 * `instantAnalytics.setUserAgentOverride($_SERVER['HTTP_USER_AGENT'])`
+* `instantAnalytics.setDocumentReferrer($_SERVER['HTTP_REFERER'])`
 * `instantAnalytics.setClientId(CID)`
 * `instantAnalytics.setDocumentPath(craft.request.url)`
 * `instantAnalytics.setDocumentTitle(TEMPLATE_PATH)`
@@ -197,6 +198,7 @@ By default, the injected `instantAnalytics` object is filled in with the followi
 * `myAnalytics.setTrackingId(YOUR_TRACKING_ID)`
 * `myAnalytics.setIpOverride($_SERVER['REMOTE_ADDR'])`
 * `myAnalytics.setUserAgentOverride($_SERVER['HTTP_USER_AGENT'])`
+* `myAnalytics.setDocumentReferrer($_SERVER['HTTP_REFERER'])`
 * `myAnalytics.setClientId(CID)`
 * `myAnalytics.setEventCategory(CATEGORY)`
 * `myAnalytics.setEventAction(ACTION)`

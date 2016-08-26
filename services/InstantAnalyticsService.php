@@ -502,10 +502,14 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 $userAgent = "User-Agent:Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13\r\n";
                 if (isset($_SERVER['HTTP_USER_AGENT']))
                     $userAgent = $_SERVER['HTTP_USER_AGENT'];
+                $referrer = "";
+                if (isset($_SERVER['HTTP_REFERER']))
+                    $referrer = $_SERVER['HTTP_REFERER'];
                 $analytics->setProtocolVersion('1')
                     ->setTrackingId($settings['googleAnalyticsTracking'])
                     ->setIpOverride($_SERVER['REMOTE_ADDR'])
                     ->setUserAgentOverride($userAgent)
+                    ->setDocumentReferrer($referrer)
                     ->setAsyncRequest(false)
                     ->setClientId($this->_gaParseCookie());
 
