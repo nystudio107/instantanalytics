@@ -299,6 +299,7 @@ Some things to do, and ideas for potential features:
 * [Improved] Updated to the latest Google Measurement Protocol (2.3.0)
 * [Improved] Added debug logging when in `devMode` for any Analytics data that is sent
 * [Improved] Fall back on a default User Agent when `$_SERVER['HTTP_USER_AGENT']` is not set
+* [Added] We now send HTTP_REFERER by default
 * [Improved] Updated README.md
 
 ### 1.0.5 -- 2016.08.16
