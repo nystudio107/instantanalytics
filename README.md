@@ -58,13 +58,13 @@ Additionally, you can add simple Twig tags to your templates to track Product Im
 
 Instant Analytics lets you track assets/resources that you can't normally track.  For instance, you may have a collection of PDF documents that you'd like to know when they are viewed.
 
-Using a simple `{{ getPageViewTrackingUrl(myAsset.url, myAsset.title) }}` or `{{ getEventTrackingUrl(myAsset.url, myAsset.title, "action", "label", "value") }}` Twig function, Instant Analytics will generate a public URL that will register a PageView in Google Analytics for the asset/resource, and then display or download the asset/resource.
+Using a simple `{{ pageViewTrackingUrl(myAsset.url, myAsset.title) }}` or `{{ eventTrackingUrl(myAsset.url, myAsset.title, "action", "label", "value") }}` Twig function, Instant Analytics will generate a public URL that will register a PageView in Google Analytics for the asset/resource, and then display or download the asset/resource.
 
 ### Tracking RSS Feeds
 
 Getting actual tracking statistics on RSS feeds can be notoriously difficult, because they are often consumed by clients that are not web browsers, and therefor will not run Javascript tracking code.
 
-With Instant Analytics, if your RSS feed is a Twig template, accesses will automatically be tracked.  Additionally, you can use the `{{ getPageViewTrackingUrl(myAsset.url, myAsset.title) }}` or `{{ getEventTrackingUrl(myAsset.url, myAsset.title, "action", "label", "value") }}` Twig functions to track individual episode accesses in Google Analytics.
+With Instant Analytics, if your RSS feed is a Twig template, accesses will automatically be tracked.  Additionally, you can use the `{{ pageViewTrackingUrl(myAsset.url, myAsset.title) }}` or `{{ eventTrackingUrl(myAsset.url, myAsset.title, "action", "label", "value") }}` Twig functions to track individual episode accesses in Google Analytics.
 
 ### Custom Tracking via Twig or Plugin
 
@@ -226,15 +226,15 @@ Instant Analytics lets you track assets/resources that you can't normally track,
 
 You can track as PageViews via either:
 
-    {{ getPageViewTrackingUrl(URL, TITLE) }}
+    {{ pageViewTrackingUrl(URL, TITLE) }}
     -OR-
-    {{ craft.instantAnalytics.getPageViewTrackingUrl(URL, TITLE) }}
+    {{ craft.instantAnalytics.pageViewTrackingUrl(URL, TITLE) }}
 
 Or you can track as Events via either:
 
-    {{ getEventTrackingUrl(URL, CATEGORY, ACTION, LABEL, VALUE) }}
+    {{ eventTrackingUrl(URL, CATEGORY, ACTION, LABEL, VALUE) }}
     -OR-
-    {{ craft.instantAnalytics.getEventTrackingUrl(URL, CATEGORY, ACTION, LABEL, VALUE) }}
+    {{ craft.instantAnalytics.eventTrackingUrl(URL, CATEGORY, ACTION, LABEL, VALUE) }}
 
 These can be wrapped around any URL, so you could wrap your tracking URL around an image, a PDF, or an externally linked file... whatever.
 
