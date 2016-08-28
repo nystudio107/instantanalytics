@@ -141,7 +141,7 @@ class InstantAnalyticsPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.1.0';
+        return '1.1.1';
     }
 
     /**
@@ -224,6 +224,17 @@ class InstantAnalyticsPlugin extends BasePlugin
     public function onAfterUninstall()
     {
     } /* -- onAfterUninstall */
+
+    /**
+     * @return array
+     */
+    public function registerSiteRoutes()
+    {
+        return array(
+            'instantanalytics/pageViewTrack/(?P<filename>[-\w\.*]+)'    => array('action' => 'instantAnalytics/trackPageViewUrl'),
+            'instantanalytics/eventTrack/(?P<filename>[-\w\.*]+)'       => array('action' => 'instantAnalytics/trackEventUrl'),
+        );
+    }
 
     /**
      * @return array

@@ -240,6 +240,14 @@ These can be wrapped around any URL, so you could wrap your tracking URL around 
 
 What happens when the link is clicked on is Instant Analytics sends the tracking PageView or Event to Google Analytics, and then the original URL is seamlessly accessed.
 
+The URL that Instant Analytics generates will look like this:
+
+    http://yoursite.com/instantAnalytics/pageViewTrack/FILENAME.EXT?url=XXX&title=AAA
+    -OR-
+    http://yoursite.com/instantAnalytics/eventTrack/FILENAME.EXT?url=XXX&eventCategory=AAA&eventAction=BBB&eventLabel=CCC&eventValue=DDD
+
+It's done this way so that the URL can be directly used in RSS feeds for the media object URLs, which require that the filename is in the URL path.
+
 ### Custom Tracking via Twig or Plugin
 
 If your needs are more specialized, you can build arbitrary Google Analytics data packets with Instant Analytics.  To get an `Analytics` object do the following:
@@ -286,6 +294,11 @@ Some things to do, and ideas for potential features:
 * Support for additional Craft Commerce data such as Refunds
 
 ## Instant Analytics Changelog
+
+### 1.1.1 -- 2016.08.29
+
+* [Improved] Changed the PageView Tracking URL and Event Tracking URL format so that they can be included in RSS feeds directly
+* [Improved] Updated README.md
 
 ### 1.1.0 -- 2016.08.26
 

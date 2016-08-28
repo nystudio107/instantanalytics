@@ -133,7 +133,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
             'url' => urlencode($url),
             'title' => urlencode($title),
             );
-        $trackingUrl = UrlHelper::getActionUrl('instantAnalytics/trackPageViewUrl', $urlParams);
+        $fileName = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_BASENAME);
+        $trackingUrl = UrlHelper::getSiteUrl('instantanalytics/pageViewTrack/' . $fileName, $urlParams);
         InstantAnalyticsPlugin::log("Created pageViewTrackingUrl for " . $trackingUrl, LogLevel::Info, false);
         return $trackingUrl;
     } /* -- pageViewTrackingUrl */
@@ -156,7 +157,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
             'eventLabel' => urlencode($eventLabel),
             'eventValue' => urlencode($eventValue),
             );
-        $trackingUrl = UrlHelper::getActionUrl('instantAnalytics/trackEventUrl', $urlParams);
+        $fileName = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_BASENAME);
+        $trackingUrl = UrlHelper::getSiteUrl('instantanalytics/eventTrack/' . $fileName, $urlParams);
         InstantAnalyticsPlugin::log("Created eventTrackingUrl for " . $trackingUrl, LogLevel::Info, false);
         return $trackingUrl;
     } /* -- eventTrackingUrl */
