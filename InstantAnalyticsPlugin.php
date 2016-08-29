@@ -38,7 +38,8 @@ class InstantAnalyticsPlugin extends BasePlugin
 
     /* -- If SEOmatic is installed, set the page title from it */
 
-                    if ((craft()->plugins->getPlugin('Seomatic')) && (isset($context['seomaticMeta'])))
+                    $seomatic = craft()->plugins->getPlugin('Seomatic');
+                    if ($seomatic && $seomatic->isInstalled && $seomatic->isEnabled && isset($context['seomaticMeta']))
                     {
                         $seomaticMeta = $context['seomaticMeta'];
                         $analytics->setDocumentTitle($seomaticMeta['seoTitle']);
@@ -55,8 +56,10 @@ class InstantAnalyticsPlugin extends BasePlugin
 /* -- Only install these listeners if Craft Commerce is installed */
 
         $settings = $this->getSettings();
-        if (craft()->plugins->getPlugin('Commerce') && $settings['autoSendCommerceAnalytics'])
+        $commerce = craft()->plugins->getPlugin('Commerce');
+        if ($commerce && $commerce->isInstalled && $commerce->isEnabled && $settings['autoSendCommerceAnalytics'])
         {
+
     /* -- Listen for completed Craft Commerce orders */
 
             craft()->on('commerce_orders.onOrderComplete', function(Event $e)
@@ -242,7 +245,8 @@ class InstantAnalyticsPlugin extends BasePlugin
     protected function defineSettings()
     {
         $defaultTrackingId = "";
-        if (craft()->plugins->getPlugin('Seomatic'))
+        $seomatic = craft()->plugins->getPlugin('Seomatic');
+        if ($seomatic && $seomatic->isInstalled && $seomatic->isEnabled)
         {
             $seomaticSettings = craft()->seomatic->getSettings(craft()->language);
             $defaultTrackingId = $seomaticSettings['googleAnalyticsUID'];
@@ -250,7 +254,9 @@ class InstantAnalyticsPlugin extends BasePlugin
 
         return array(
             'googleAnalyticsTracking' => array(AttributeType::String, 'label' => 'Google Analytics Tracking ID:', 'default' => $defaultTrackingId),
-            'autoSendCommerceAnalytics' => array(AttributeType::String, 'label' => 'Auto Send Page View:', 'default' => true),
+            'productCategoryField' => array(AttributeType::String, 'label' => 'Commerce Product Category Field:', 'default' => ''),
+            'productBrandField' => array(AttributeType::String, 'label' => 'Commerce Product Brand Field:', 'default' => ''),
+            'autoSendCommerceAnalytics' => array(AttributeType::String, 'label' => 'Auto Send Commerce Analytics:', 'default' => true),
         );
     }
 
@@ -266,8 +272,26 @@ class InstantAnalyticsPlugin extends BasePlugin
      */
     public function getSettingsHtml()
     {
+        $commerceFields = array();
+
+        $commerce = craft()->plugins->getPlugin('Commerce');
+        if ($commerce && $commerce->isInstalled && $commerce->isEnabled)
+        {
+            $productTypes = craft()->commerce_productTypes->getAllProductTypes();
+            foreach($productTypes as $productType)
+            {
+                $productFields = $this->_getPullFieldsFromLayoutId($productType->fieldLayoutId);
+                $commerceFields = array_merge($commerceFields, $productFields);
+                if ($productType->hasVariants)
+                {
+                    $variantFields = $this->_getPullFieldsFromLayoutId($productType->variantFieldLayoutId);
+                    $commerceFields = array_merge($commerceFields, $variantFields);
+                }
+            }
+        }
        return craft()->templates->render('instantanalytics/InstantAnalytics_Settings', array(
-           'settings' => $this->getSettings()
+           'settings' => $this->getSettings(),
+           'commerceFields' => $commerceFields,
        ));
     }
 
@@ -283,4 +307,30 @@ class InstantAnalyticsPlugin extends BasePlugin
         return $settings;
     }
 
+    /**
+     * @return array
+     */
+    private function _getPullFieldsFromLayoutId($layoutId)
+    {
+        $result = array('' => "none");
+        $fieldLayout = craft()->fields->getLayoutById($layoutId);
+        $fieldLayoutFields = $fieldLayout->getFields();
+        foreach ($fieldLayoutFields as $fieldLayoutField)
+        {
+            $field = $fieldLayoutField->field;
+            switch ($field->type)
+            {
+                case "PlainText":
+                case "RichText":
+                case "RedactorI":
+                case "PreparseField_Preparse":
+                    $result[$field->handle] = $field->name;
+                    break;
+
+                case "Tags":
+                    break;
+            }
+        }
+        return $result;
+    } /* -- _getPullFieldsFromLayoutId */
 }

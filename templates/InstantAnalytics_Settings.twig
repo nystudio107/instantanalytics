@@ -17,6 +17,9 @@
 {% includeCssResource "instantanalytics/css/InstantAnalytics_Style.css" %}
 {% includeJsResource "instantanalytics/js/InstantAnalytics_Script.js" %}
 
+{% set commerce = craft.plugins.getPlugin('Commerce', false) %}
+{% set commerceEnabled = (commerce and commerce.isEnabled() and commerce.isInstalled()) %}
+
 {{ forms.textField({
     label: 'Google Analytics Tracking ID:',
     instructions: "Enter your Google Analytics Tracking ID here. Only enter the ID, e.g.: UA-XXXXXX-XX, not the entire script code.",
@@ -30,5 +33,26 @@
     instructions: "If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent when an item is added or removed from your Craft Commerce cart, and when a purchase is completed.",
     id: 'autoSendCommerceAnalytics',
     name: 'autoSendCommerceAnalytics',
+    disabled: (not commerceEnabled),
     on: settings['autoSendCommerceAnalytics']})
 }}
+
+{{ forms.selectField({
+    label: 'Commerce Product Category Field:',
+    instructions: "Choose the field in your Product or Variant field layout that should be used for the product's Category field for Google Analytics Enhanced Ecommerce",
+    id: 'productCategoryField',
+    name: 'productCategoryField',
+    options: commerceFields,
+    disabled: (not commerceEnabled),
+    value: settings['productCategoryField'],
+}) }}
+
+{{ forms.selectField({
+    label: 'Commerce Product Brand Field:',
+    instructions: "Choose the field in your Product or Variant field layout that should be used for the product's Brand field for Google Analytics Enhanced Ecommerce",
+    id: 'productBrandField',
+    name: 'productBrandField',
+    options: commerceFields,
+    disabled: (not commerceEnabled),
+    value: settings['productBrandField'],
+}) }}

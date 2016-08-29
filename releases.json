@@ -4,7 +4,10 @@
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2016-08-29T17:29:17.496Z",
         "notes": [
+            "[Added] Added `Category` and `Brand` fields to the Settings, so you can specify what fields this data for Google Enhanced Ecommerce should be pulled from",
             "[Improved] Changed the PageView Tracking URL and Event Tracking URL format so that they can be included in RSS feeds directly",
+            "[Improved] We do a better job checking to see if the Commerce and SEOmatic plugins are installed",
+            "[Added] If SEOmatic is installed, we automatically do a `setAffiliation` for the Analytics object, using the `siteSeoName`",
             "[Improved] Updated README.md"
         ]
     },

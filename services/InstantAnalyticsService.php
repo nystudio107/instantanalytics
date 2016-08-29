@@ -198,6 +198,12 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 'position' => "",
 */
             ];
+            $settings = craft()->plugins->getPlugin('instantanalytics')->getSettings();
+            if (isset($settings) && isset($settings['productCategoryField']) && $settings['productCategoryField'] != "")
+                $productData['category'] = $this->_pullDataFromField($productVariant, $settings['productCategoryField']);
+            if (isset($settings) && isset($settings['productCategoryField']) && $settings['productCategoryField'] != "")
+                $productData['brand'] = $this->_pullDataFromField($productVariant, $settings['productCategoryField']);
+
             $result = $productData;
         }
         return $result;
@@ -305,6 +311,13 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 }
 
                 $result = $productData['name'];
+
+                $settings = craft()->plugins->getPlugin('instantanalytics')->getSettings();
+                if (isset($settings) && isset($settings['productCategoryField']) && $settings['productCategoryField'] != "")
+                    $productData['category'] = $this->_pullDataFromField($lineItem->purchasable->product, $settings['productCategoryField']);
+                if (isset($settings) && isset($settings['productCategoryField']) && $settings['productCategoryField'] != "")
+                    $productData['brand'] = $this->_pullDataFromField($lineItem->purchasable->product, $settings['productCategoryField']);
+
                 //Add each product to the hit to be sent
                 $analytics->addProduct($productData);
             }
@@ -489,6 +502,50 @@ class InstantAnalyticsService extends BaseApplicationComponent
     } /* -- _shouldSendAnalytics */
 
     /**
+     * Extract the value of a field
+     * @param Commerce_OrderModel  $orderModel the Product or Variant
+     * @param Commerce_LineItemModel  $lineItem the line item that was added
+     * @return string
+     */
+    private function _pullDataFromField($productVariant, $fieldHandle)
+    {
+        $result = "";
+        if ($productVariant)
+        {
+            if ($fieldHandle)
+            {
+                $srcField = $productVariant[$fieldHandle];
+                if ($srcField == null)
+                    $srcField = $productVariant->product->content->attributes[$fieldHandle];
+
+                if (isset($srcField->elementType))
+                {
+                    switch ($srcField->elementType->classHandle)
+                    {
+                        case "Neo":
+                            break;
+
+                        case ElementType::MatrixBlock:
+                            break;
+
+                        case ElementType::Tag:
+                            break;
+
+                        default:
+                            $result = strip_tags($srcField);
+                            break;
+                    }
+                }
+                else
+                {
+                    $result = strip_tags($srcField);
+                }
+            }
+        }
+        return $result;
+    } /* -- _pullDataFromField */
+
+    /**
      * Get the Google Analytics object, primed with the default values
      * @return Analytics object
      */
@@ -518,6 +575,15 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 $gclid = $this->_getGclid();
                 if ($gclid)
                     $analytics->setGoogleAdwordsId($gclid);
+
+/* -- If SEOmatic is installed, set the affiliation as well */
+
+                $seomatic = craft()->plugins->getPlugin('Seomatic');
+                if ($seomatic && $seomatic->isInstalled && $seomatic->isEnabled)
+                {
+                    $seomaticSettings = craft()->seomatic->getSettings(craft()->language);
+                    $analytics->setAffiliation($seomaticSettings['siteSeoName']);
+                }
 
             }
         }

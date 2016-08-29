@@ -78,6 +78,8 @@ Once you have installed Instant Analytics, you'll see a welcome screen.  Click o
 
 * **Google Analytics Tracking ID:** Enter your Google Analytics Tracking ID here. Only enter the ID, e.g.: UA-XXXXXX-XX, not the entire script code.
 * **Auto Send Commerce Analytics:** If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent when an item is added or removed from your Craft Commerce cart, and when a purchase is completed.
+* **Commerce Product Category Field:** Choose the field in your Product or Variant field layout that should be used for the product's Category field for Google Analytics Enhanced Ecommerce
+* **Commerce Product Brand Field** Choose the field in your Product or Variant field layout that should be used for the product's Brand field for Google Analytics Enhanced Ecommerce
 
 If you have the [SEOmatic](https://github.com/nystudio107/seomatic) plugin installed, Instant Analytics will automatically grab your **Google Analytics Tracking ID:** from it.
 
@@ -297,7 +299,10 @@ Some things to do, and ideas for potential features:
 
 ### 1.1.1 -- 2016.08.29
 
+* [Added] Added `Category` and `Brand` fields to the Settings, so you can specify what fields this data for Google Enhanced Ecommerce should be pulled from
 * [Improved] Changed the PageView Tracking URL and Event Tracking URL format so that they can be included in RSS feeds directly
+* [Improved] We do a better job checking to see if the Commerce and SEOmatic plugins are installed
+* [Added] If SEOmatic is installed, we automatically do a `setAffiliation` for the Analytics object, using the `siteSeoName`
 * [Improved] Updated README.md
 
 ### 1.1.0 -- 2016.08.26
