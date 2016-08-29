@@ -8,6 +8,8 @@
             "[Improved] Changed the PageView Tracking URL and Event Tracking URL format so that they can be included in RSS feeds directly",
             "[Improved] We do a better job checking to see if the Commerce and SEOmatic plugins are installed",
             "[Added] If SEOmatic is installed, we automatically do a `setAffiliation` for the Analytics object, using the `siteSeoName`",
+            "[Added] You can now discretely choose which Google Enhanced Ecommerces events are automatically sent",
+            "[Added] A product's `Category` is by default set to the name of the Product Type",
             "[Improved] Updated README.md"
         ]
     },

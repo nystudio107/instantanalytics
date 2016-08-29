@@ -57,37 +57,43 @@ class InstantAnalyticsPlugin extends BasePlugin
 
         $settings = $this->getSettings();
         $commerce = craft()->plugins->getPlugin('Commerce');
-        if ($commerce && $commerce->isInstalled && $commerce->isEnabled && $settings['autoSendCommerceAnalytics'])
+        if ($commerce && $commerce->isInstalled && $commerce->isEnabled)
         {
 
     /* -- Listen for completed Craft Commerce orders */
 
-            craft()->on('commerce_orders.onOrderComplete', function(Event $e)
+            if ($settings['autoSendPurchaseComplete'])
             {
-                $orderModel = null;
+                craft()->on('commerce_orders.onOrderComplete', function(Event $e)
+                {
+                    $orderModel = null;
 
-                if (isset($e->params['order']))
-                    $orderModel = $e->params['order'];
-                craft()->instantAnalytics->orderComplete($orderModel);
-            });
+                    if (isset($e->params['order']))
+                        $orderModel = $e->params['order'];
+                    craft()->instantAnalytics->orderComplete($orderModel);
+                });
+            }
 
     /* -- Listen for items added to the Craft Commerce cart */
 
-            craft()->on('commerce_cart.onAddToCart', function(Event $e)
+            if ($settings['autoSendAddToCart'])
             {
-                $orderModel = null;
-                $lineItem = null;
+                craft()->on('commerce_cart.onAddToCart', function(Event $e)
+                {
+                    $orderModel = null;
+                    $lineItem = null;
 
-                if (isset($e->params['cart']))
-                    $orderModel = $e->params['cart'];
-                if (isset($e->params['lineItem']))
-                    $lineItem = $e->params['lineItem'];
-                craft()->instantAnalytics->addToCart($orderModel, $lineItem);
-            });
+                    if (isset($e->params['cart']))
+                        $orderModel = $e->params['cart'];
+                    if (isset($e->params['lineItem']))
+                        $lineItem = $e->params['lineItem'];
+                    craft()->instantAnalytics->addToCart($orderModel, $lineItem);
+                });
+            }
 
     /* -- Listen for items removed from the Craft Commerce cart */
 
-                if (craft()->commerce_cart->hasEvent('onBeforeRemoveFromCart'))
+                if ($settings['autoSendRemoveFromCart'] && craft()->commerce_cart->hasEvent('onBeforeRemoveFromCart'))
                 {
                     craft()->on('commerce_cart.onBeforeRemoveFromCart', function(Event $e)
                     {
@@ -256,7 +262,9 @@ class InstantAnalyticsPlugin extends BasePlugin
             'googleAnalyticsTracking' => array(AttributeType::String, 'label' => 'Google Analytics Tracking ID:', 'default' => $defaultTrackingId),
             'productCategoryField' => array(AttributeType::String, 'label' => 'Commerce Product Category Field:', 'default' => ''),
             'productBrandField' => array(AttributeType::String, 'label' => 'Commerce Product Brand Field:', 'default' => ''),
-            'autoSendCommerceAnalytics' => array(AttributeType::String, 'label' => 'Auto Send Commerce Analytics:', 'default' => true),
+            'autoSendAddToCart' => array(AttributeType::String, 'label' => 'Auto Send Commerce Analytics:', 'default' => true),
+            'autoSendRemoveFromCart' => array(AttributeType::String, 'label' => 'Auto Send Commerce Analytics:', 'default' => true),
+            'autoSendPurchaseComplete' => array(AttributeType::String, 'label' => 'Auto Send Commerce Analytics:', 'default' => true),
         );
     }
 

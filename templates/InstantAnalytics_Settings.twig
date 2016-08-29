@@ -29,12 +29,30 @@
 }}
 
 {{ forms.lightswitchField({
-    label: 'Auto Send Commerce Analytics:',
-    instructions: "If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent when an item is added or removed from your Craft Commerce cart, and when a purchase is completed.",
-    id: 'autoSendCommerceAnalytics',
-    name: 'autoSendCommerceAnalytics',
+    label: 'Auto Send "Add To Cart" Events:',
+    instructions: "If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent when an item is added to your Craft Commerce cart.",
+    id: 'autoSendAddToCart',
+    name: 'autoSendAddToCart',
     disabled: (not commerceEnabled),
-    on: settings['autoSendCommerceAnalytics']})
+    on: settings['autoSendAddToCart']})
+}}
+
+{{ forms.lightswitchField({
+    label: 'Auto Send "Remove From Cart" Events:',
+    instructions: "If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent when an item is removed from your Craft Commerce cart.",
+    id: 'autoSendRemoveFromCart',
+    name: 'autoSendRemoveFromCart',
+    disabled: (not commerceEnabled),
+    on: settings['autoSendRemoveFromCart']})
+}}
+
+{{ forms.lightswitchField({
+    label: 'Auto Send "Purchase Complete" Events:',
+    instructions: "If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent a purchase is completed.",
+    id: 'autoSendPurchaseComplete',
+    name: 'autoSendPurchaseComplete',
+    disabled: (not commerceEnabled),
+    on: settings['autoSendPurchaseComplete']})
 }}
 
 {{ forms.selectField({

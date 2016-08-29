@@ -77,7 +77,9 @@ You can do anything from customized PageViews to complicated Google Enhanced eCo
 Once you have installed Instant Analytics, you'll see a welcome screen.  Click on **Get Started** to configure Instant Analytics:
 
 * **Google Analytics Tracking ID:** Enter your Google Analytics Tracking ID here. Only enter the ID, e.g.: UA-XXXXXX-XX, not the entire script code.
-* **Auto Send Commerce Analytics:** If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent when an item is added or removed from your Craft Commerce cart, and when a purchase is completed.
+* **Auto Send "Add To Cart" Events:** If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent when an item is added to your Craft Commerce cart.
+* **Auto Send "Remove From Cart" Events:** If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent when an item is removed from your Craft Commerce cart.
+* **Auto Send "Purchase Complete" Events:** If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent a purchase is completed.
 * **Commerce Product Category Field:** Choose the field in your Product or Variant field layout that should be used for the product's Category field for Google Analytics Enhanced Ecommerce
 * **Commerce Product Brand Field** Choose the field in your Product or Variant field layout that should be used for the product's Brand field for Google Analytics Enhanced Ecommerce
 
@@ -303,6 +305,8 @@ Some things to do, and ideas for potential features:
 * [Improved] Changed the PageView Tracking URL and Event Tracking URL format so that they can be included in RSS feeds directly
 * [Improved] We do a better job checking to see if the Commerce and SEOmatic plugins are installed
 * [Added] If SEOmatic is installed, we automatically do a `setAffiliation` for the Analytics object, using the `siteSeoName`
+* [Added] You can now discretely choose which Google Enhanced Ecommerces events are automatically sent
+* [Added] A product's `Category` is by default set to the name of the Product Type
 * [Improved] Updated README.md
 
 ### 1.1.0 -- 2016.08.26

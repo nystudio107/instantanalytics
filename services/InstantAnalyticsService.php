@@ -177,32 +177,50 @@ class InstantAnalyticsService extends BaseApplicationComponent
             {
                 $productType = craft()->commerce_productTypes->getProductTypeById($productVariant->typeId);
                 if ($productType->hasVariants)
+                {
                     $productVariant = ArrayHelper::getFirstValue($productVariant->getVariants());
+                    $product = $productVariant->getProduct();
+                    if ($product)
+                    {
+                        $category = $product->getType()['name'];
+                        $name = $product->title;
+                        $variant = $productVariant->title;
+                    }
+                    else
+                    {
+                        $category = $productVariant->getType()['name'];
+                        $name = $productVariant->title;
+                        $variant = "";
+                    }
+                }
                 else
+                {
                     $productVariant = craft()->commerce_variants->getVariantById($productVariant->defaultVariantId);
+                    $category = $productVariant->getProduct()->getType()['name'];
+                    $name = $productVariant->title;
+                    $variant = "";
+                }
             }
 
-            if (!is_object($productVariant))
-            {
-                Craft::dd($productVariant);
-            }
             $productData = [
                 'sku' => $productVariant->sku,
-                'name' => $productVariant->title,
+                'name' => $name,
                 'price' => number_format($productVariant->price, 2, '.', ''),
+                'category' => $category,
 /*
-                'category' => "",
                 'brand' => "",
-                'variant' => "",
                 'list' => "",
                 'position' => "",
 */
             ];
+
+            if ($variant)
+                $productData['variant'] = $variant;
             $settings = craft()->plugins->getPlugin('instantanalytics')->getSettings();
             if (isset($settings) && isset($settings['productCategoryField']) && $settings['productCategoryField'] != "")
                 $productData['category'] = $this->_pullDataFromField($productVariant, $settings['productCategoryField']);
-            if (isset($settings) && isset($settings['productCategoryField']) && $settings['productCategoryField'] != "")
-                $productData['brand'] = $this->_pullDataFromField($productVariant, $settings['productCategoryField']);
+            if (isset($settings) && isset($settings['productBrandField']) && $settings['productBrandField'] != "")
+                $productData['brand'] = $this->_pullDataFromField($productVariant, $settings['productBrandField']);
 
             $result = $productData;
         }
@@ -302,11 +320,13 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 {
                 //No variants (i.e. default variant)
                     $productData['name'] = $lineItem->purchasable->title;
+                    $productData['category'] = $lineItem->purchasable->product->type['name'];
                 }
                 else
                 {
                 // Product with variants
                     $productData['name'] = $lineItem->purchasable->product->title;
+                    $productData['category'] = $lineItem->purchasable->product->type['name'];
                     $productData['variant'] = $lineItem->purchasable->title;
                 }
 
@@ -315,9 +335,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 $settings = craft()->plugins->getPlugin('instantanalytics')->getSettings();
                 if (isset($settings) && isset($settings['productCategoryField']) && $settings['productCategoryField'] != "")
                     $productData['category'] = $this->_pullDataFromField($lineItem->purchasable->product, $settings['productCategoryField']);
-                if (isset($settings) && isset($settings['productCategoryField']) && $settings['productCategoryField'] != "")
-                    $productData['brand'] = $this->_pullDataFromField($lineItem->purchasable->product, $settings['productCategoryField']);
-
+                if (isset($settings) && isset($settings['productBrandField']) && $settings['productBrandField'] != "")
+                    $productData['brand'] = $this->_pullDataFromField($lineItem->purchasable->product, $settings['productBrandField']);
                 //Add each product to the hit to be sent
                 $analytics->addProduct($productData);
             }
