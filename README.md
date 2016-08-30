@@ -170,7 +170,7 @@ You simply need to enable Enhanced Ecommerce in your Google Analytics Admin area
 
 That's it!  It'll just work.  In addition to the basic automatic tracking that Instant Analytics does, you can use the `instantAnalytics` object to send additional data to Google Analytics Enhanced Ecommerce:
 
-* `{% do instantAnalytics.addCommerceProductImpression(PRODUCT_VARIANT) %}` - This will add an _impression_ for a given Craft Commerce `Product` or `Variant` (you can pass in either in `PRODUCT_VARIANT`).  This should be used on product listing pages that show a number of products, to indicate that the user has been shown a particular product.
+* `{% do instantAnalytics.addCommerceProductImpression(PRODUCT_VARIANT, INDEX) %}` - This will add an _impression_ for a given Craft Commerce `Product` or `Variant` (you can pass in either in `PRODUCT_VARIANT`).  `INDEX` is the position in the list of products where this product appears. This should be used on product listing pages that show a number of products, to indicate that the user has been shown a particular product.
 *  `{% do instantAnalytics.addCommerceProductDetailView(PRODUCT_VARIANT) %}` - This will add a _product detail view_ for a given Craft Commerce `Product` or `Variant` (you can pass in either in `PRODUCT_VARIANT`).  This should be used when the user is shown the detail view of a product.
 *  `{% do instantAnalytics.addCommerceCheckoutStep(CART, STEP, OPTION) %}` - This will add a _checkout step_ for a given Craft Commerce `CART` (obtained via `craft.commerce.cart`).  The `STEP` parameter lets you specify which step in the checkout process you are on, and the `OPTION` parameter is optional information you can associate with this checkout step, e.g.: `Shipping Info` or `VISA`.
 
@@ -298,6 +298,11 @@ Some things to do, and ideas for potential features:
 * Support for additional Craft Commerce data such as Refunds
 
 ## Instant Analytics Changelog
+
+### 1.1.2 -- 2016.08.31
+
+* [Improved] Added the `$index` parameter to `addCommerceProductImpression()`, and re-enabled it
+* [Improved] Updated README.md
 
 ### 1.1.1 -- 2016.08.29
 

@@ -231,8 +231,9 @@ class InstantAnalyticsService extends BaseApplicationComponent
      * Add a product impression from a Craft Commerce Product or Variant
      * @param IAnalytics $analytics the Analytics object
      * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
+     * @param int  $index Where the product appears in the list
      */
-    public function addCommerceProductImpression($analytics = null, $productVariant = null)
+    public function addCommerceProductImpression($analytics = null, $productVariant = null, $index = 0)
     {
         if ($productVariant)
         {
@@ -241,7 +242,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 $productData = $this->getProductDataFromProduct($productVariant);
 
                 //Add the product to the hit to be sent
-                $analytics->addProductImpression($productData);
+                $analytics->addProductImpression($productData, $index);
                 InstantAnalyticsPlugin::log("addCommerceProductDetailView for `" . $productData['sku'] . "` - `" . $productData['name'] . "` - `" . $productData['name'] . "`", LogLevel::Info, false);
             }
         }

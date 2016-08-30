@@ -57,16 +57,16 @@ class IAnalytics extends Analytics
     /**
      * Add a product impression to the Analytics object
      * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
+     * @param int  $index Where the product appears in the list
      */
-    public function addCommerceProductImpression($productVariant = null)
+    public function addCommerceProductImpression($productVariant = null, $index =0)
     {
-/* -- This appears to be broken in the current version of php-ga-measurement-protocol.  That, or
-        I'm doing it wrong: https://github.com/theiconic/php-ga-measurement-protocol/issues/26
+
         if ($productVariant)
         {
-            craft()->instantAnalytics->addCommerceProductImpression($this, $productVariant);
+            craft()->instantAnalytics->addCommerceProductImpression($this, $productVariant, $index);
         }
-*/
+
     } /* -- addCommerceProductImpression */
 
     /**

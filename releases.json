@@ -1,5 +1,14 @@
 [
     {
+        "version": "1.1.2",
+        "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
+        "date": "2016-08-31T17:29:17.496Z",
+        "notes": [
+            "[Improved] Added the `$index` parameter to `addCommerceProductImpression()`, and re-enabled it",
+            "[Improved] Updated README.md"
+        ]
+    },
+    {
         "version": "1.1.1",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2016-08-29T17:29:17.496Z",
