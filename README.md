@@ -301,7 +301,8 @@ Some things to do, and ideas for potential features:
 
 ### 1.1.2 -- 2016.08.31
 
-* [Improved] Added the `$index` parameter to `addCommerceProductImpression()`, and re-enabled it
+* [Improved] Added the `$index` and `$listName` parameters to `addCommerceProductImpression()`, and re-enabled it
+* [Improved] The URLs returned by `pageViewTrackingUrl()` and `eventTrackingUrl()` will now work even if there is no filename in the URL
 * [Improved] Updated README.md
 
 ### 1.1.1 -- 2016.08.29

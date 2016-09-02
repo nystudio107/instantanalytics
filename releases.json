@@ -4,7 +4,8 @@
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2016-08-31T17:29:17.496Z",
         "notes": [
-            "[Improved] Added the `$index` parameter to `addCommerceProductImpression()`, and re-enabled it",
+            "[Improved] Added the `$index` and `$listName` parameters to `addCommerceProductImpression()`, and re-enabled it",
+            "[Improved] The URLs returned by `pageViewTrackingUrl()` and `eventTrackingUrl()` will now work even if there is no filename in the URL",
             "[Improved] Updated README.md"
         ]
     },

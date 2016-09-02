@@ -240,8 +240,8 @@ class InstantAnalyticsPlugin extends BasePlugin
     public function registerSiteRoutes()
     {
         return array(
-            'instantanalytics/pageViewTrack/(?P<filename>[-\w\.*]+)'    => array('action' => 'instantAnalytics/trackPageViewUrl'),
-            'instantanalytics/eventTrack/(?P<filename>[-\w\.*]+)'       => array('action' => 'instantAnalytics/trackEventUrl'),
+            'instantanalytics/pageViewTrack(/(?P<filename>[-\w\.*]+))?'    => array('action' => 'instantAnalytics/trackPageViewUrl'),
+            'instantanalytics/eventTrack(/(?P<filename>[-\w\.*]+))?'       => array('action' => 'instantAnalytics/trackEventUrl'),
         );
     }
 

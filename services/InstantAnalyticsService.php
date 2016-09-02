@@ -168,7 +168,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
      * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
      * @return array the product data
      */
-    public function getProductDataFromProduct($productVariant = null)
+    public function getProductDataFromProduct($productVariant = null, $index = 0, $listName = "")
     {
         $result = array();
         if ($productVariant)
@@ -214,8 +214,13 @@ class InstantAnalyticsService extends BaseApplicationComponent
 */
             ];
 
+            if ($index)
+                $productData['position'] = $index;
+            if ($listName)
+                $productData['list'] = $listName;
             if ($variant)
                 $productData['variant'] = $variant;
+
             $settings = craft()->plugins->getPlugin('instantanalytics')->getSettings();
             if (isset($settings) && isset($settings['productCategoryField']) && $settings['productCategoryField'] != "")
                 $productData['category'] = $this->_pullDataFromField($productVariant, $settings['productCategoryField']);
@@ -225,7 +230,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
             $result = $productData;
         }
         return $result;
-    } /* -- getProductData */
+    } /* -- getProductDataFromProduct */
 
     /**
      * Add a product impression from a Craft Commerce Product or Variant
@@ -233,13 +238,13 @@ class InstantAnalyticsService extends BaseApplicationComponent
      * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
      * @param int  $index Where the product appears in the list
      */
-    public function addCommerceProductImpression($analytics = null, $productVariant = null, $index = 0)
+    public function addCommerceProductImpression($analytics = null, $productVariant = null, $index = 0, $listName="")
     {
         if ($productVariant)
         {
             if ($analytics)
             {
-                $productData = $this->getProductDataFromProduct($productVariant);
+                $productData = $this->getProductDataFromProduct($productVariant, $index, $listName);
 
                 //Add the product to the hit to be sent
                 $analytics->addProductImpression($productData, $index);
@@ -286,8 +291,12 @@ class InstantAnalyticsService extends BaseApplicationComponent
             {
                 // Add each line item in the transaction
                 // Two cases - variant and non variant products
+                $index = 1;
                 foreach ($orderModel->lineItems as $key => $lineItem)
-                    $this->addProductDataFromLineItem($analytics, $lineItem);
+                {
+                    $this->addProductDataFromLineItem($analytics, $lineItem, $index, "");
+                    $index++;
+                }
                 $analytics->setCheckoutStep($step);
                 if ($option)
                     $analytics->setCheckoutStepOption($option);
@@ -303,7 +312,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
      * Add a Craft Commerce LineItem to an Analytics object
      * @return string the title of the product
      */
-    public function addProductDataFromLineItem($analytics = null, $lineItem = null)
+    public function addProductDataFromLineItem($analytics = null, $lineItem = null, $index = 0, $listName = "")
     {
         $result = "";
         if ($lineItem)
@@ -332,6 +341,10 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 }
 
                 $result = $productData['name'];
+                if ($index)
+                    $productData['position'] = $index;
+                if ($listName)
+                    $productData['list'] = $listName;
 
                 $settings = craft()->plugins->getPlugin('instantanalytics')->getSettings();
                 if (isset($settings) && isset($settings['productCategoryField']) && $settings['productCategoryField'] != "")
@@ -368,8 +381,12 @@ class InstantAnalyticsService extends BaseApplicationComponent
 
                 // Add each line item in the transaction
                 // Two cases - variant and non variant products
+                $index = 1;
                 foreach ($orderModel->lineItems as $key => $lineItem)
-                    $this->addProductDataFromLineItem($analytics, $lineItem);
+                {
+                    $this->addProductDataFromLineItem($analytics, $lineItem, $index, "");
+                    $index++;
+                }
             }
         }
     } /* -- addCommerceOrderToAnalytics */
