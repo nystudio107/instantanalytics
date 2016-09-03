@@ -29,6 +29,14 @@
 }}
 
 {{ forms.lightswitchField({
+    label: 'Strip Query String from PageView URLs:',
+    instructions: "If this setting is on, the query string will be stripped from PageView URLs before being sent to Google Analytics.  e.g.: `/some/path?token=1235312` would be sent as just `/some/path`",
+    id: 'stripQueryString',
+    name: 'stripQueryString',
+    on: settings['stripQueryString']})
+}}
+
+{{ forms.lightswitchField({
     label: 'Auto Send "Add To Cart" Events:',
     instructions: "If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent when an item is added to your Craft Commerce cart.",
     id: 'autoSendAddToCart',

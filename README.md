@@ -77,6 +77,7 @@ You can do anything from customized PageViews to complicated Google Enhanced eCo
 Once you have installed Instant Analytics, you'll see a welcome screen.  Click on **Get Started** to configure Instant Analytics:
 
 * **Google Analytics Tracking ID:** Enter your Google Analytics Tracking ID here. Only enter the ID, e.g.: UA-XXXXXX-XX, not the entire script code.
+* **Strip Query String from PageView URLs:** If this setting is on, the query string will be stripped from PageView URLs before being sent to Google Analytics.  e.g.: `/some/path?token=1235312` would be sent as just `/some/path`
 * **Auto Send "Add To Cart" Events:** If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent when an item is added to your Craft Commerce cart.
 * **Auto Send "Remove From Cart" Events:** If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent when an item is removed from your Craft Commerce cart.
 * **Auto Send "Purchase Complete" Events:** If this setting is on, Google Analytics Enhanced Ecommerce events are automatically sent a purchase is completed.
@@ -303,6 +304,7 @@ Some things to do, and ideas for potential features:
 
 * [Improved] Added the `$index` and `$listName` parameters to `addCommerceProductImpression()`, and re-enabled it
 * [Improved] The URLs returned by `pageViewTrackingUrl()` and `eventTrackingUrl()` will now work even if there is no filename in the URL
+* [Improved] Added a global config option to strip the query string from PageView URLs
 * [Improved] Updated README.md
 
 ### 1.1.1 -- 2016.08.29

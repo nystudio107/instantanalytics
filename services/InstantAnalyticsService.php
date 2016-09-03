@@ -78,6 +78,12 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 $url = substr($url, 1);
             }
 
+/* -- Strip the query string if that's the global config setting */
+
+            $settings = craft()->plugins->getPlugin('instantanalytics')->getSettings();
+            if (isset($settings) && isset($settings['stripQueryString']) && $settings['stripQueryString'])
+                $url = UrlHelper::stripQueryString($url);
+
 /* -- Prepare the Analytics object, and send the pageview */
 
             $analytics->setDocumentPath($url)

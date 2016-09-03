@@ -260,6 +260,7 @@ class InstantAnalyticsPlugin extends BasePlugin
 
         return array(
             'googleAnalyticsTracking' => array(AttributeType::String, 'label' => 'Google Analytics Tracking ID:', 'default' => $defaultTrackingId),
+            'stripQueryString' => array(AttributeType::String, 'label' => 'Strip Query String from PageView URLs:', 'default' => true),
             'productCategoryField' => array(AttributeType::String, 'label' => 'Commerce Product Category Field:', 'default' => ''),
             'productBrandField' => array(AttributeType::String, 'label' => 'Commerce Product Brand Field:', 'default' => ''),
             'autoSendAddToCart' => array(AttributeType::String, 'label' => 'Auto Send Commerce Analytics:', 'default' => true),
