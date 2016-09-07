@@ -670,7 +670,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
             else
                 $cid = $this->_gaGenUUID();
         }
-        setcookie('_ia', $cid, time()+60*60*24*730); // Two years
+        setcookie('_ia', $cid, time()+60*60*24*730, "/"); // Two years
         return $cid;
     } /* -- _gaParseCookie */
 

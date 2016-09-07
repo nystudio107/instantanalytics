@@ -305,6 +305,7 @@ Some things to do, and ideas for potential features:
 * [Improved] Added the `$index` and `$listName` parameters to `addCommerceProductImpression()`, and re-enabled it
 * [Improved] The URLs returned by `pageViewTrackingUrl()` and `eventTrackingUrl()` will now work even if there is no filename in the URL
 * [Improved] Added a global config option to strip the query string from PageView URLs
+* [Improved] The `_ia` cookie is now set on `/`
 * [Improved] Updated README.md
 
 ### 1.1.1 -- 2016.08.29
