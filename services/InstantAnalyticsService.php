@@ -160,7 +160,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
             'url' => $url,
             'eventCategory' => $eventCategory,
             'eventAction' => $eventAction,
-            'eventLabel' => $eventLabel),
+            'eventLabel' => $eventLabel,
             'eventValue' => $eventValue,
             );
         $fileName = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_BASENAME);
