@@ -136,8 +136,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
     public function pageViewTrackingUrl($url, $title)
     {
         $urlParams = array(
-            'url' => urlencode($url),
-            'title' => urlencode($title),
+            'url' => $url,
+            'title' => $title,
             );
         $fileName = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_BASENAME);
         $trackingUrl = UrlHelper::getSiteUrl('instantanalytics/pageViewTrack/' . $fileName, $urlParams);
@@ -157,11 +157,11 @@ class InstantAnalyticsService extends BaseApplicationComponent
     public function eventTrackingUrl($url, $eventCategory="", $eventAction="", $eventLabel="", $eventValue=0)
     {
         $urlParams = array(
-            'url' => urlencode($url),
-            'eventCategory' => urlencode($eventCategory),
-            'eventAction' => urlencode($eventAction),
-            'eventLabel' => urlencode($eventLabel),
-            'eventValue' => urlencode($eventValue),
+            'url' => $url,
+            'eventCategory' => $eventCategory,
+            'eventAction' => $eventAction,
+            'eventLabel' => $eventLabel),
+            'eventValue' => $eventValue,
             );
         $fileName = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_BASENAME);
         $trackingUrl = UrlHelper::getSiteUrl('instantanalytics/eventTrack/' . $fileName, $urlParams);
