@@ -246,6 +246,12 @@ class InstantAnalyticsService extends BaseApplicationComponent
      */
     public function addCommerceProductImpression($analytics = null, $productVariant = null, $index = 0, $listName="")
     {
+/**
+ * This is broken in the Google Measurement Protocol PHP lib as per:
+ * https://github.com/theiconic/php-ga-measurement-protocol/issues/26
+ */
+        return;
+
         if ($productVariant)
         {
             if ($analytics)
