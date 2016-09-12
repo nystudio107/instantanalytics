@@ -651,7 +651,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
             $gclid = $_GET['gclid'];
             if (!empty($gclid))
             {
-                setcookie("gclid", $gclid, time() + (10 * 365 * 24 * 60 * 60));
+                setcookie("gclid", $gclid, time() + (10 * 365 * 24 * 60 * 60),  "/");
             }
         }
         return $gclid;
