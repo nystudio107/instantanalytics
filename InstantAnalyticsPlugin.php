@@ -219,7 +219,8 @@ class InstantAnalyticsPlugin extends BasePlugin
 
 /* -- Show our "Welcome to Instant Analytics" message */
 
-        craft()->request->redirect(UrlHelper::getCpUrl('instantanalytics/welcome'));
+        if (!craft()->isConsole())
+            craft()->request->redirect(UrlHelper::getCpUrl('instantanalytics/welcome'));
     }
 
     /**

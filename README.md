@@ -300,6 +300,11 @@ Some things to do, and ideas for potential features:
 
 ## Instant Analytics Changelog
 
+### 1.1.3 -- 2016.09.23
+
+* [Improved] Don't redirect to the welcome page if we're being installed via Console command
+* [Improved] Updated README.md
+
 ### 1.1.2 -- 2016.09.18
 
 * [Improved] The URLs returned by `pageViewTrackingUrl()` and `eventTrackingUrl()` will now work even if there is no filename in the URL
