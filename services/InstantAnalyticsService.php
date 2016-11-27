@@ -607,6 +607,9 @@ class InstantAnalyticsService extends BaseApplicationComponent
             $analytics = new IAnalytics();
             if ($analytics)
             {
+                $hostName = parse_url(craft()->getSiteUrl(), PHP_URL_HOST);
+                if (isset($_SERVER['SERVER_NAME']))
+                    $hostName = $_SERVER['SERVER_NAME'];
                 $userAgent = "User-Agent:Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13\r\n";
                 if (isset($_SERVER['HTTP_USER_AGENT']))
                     $userAgent = $_SERVER['HTTP_USER_AGENT'];
@@ -617,6 +620,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     ->setTrackingId($settings['googleAnalyticsTracking'])
                     ->setIpOverride($_SERVER['REMOTE_ADDR'])
                     ->setUserAgentOverride($userAgent)
+                    ->setDocumentHostName($hostName)
                     ->setDocumentReferrer($referrer)
                     ->setAsyncRequest(false)
                     ->setClientId($this->_gaParseCookie());
