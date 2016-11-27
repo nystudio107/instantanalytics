@@ -87,6 +87,14 @@ The library is 100% done, full documentation is a work in progress, but basicall
 // https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters
 $analytics->set<ParameterName>('my_value');
 ```
+
+```php
+// Get any parameter by its name
+// Look at the parameter names in Google official docs at
+// https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters
+$analytics->get<ParameterName>();
+```
+
 All methods for setting parameters should **Autocomplete** if you use an IDE such as PHPStorm, which makes building the Analytics object very easy.
 
 ## Use Cases
@@ -100,6 +108,42 @@ $analytics
     ->sendPageview();
 ```
 This means that we are sending the request and not waiting for a response. The AnalyticsResponse object that you will get back has NULL for HTTP status code.
+### Order Tracking with simple E-commerce
+```php
+use TheIconic\Tracking\GoogleAnalytics\Analytics;
+
+$analytics = new Analytics();
+
+// Build the order data programmatically, including each order product in the payload
+// Take notice, if you want GA reports to tie this event with previous user actions
+// you must get and set the same ClientId from the GA Cookie
+// First, general and required hit data
+$analytics->setProtocolVersion('1')
+    ->setTrackingId('UA-26293624-12')
+    ->setClientId('2133506694.1448249699');
+
+// To report an order we need to make single hit of type 'transaction' and a hit of
+// type 'item' for every item purchased. Just like analytics.js would do when
+// tracking e-commerce from JavaScript
+$analytics->setTransactionId(1667) // transaction id. required
+    ->setRevenue(65.00)
+    ->setShipping(5.00)
+    ->setTax(10.83)
+    // make the 'transaction' hit
+    ->sendTransaction();
+
+foreach ($cartProducts as $cartProduct) {
+    $response = $analytics->setTransactionId(1667) // transaction id. required, same value as above
+        ->setItemName($cartProduct->name) // required
+        ->setItemCode($cartProduct->code) // SKU or id
+        ->setItemCategory($cartProduct->category) // item variation: category, size, color etc.
+        ->setItemPrice($cartProduct->price)
+        ->setItemQuantity($cartProduct->qty)
+        // make the 'item' hit
+        ->sendItem();
+}
+
+```
 ### Order Tracking with Enhanced E-commerce
 
 ```php
@@ -194,6 +238,7 @@ GA actually returns a JSON that is parsed into an associative array. Read ([here
 * Martín Palombo - [lombo](https://github.com/lombo)
 * Amit Rana - [amit0rana](https://github.com/amit0rana)
 * Stefan Zweifel - [stefanzweifel](https://github.com/stefanzweifel)
+* Titouan BENOIT - [nightbr](https://github.com/Nightbr)
 
 ## License
 

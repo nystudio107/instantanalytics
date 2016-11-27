@@ -3,8 +3,6 @@
 namespace TheIconic\Tracking\GoogleAnalytics\Network;
 
 use TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse;
-use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
-use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
@@ -56,6 +54,7 @@ class HttpClient
     /**
      * Sets HTTP client.
      *
+     * @internal
      * @param Client $client
      */
     public function setClient(Client $client)
@@ -82,6 +81,7 @@ class HttpClient
     /**
      * Sends request to Google Analytics.
      *
+     * @internal
      * @param string $url
      * @param boolean $nonBlocking
      * @return AnalyticsResponse
