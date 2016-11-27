@@ -46,7 +46,7 @@ class IAnalytics extends Analytics
      * @param $methodName
      * @return AnalyticsResponse
      */
-    private function sendHit($methodName)
+    protected function sendHit($methodName)
     {
         if ($this->shouldSendAnalytics)
             return parent::sendHit($methodName);
