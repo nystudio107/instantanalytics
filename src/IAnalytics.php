@@ -48,10 +48,15 @@ class IAnalytics extends Analytics
      */
     protected function sendHit($methodName)
     {
+        $loggingFlag = craft()->config->get("logExcludedAnalytics", "instantanalytics");
+        $requestIp = $_SERVER['REMOTE_ADDR'];
         if ($this->shouldSendAnalytics)
             return parent::sendHit($methodName);
         else
+        {
+            InstantAnalyticsPlugin::log("*** sendHit(): analytics not sent for " . $requestIp, LogLevel::Info, $loggingFlag);
             return null;
+        }
     } /* -- sendHit */
 
     /**

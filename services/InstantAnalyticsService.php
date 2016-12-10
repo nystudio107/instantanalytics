@@ -481,17 +481,34 @@ class InstantAnalyticsService extends BaseApplicationComponent
     public function shouldSendAnalytics()
     {
         $result = true;
+        $loggingFlag = craft()->config->get("logExcludedAnalytics", "instantanalytics");
+        $requestIp = $_SERVER['REMOTE_ADDR'];
 
         if (!craft()->config->get("sendAnalyticsData", "instantanalytics"))
+        {
+            InstantAnalyticsPlugin::log("Analytics excluded for: " . $requestIp . " due to: `sendAnalyticsData`", LogLevel::Info, $loggingFlag);
             return false;
+        }
         if (!craft()->config->get("sendAnalyticsInDevMode", "instantanalytics") && craft()->config->get('devMode'))
+        {
+            InstantAnalyticsPlugin::log("Analytics excluded for: " . $requestIp . " due to: `sendAnalyticsInDevMode`", LogLevel::Info, $loggingFlag);
             return false;
+        }
         if (craft()->isConsole())
+        {
+            InstantAnalyticsPlugin::log("Analytics excluded for: " . $requestIp . " due to: `craft()->isConsole()`", LogLevel::Info, $loggingFlag);
             return false;
+        }
         if (craft()->request->isCpRequest())
+        {
+            InstantAnalyticsPlugin::log("Analytics excluded for: " . $requestIp . " due to: `craft()->request->isCpRequest()`", LogLevel::Info, $loggingFlag);
             return false;
+        }
         if (craft()->request->isLivePreview())
+        {
+            InstantAnalyticsPlugin::log("Analytics excluded for: " . $requestIp . " due to: `craft()->request->isLivePreview()`", LogLevel::Info, $loggingFlag);
             return false;
+        }
 
 /* -- Check the $_SERVER[] super-global exclusions */
 
@@ -505,7 +522,10 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     foreach ($matchArray as $matchItem)
                     {
                         if (preg_match($matchItem, $_SERVER[$match]))
+                        {
+                            InstantAnalyticsPlugin::log("Analytics excluded for: " . $requestIp . " due to: `serverExcludes`", LogLevel::Info, $loggingFlag);
                             return false;
+                        }
                     }
                 }
             }
@@ -520,7 +540,10 @@ class InstantAnalyticsService extends BaseApplicationComponent
 
 // Check the user agent of the current 'visitor'
             if ($CrawlerDetect->isCrawler())
+            {
+                InstantAnalyticsPlugin::log("Analytics excluded for: " . $requestIp . " due to: `filterBotUserAgents`", LogLevel::Info, $loggingFlag);
                 return false;
+            }
         }
 
 /* -- Filter by user group */
@@ -532,7 +555,10 @@ class InstantAnalyticsService extends BaseApplicationComponent
             $exclusions = craft()->config->get("groupExcludes", "instantanalytics");
 
             if (craft()->config->get("adminExclude", "instantanalytics") && $session->isAdmin())
+            {
+                InstantAnalyticsPlugin::log("Analytics excluded for: " . $requestIp . " due to: `adminExclude`", LogLevel::Info, $loggingFlag);
                 return false;
+            }
 
             if ($user && isset($exclusions) && is_array($exclusions))
             {
@@ -541,7 +567,10 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     foreach ($exclusions as $matchItem)
                     {
                         if ($user->isInGroup($matchItem))
+                        {
+                            InstantAnalyticsPlugin::log("Analytics excluded for: " . $requestIp . " due to: `groupExcludes`", LogLevel::Info, $loggingFlag);
                             return false;
+                        }
                     }
                 }
             }

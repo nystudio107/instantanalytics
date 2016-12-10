@@ -302,9 +302,11 @@ Some things to do, and ideas for potential features:
 
 ### 1.1.4 -- 2016.10.19
 
+* [Added] Added extensive logging of excluded analytics data
+* [Added] Added `logExcludedAnalytics` config.php setting
 * [Fixed] Fixed an issue that would cause InstantAnalytics to not filter out bots properly
 * [Improved] `DocumentHostName` is now set by default
-* [Improved] Fixed an CSS file type in the `welcome.twig` template
+* [Improved] Fixed a CSS file typo in the `welcome.twig` template
 * [Improved] Updated README.md
 
 ### 1.1.3 -- 2016.09.23

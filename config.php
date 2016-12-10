@@ -32,6 +32,13 @@ return array(
     "adminExclude" => false,
 
 /**
+ * Controls whether analytics that blocked from being sent should be logged to
+ * craft/storage/runtime/logs/instantanalytics.log
+ * These are always logged if `devMode` is on
+ */
+    "logExcludedAnalytics" => false,
+
+/**
  * Contains an array of Craft user group handles to exclude from Analytics tracking.  If there's a match
  * for any of them, analytics data is not sent.
  */
