@@ -342,20 +342,29 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     'quantity' => $lineItem->qty,
                 ];
 
-                if (!$lineItem->purchasable->product->type->hasVariants)
+                if (isset($lineItem->purchasable->product))
                 {
-                //No variants (i.e. default variant)
-                    $productData['name'] = $lineItem->purchasable->title;
-                    $productData['category'] = $lineItem->purchasable->product->type['name'];
+                    $productVariant = $lineItem->purchasable->product;
+                    if (!$lineItem->purchasable->product->type->hasVariants)
+                    {
+                    //No variants (i.e. default variant)
+                        $productData['name'] = $lineItem->purchasable->title;
+                        $productData['category'] = $lineItem->purchasable->product->type['name'];
+                    }
+                    else
+                    {
+                    // Product with variants
+                        $productData['name'] = $lineItem->purchasable->product->title;
+                        $productData['category'] = $lineItem->purchasable->product->type['name'];
+                        $productData['variant'] = $lineItem->purchasable->title;
+                    }
                 }
                 else
                 {
-                // Product with variants
-                    $productData['name'] = $lineItem->purchasable->product->title;
-                    $productData['category'] = $lineItem->purchasable->product->type['name'];
-                    $productData['variant'] = $lineItem->purchasable->title;
+                    $productVariant = $lineItem->purchasable;
+                    $productData['name'] = $lineItem->purchasable->title;
+                    $productData['category'] = $lineItem->purchasable->elementType;
                 }
-
                 $result = $productData['name'];
                 if ($index)
                     $productData['position'] = $index;
@@ -364,12 +373,12 @@ class InstantAnalyticsService extends BaseApplicationComponent
 
                 $settings = craft()->plugins->getPlugin('instantanalytics')->getSettings();
                 if (isset($settings) && isset($settings['productCategoryField']) && $settings['productCategoryField'] != "")
-                    $productData['category'] = $this->_pullDataFromField($lineItem->purchasable->product, $settings['productCategoryField']);
+                    $productData['category'] = $this->_pullDataFromField($productVariant, $settings['productCategoryField']);
                 if (isset($settings) && isset($settings['productBrandField']) && $settings['productBrandField'] != "")
-                    $productData['brand'] = $this->_pullDataFromField($lineItem->purchasable->product, $settings['productBrandField']);
+                    $productData['brand'] = $this->_pullDataFromField($productVariant, $settings['productBrandField']);
                 //Add each product to the hit to be sent
                 $analytics->addProduct($productData);
-            }
+           }
         }
         return $result;
     } /* -- addProductDataFromLineItem */
