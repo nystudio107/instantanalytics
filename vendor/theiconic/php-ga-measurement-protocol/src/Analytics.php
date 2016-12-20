@@ -553,7 +553,7 @@ class Analytics
      * @return AnalyticsResponse
      * @throws Exception\InvalidPayloadDataException
      */
-    protected function sendHit($methodName)
+    private function sendHit($methodName)
     {
         $hitType = strtoupper(substr($methodName, 4));
 

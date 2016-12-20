@@ -300,8 +300,9 @@ Some things to do, and ideas for potential features:
 
 ## Instant Analytics Changelog
 
-### 1.1.4 -- 2016.10.19
+### 1.1.4 -- 2016.12.20
 
+* [Improved] Made the default `config.php` multi-environment
 * [Added] Added extensive logging of excluded analytics data
 * [Added] Added `logExcludedAnalytics` config.php setting
 * [Fixed] Fixed an issue that would cause InstantAnalytics to not filter out bots properly

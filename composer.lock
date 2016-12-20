@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6c6729fbcb810d0c1e6a5f7577b0903d",
-    "content-hash": "934a87fcb611a1c92735e56d9a6cfa5a",
+    "hash": "fa819943c4292085a63311a081fe4922",
+    "content-hash": "7bfc80dd38ea5ce672a0a8b9d9097ec2",
     "packages": [
         {
             "name": "composer/installers",
@@ -120,12 +120,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "471026d23a14f6eadd0147eb5697f48ebe6adec8"
+                "reference": "dfadff37efcfd42230eef1350009898b7b9af40a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/471026d23a14f6eadd0147eb5697f48ebe6adec8",
-                "reference": "471026d23a14f6eadd0147eb5697f48ebe6adec8",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/dfadff37efcfd42230eef1350009898b7b9af40a",
+                "reference": "dfadff37efcfd42230eef1350009898b7b9af40a",
                 "shasum": ""
             },
             "require": {
@@ -174,32 +174,32 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-11-15 18:22:40"
+            "time": "2016-12-15 09:53:31"
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "1.3.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "2693c101803ca78b27972d84081d027fca790a1e"
+                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/2693c101803ca78b27972d84081d027fca790a1e",
-                "reference": "2693c101803ca78b27972d84081d027fca790a1e",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0"
+                "phpunit/phpunit": "^4.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -225,7 +225,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-11-18 17:47:58"
+            "time": "2016-12-20 10:07:11"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -294,16 +294,16 @@
         },
         {
             "name": "jaybizzle/crawler-detect",
-            "version": "v1.2.24",
+            "version": "v1.2.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-                "reference": "b7bd13fdef0770a65c6d4362d6d72f99021dfee9"
+                "reference": "34d45b1dd0db13b55894af493df823741d22d59a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/b7bd13fdef0770a65c6d4362d6d72f99021dfee9",
-                "reference": "b7bd13fdef0770a65c6d4362d6d72f99021dfee9",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/34d45b1dd0db13b55894af493df823741d22d59a",
+                "reference": "34d45b1dd0db13b55894af493df823741d22d59a",
                 "shasum": ""
             },
             "require": {
@@ -338,7 +338,7 @@
                 "crawlerdetect",
                 "php crawler detect"
             ],
-            "time": "2016-11-25 21:32:14"
+            "time": "2016-12-15 21:48:05"
         },
         {
             "name": "psr/http-message",

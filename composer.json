@@ -4,8 +4,8 @@
     "description": "Instant Analytics lets you track otherwise untrackable assets & events with Google Analytics, and eliminates the need for Javascript tracking",
     "type": "craft-plugin",
     "require": {
-        "theiconic/php-ga-measurement-protocol": "^2.0",
-        "jaybizzle/crawler-detect" :"1.*",
+        "theiconic/php-ga-measurement-protocol": "^2.4.0",
+        "jaybizzle/crawler-detect" :"^1.2.26",
         "composer/installers": "~1.0"
     }
 }

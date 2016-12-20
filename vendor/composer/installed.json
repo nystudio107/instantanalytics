@@ -110,33 +110,33 @@
     },
     {
         "name": "guzzlehttp/promises",
-        "version": "1.3.0",
-        "version_normalized": "1.3.0.0",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/promises.git",
-            "reference": "2693c101803ca78b27972d84081d027fca790a1e"
+            "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/promises/zipball/2693c101803ca78b27972d84081d027fca790a1e",
-            "reference": "2693c101803ca78b27972d84081d027fca790a1e",
+            "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+            "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
             "shasum": ""
         },
         "require": {
             "php": ">=5.5.0"
         },
         "require-dev": {
-            "phpunit/phpunit": "~4.0"
+            "phpunit/phpunit": "^4.0"
         },
-        "time": "2016-11-18 17:47:58",
+        "time": "2016-12-20 10:07:11",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.0-dev"
+                "dev-master": "1.4-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "GuzzleHttp\\Promise\\": "src/"
@@ -287,12 +287,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "471026d23a14f6eadd0147eb5697f48ebe6adec8"
+            "reference": "dfadff37efcfd42230eef1350009898b7b9af40a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/471026d23a14f6eadd0147eb5697f48ebe6adec8",
-            "reference": "471026d23a14f6eadd0147eb5697f48ebe6adec8",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/dfadff37efcfd42230eef1350009898b7b9af40a",
+            "reference": "dfadff37efcfd42230eef1350009898b7b9af40a",
             "shasum": ""
         },
         "require": {
@@ -305,7 +305,7 @@
             "phpunit/phpunit": "^4.0",
             "psr/log": "^1.0"
         },
-        "time": "2016-11-15 18:22:40",
+        "time": "2016-12-15 09:53:31",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -389,17 +389,17 @@
     },
     {
         "name": "jaybizzle/crawler-detect",
-        "version": "v1.2.24",
-        "version_normalized": "1.2.24.0",
+        "version": "v1.2.26",
+        "version_normalized": "1.2.26.0",
         "source": {
             "type": "git",
             "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-            "reference": "b7bd13fdef0770a65c6d4362d6d72f99021dfee9"
+            "reference": "34d45b1dd0db13b55894af493df823741d22d59a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/b7bd13fdef0770a65c6d4362d6d72f99021dfee9",
-            "reference": "b7bd13fdef0770a65c6d4362d6d72f99021dfee9",
+            "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/34d45b1dd0db13b55894af493df823741d22d59a",
+            "reference": "34d45b1dd0db13b55894af493df823741d22d59a",
             "shasum": ""
         },
         "require": {
@@ -408,7 +408,7 @@
         "require-dev": {
             "phpunit/phpunit": "*"
         },
-        "time": "2016-11-25 21:32:14",
+        "time": "2016-12-15 21:48:05",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
