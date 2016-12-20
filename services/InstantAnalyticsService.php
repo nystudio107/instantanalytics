@@ -363,7 +363,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 {
                     $productVariant = $lineItem->purchasable;
                     $productData['name'] = $lineItem->purchasable->title;
-                    $productData['category'] = $lineItem->purchasable->elementType;
+                    $productData['category'] = $lineItem->purchasable->type->name;
                 }
                 $result = $productData['name'];
                 if ($index)

@@ -6,6 +6,7 @@
         "notes": [
             "[Added] Added support for DigitalProducts and other base purchaseables",
             "[Added] Added `UptimeRobot` to the crawlers list",
+            "[Fixed] Rolled the mult-env aware `config.php` back; Craft doesn't work that way",
             "[Improved] Updated README.md"
         ]
     },
