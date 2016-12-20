@@ -4,6 +4,7 @@
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2016-12-21T17:29:17.496Z",
         "notes": [
+            "[Improved] Fixed the Analytics Excludes",
             "[Added] Added support for DigitalProducts and other base purchaseables",
             "[Added] Added `UptimeRobot` to the crawlers list",
             "[Fixed] Rolled the mult-env aware `config.php` back; Craft doesn't work that way",
