@@ -64,7 +64,7 @@ class IAnalytics extends Analytics
      * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
      * @param int  $index Where the product appears in the list
      */
-    public function addCommerceProductImpression($productVariant = null, $index = 0, $listName = "")
+    public function addCommerceProductImpression($productVariant = null, $index = 0, $listName = "default", $listIndex = 1)
     {
 
         if ($productVariant)

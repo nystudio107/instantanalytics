@@ -2,9 +2,16 @@
     {
         "version": "1.1.4",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
-        "date": "2016-10-19T17:29:17.496Z",
+        "date": "2016-12-20T17:29:17.496Z",
         "notes": [
-            "[Improved] Fixed an CSS file type in the `welcome.twig` template",
+            "[Fixed] `addCommerceProductImpression()` now works properly",
+            "[Improved] Made the default `config.php` multi-environment",
+            "[Added] Added extensive logging of excluded analytics data",
+            "[Added] Added `logExcludedAnalytics` config.php setting",
+            "[Fixed] Fixed an issue that would cause InstantAnalytics to not filter out bots properly",
+            "[Improved] `DocumentHostName` is now set by default",
+            "[Improved] Fixed a CSS file typo in the `welcome.twig` template",
+            "[Improved] Updated to the latest vendor deps",
             "[Improved] Updated README.md"
         ]
     },

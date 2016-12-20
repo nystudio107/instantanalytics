@@ -171,7 +171,7 @@ You simply need to enable Enhanced Ecommerce in your Google Analytics Admin area
 
 That's it!  It'll just work.  In addition to the basic automatic tracking that Instant Analytics does, you can use the `instantAnalytics` object to send additional data to Google Analytics Enhanced Ecommerce:
 
-* `{% do instantAnalytics.addCommerceProductImpression(PRODUCT_VARIANT, INDEX) %}` - This will add an _impression_ for a given Craft Commerce `Product` or `Variant` (you can pass in either in `PRODUCT_VARIANT`).  `INDEX` must be a number between 1-200, and is the position in the list of products where this product appears. This should be used on product listing pages that show a number of products, to indicate that the user has been shown a particular product.
+* `{% do instantAnalytics.addCommerceProductImpression(PRODUCT_VARIANT, INDEX, LIST_NAME, LIST_INDEX) %}` - This will add an _impression_ for a given Craft Commerce `Product` or `Variant` (you can pass in either in `PRODUCT_VARIANT`).  `INDEX` must be a number between 1-200, and is the position in the list of products where this product appears. This should be used on product listing pages that show a number of products, to indicate that the user has been shown a particular product. `LIST_NAME` and `LIST_INDEX` are optional; they let you set the product list name, and the index of that list, which is a number from 1-200, and should be unique to the list. `LIST_NAME` defaults to `default` and `LIST_INDEX` defaults to `1` if not specified.
 *  `{% do instantAnalytics.addCommerceProductDetailView(PRODUCT_VARIANT) %}` - This will add a _product detail view_ for a given Craft Commerce `Product` or `Variant` (you can pass in either in `PRODUCT_VARIANT`).  This should be used when the user is shown the detail view of a product.
 *  `{% do instantAnalytics.addCommerceCheckoutStep(CART, STEP, OPTION) %}` - This will add a _checkout step_ for a given Craft Commerce `CART` (obtained via `craft.commerce.cart`).  The `STEP` parameter lets you specify which step in the checkout process you are on, and the `OPTION` parameter is optional information you can associate with this checkout step, e.g.: `Shipping Info` or `VISA`.
 
@@ -203,6 +203,7 @@ By default, the injected `instantAnalytics` object is filled in with the followi
 * `myAnalytics.setTrackingId(YOUR_TRACKING_ID)`
 * `myAnalytics.setIpOverride($_SERVER['REMOTE_ADDR'])`
 * `myAnalytics.setUserAgentOverride($_SERVER['HTTP_USER_AGENT'])`
+* `myAnalytics.setDocumentHostName($_SERVER['SERVER_NAME'])`
 * `myAnalytics.setDocumentReferrer($_SERVER['HTTP_REFERER'])`
 * `myAnalytics.setClientId(CID)`
 * `myAnalytics.setEventCategory(CATEGORY)`
@@ -302,12 +303,14 @@ Some things to do, and ideas for potential features:
 
 ### 1.1.4 -- 2016.12.20
 
+* [Fixed] `addCommerceProductImpression()` now works properly
 * [Improved] Made the default `config.php` multi-environment
 * [Added] Added extensive logging of excluded analytics data
 * [Added] Added `logExcludedAnalytics` config.php setting
 * [Fixed] Fixed an issue that would cause InstantAnalytics to not filter out bots properly
 * [Improved] `DocumentHostName` is now set by default
 * [Improved] Fixed a CSS file typo in the `welcome.twig` template
+* [Improved] Updated to the latest vendor deps
 * [Improved] Updated README.md
 
 ### 1.1.3 -- 2016.09.23

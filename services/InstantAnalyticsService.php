@@ -174,7 +174,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
      * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
      * @return array the product data
      */
-    public function getProductDataFromProduct($productVariant = null, $index = 0, $listName = "")
+    public function getProductDataFromProduct($productVariant = null)
     {
         $result = array();
         if ($productVariant)
@@ -215,15 +215,9 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 'category' => $category,
 /*
                 'brand' => "",
-                'list' => "",
-                'position' => "",
 */
             ];
 
-            if ($index)
-                $productData['position'] = $index;
-            if ($listName)
-                $productData['list'] = $listName;
             if ($variant)
                 $productData['variant'] = $variant;
 
@@ -244,23 +238,24 @@ class InstantAnalyticsService extends BaseApplicationComponent
      * @param Commerce_ProductModel or Commerce_VariantModel  $productVariant the Product or Variant
      * @param int  $index Where the product appears in the list
      */
-    public function addCommerceProductImpression($analytics = null, $productVariant = null, $index = 0, $listName="")
+    public function addCommerceProductImpression($analytics = null, $productVariant = null, $index = 0, $listName="default", $listIndex = 1)
     {
-/**
- * This is broken in the Google Measurement Protocol PHP lib as per:
- * https://github.com/theiconic/php-ga-measurement-protocol/issues/26
- */
-        return;
-
         if ($productVariant)
         {
             if ($analytics)
             {
-                $productData = $this->getProductDataFromProduct($productVariant, $index, $listName);
+                $productData = $this->getProductDataFromProduct($productVariant);
+/**
+ * As per: https://github.com/theiconic/php-ga-measurement-protocol/issues/26
+ */
+                if ($listName && $listIndex)
+                    $analytics->setProductImpressionListName($listName, $listIndex);
+                if ($index)
+                    $productData['position'] = $index;
 
                 //Add the product to the hit to be sent
                 $analytics->addProductImpression($productData, $index);
-                InstantAnalyticsPlugin::log("addCommerceProductDetailView for `" . $productData['sku'] . "` - `" . $productData['name'] . "` - `" . $productData['name'] . "`", LogLevel::Info, false);
+                InstantAnalyticsPlugin::log("addCommerceProductImpression for `" . $productData['sku'] . "` - `" . $productData['name'] . "` - `" . $productData['name'] . "`", LogLevel::Info, false);
             }
         }
     } /* -- addCommerceProductImpression */
