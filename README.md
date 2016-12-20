@@ -301,6 +301,12 @@ Some things to do, and ideas for potential features:
 
 ## Instant Analytics Changelog
 
+### 1.1.5 -- 2016.12.21
+
+* [Added] Added support for DigitalProducts and other base purchaseables
+* [Added] Added `UptimeRobot` to the crawlers list
+* [Improved] Updated README.md
+
 ### 1.1.4 -- 2016.12.20
 
 * [Fixed] `addCommerceProductImpression()` now works properly

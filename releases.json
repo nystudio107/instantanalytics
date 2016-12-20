@@ -1,5 +1,15 @@
 [
     {
+        "version": "1.1.5",
+        "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
+        "date": "2016-12-21T17:29:17.496Z",
+        "notes": [
+            "[Added] Added support for DigitalProducts and other base purchaseables",
+            "[Added] Added `UptimeRobot` to the crawlers list",
+            "[Improved] Updated README.md"
+        ]
+    },
+    {
         "version": "1.1.4",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2016-12-20T17:29:17.496Z",

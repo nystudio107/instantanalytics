@@ -179,10 +179,10 @@ class InstantAnalyticsService extends BaseApplicationComponent
         $result = array();
         if ($productVariant)
         {
-            if (is_object($productVariant) && $productVariant->getElementType() == "Commerce_Product")
+            if (is_object($productVariant) && ($productVariant->getElementType() == "Commerce_Product" || is_a($productVariant, "Commerce\\Base\\Purchasable")))
             {
                 $productType = craft()->commerce_productTypes->getProductTypeById($productVariant->typeId);
-                if ($productType->hasVariants)
+                if ($productType && $productType->hasVariants)
                 {
                     $productVariant = ArrayHelper::getFirstValue($productVariant->getVariants());
                     $product = $productVariant->getProduct();
@@ -201,10 +201,19 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 }
                 else
                 {
-                    $productVariant = craft()->commerce_variants->getVariantById($productVariant->defaultVariantId);
-                    $category = $productVariant->getProduct()->getType()['name'];
-                    $name = $productVariant->title;
-                    $variant = "";
+                    if (isset($productVariant->defaultVariantId))
+                    {
+                        $productVariant = craft()->commerce_variants->getVariantById($productVariant->defaultVariantId);
+                        $category = $productVariant->getProduct()->getType()['name'];
+                        $name = $productVariant->title;
+                        $variant = "";
+                    }
+                    else
+                    {
+                        $category = $productVariant->getType()['name'];
+                        $name = $productVariant->title;
+                        $variant = "";
+                    }
                 }
             }
 

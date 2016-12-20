@@ -19,6 +19,7 @@ class Crawlers extends AbstractProvider
      * @var array
      */
     protected $data = array(
+        'UptimeRobot',
         '.*Java.*outbrain',
         '008\/',
         '192.comAgent',
