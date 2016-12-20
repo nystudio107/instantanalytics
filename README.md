@@ -305,7 +305,7 @@ Some things to do, and ideas for potential features:
 
 * [Added] Added support for DigitalProducts and other base purchaseables
 * [Added] Added `UptimeRobot` to the crawlers list
-* [Improved] Rolled the mult-env aware `config.php` back; Craft doesn't work that way
+* [Improved] Rolled the multi-env aware `config.php` back; Craft doesn't work that way
 * [Improved] Updated README.md
 
 ### 1.1.4 -- 2016.12.20
