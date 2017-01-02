@@ -16,7 +16,7 @@ To install Instant Analytics, follow these steps:
 
 Instant Analytics works on Craft 2.4.x, Craft 2.5.x, and Craft 2.6.x.  It requires at least PHP 5.5 or later to work.
 
-N.B.: Version 1.1 of Instant Analytics has breaking API changes from the 1.0.x version.  You will need to add `{% hook 'iaSendPageView' %}` to your templates to send Google Analytics data.  In addition, the Twig tags `sendEvent` and `sendPageView` are deprecated; instead use `eventAnalytics` and `pageViewAnalytics` respectively to return an `Analtyics` object (see below).
+N.B.: Version 1.1 of Instant Analytics has breaking API changes from the 1.0.x version.  You will need to add `{% hook 'iaSendPageView' %}` to your templates to send Google Analytics data.  In addition, the Twig tags `sendEvent` and `sendPageView` are deprecated; instead use `eventAnalytics` and `pageViewAnalytics` respectively to return an `Analytics` object (see below).
 
 ## Instant Analytics Overview
 
