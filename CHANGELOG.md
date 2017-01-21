@@ -3,6 +3,7 @@
 ## 1.1.6 -- 2017.01.21
 
 * [Fixed] Fixed an issue where the `LIST_INDEX` wasn't being passed down to `addCommerceProductImpression`
+* [Fixed] Fixed an issue that would cause only one item to be listed on Product Lists
 * [Improved] Broke out the changelog into CHANGELOG.md
 
 ## 1.1.5 -- 2016.12.21

@@ -5,6 +5,7 @@
         "date": "2017-01-21T17:29:17.496Z",
         "notes": [
             "[Fixed] Fixed an issue where the `LIST_INDEX` wasn't being passed down to `addCommerceProductImpression`",
+            "[Fixed] Fixed an issue that would cause only one item to be listed on Product Lists",
             "[Improved] Broke out the changelog into CHANGELOG.md"
         ]
     },
