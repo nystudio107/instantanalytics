@@ -263,7 +263,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     $productData['position'] = $index;
 
                 //Add the product to the hit to be sent
-                $analytics->addProductImpression($productData, $index);
+                $analytics->addProductImpression($productData, $listIndex);
                 InstantAnalyticsPlugin::log("addCommerceProductImpression for `" . $productData['sku'] . "` - `" . $productData['name'] . "` - `" . $productData['name'] . "` - `" . $index . "`", LogLevel::Info, false);
             }
         }
