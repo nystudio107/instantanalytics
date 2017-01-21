@@ -69,7 +69,7 @@ class IAnalytics extends Analytics
 
         if ($productVariant)
         {
-            craft()->instantAnalytics->addCommerceProductImpression($this, $productVariant, $index, $listName);
+            craft()->instantAnalytics->addCommerceProductImpression($this, $productVariant, $index, $listName, $listIndex);
         }
 
     } /* -- addCommerceProductImpression */
