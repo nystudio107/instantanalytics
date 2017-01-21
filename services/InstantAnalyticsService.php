@@ -264,7 +264,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
 
                 //Add the product to the hit to be sent
                 $analytics->addProductImpression($productData, $index);
-                InstantAnalyticsPlugin::log("addCommerceProductImpression for `" . $productData['sku'] . "` - `" . $productData['name'] . "` - `" . $productData['name'] . "`", LogLevel::Info, false);
+                InstantAnalyticsPlugin::log("addCommerceProductImpression for `" . $productData['sku'] . "` - `" . $productData['name'] . "` - `" . $productData['name'] . "` - `" . $index . "`", LogLevel::Info, false);
             }
         }
     } /* -- addCommerceProductImpression */
