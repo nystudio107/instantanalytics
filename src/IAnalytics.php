@@ -50,8 +50,13 @@ class IAnalytics extends Analytics
     {
         $loggingFlag = craft()->config->get("logExcludedAnalytics", "instantanalytics");
         $requestIp = $_SERVER['REMOTE_ADDR'];
-        if ($this->shouldSendAnalytics)
-            return parent::sendHit($methodName);
+        if ($this->shouldSendAnalytics) {
+            try {
+                return parent::sendHit($methodName);
+            } catch (\Exception $e) {
+                InstantAnalyticsPlugin::log("*** sendHit(): error sending analytics: " . $e->getMessage(), LogLevel::Error, $loggingFlag);
+            }
+        }
         else
         {
             InstantAnalyticsPlugin::log("*** sendHit(): analytics not sent for " . $requestIp, LogLevel::Info, $loggingFlag);

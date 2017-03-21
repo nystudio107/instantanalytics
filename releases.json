@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.1.7",
+        "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
+        "date": "2017-03-21T17:29:17.496Z",
+        "notes": [
+            "[Improved] Wrap calls to `sendHit()` in a `try` / `catch` block to avoid hard errors"
+        ]
+    },
+    {
         "version": "1.1.6",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2017-01-21T17:29:17.496Z",
