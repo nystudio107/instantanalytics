@@ -334,6 +334,7 @@ class InstantAnalyticsPlugin extends BasePlugin
                 case "RichText":
                 case "RedactorI":
                 case "PreparseField_Preparse":
+	            case "Categories":
                     $result[$field->handle] = $field->name;
                     break;
 
