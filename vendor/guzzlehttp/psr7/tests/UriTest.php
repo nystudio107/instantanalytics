@@ -569,14 +569,12 @@ class UriTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('foo', (string) $uri);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The path of a URI with an authority must start with a slash "/" or be empty
-     */
-    public function testRelativePathAndAuhorityIsInvalid()
+    public function testRelativePathAndAuhorityIsAutomagicallyFixed()
     {
         // concatenating a relative path with a host doesn't work: "//example.comfoo" would be wrong
-        (new Uri)->withPath('foo')->withHost('example.com');
+        $uri = (new Uri)->withPath('foo')->withHost('example.com');
+        $this->assertSame('/foo', $uri->getPath());
+        $this->assertSame('//example.com/foo', (string) $uri);
     }
 
     /**

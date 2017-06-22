@@ -690,7 +690,13 @@ class Uri implements UriInterface
                 throw new \InvalidArgumentException('A relative URI must not have a path beginning with a segment containing a colon');
             }
         } elseif (isset($this->path[0]) && $this->path[0] !== '/') {
-            throw new \InvalidArgumentException('The path of a URI with an authority must start with a slash "/" or be empty');
+            @trigger_error(
+                'The path of a URI with an authority must start with a slash "/" or be empty. Automagically fixing the URI ' .
+                'by adding a leading slash to the path is deprecated since version 1.4 and will throw an exception instead.',
+                E_USER_DEPRECATED
+            );
+            $this->path = '/'. $this->path;
+            //throw new \InvalidArgumentException('The path of a URI with an authority must start with a slash "/" or be empty');
         }
     }
 }

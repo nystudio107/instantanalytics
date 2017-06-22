@@ -181,10 +181,10 @@ class InstantAnalyticsService extends BaseApplicationComponent
         {
             if (is_object($productVariant) && ($productVariant->getElementType() == "Commerce_Product" || is_a($productVariant, "Commerce\\Base\\Purchasable")))
             {
-	            $productType = property_exists($productVariant, "typeId")
-		            ? craft()->commerce_productTypes->getProductTypeById($productVariant->typeId)
-		            : null;
-	            
+                $productType = property_exists($productVariant, "typeId")
+                    ? craft()->commerce_productTypes->getProductTypeById($productVariant->typeId)
+                    : null;
+                
                 if ($productType && $productType->hasVariants)
                 {
                     $productVariant = ArrayHelper::getFirstValue($productVariant->getVariants());
@@ -214,8 +214,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     else
                     {
                         $category = $productVariant->product->getType()['name'];
-	                    $name = $productVariant->product->title;
-	                    $variant = $productVariant->title;
+                        $name = $productVariant->product->title;
+                        $variant = $productVariant->title;
                     }
                 }
             }
@@ -237,31 +237,31 @@ class InstantAnalyticsService extends BaseApplicationComponent
             $isVariant = $productVariant->getElementType() == "Commerce_Variant";
 
             if (isset($settings) && isset($settings['productCategoryField']) && $settings['productCategoryField'] != "") {
-	            $productData['category'] = $this->_pullDataFromField(
-		            $productVariant,
-		            $settings['productCategoryField']
-	            );
-	            if (empty($productData['category']) && $isVariant) {
-		            $productData['category'] = $this->_pullDataFromField(
-			            $productVariant->product,
-			            $settings['productCategoryField']
-		            );
-	            }
+                $productData['category'] = $this->_pullDataFromField(
+                    $productVariant,
+                    $settings['productCategoryField']
+                );
+                if (empty($productData['category']) && $isVariant) {
+                    $productData['category'] = $this->_pullDataFromField(
+                        $productVariant->product,
+                        $settings['productCategoryField']
+                    );
+                }
             }
 
             if (isset($settings) && isset($settings['productBrandField']) && $settings['productBrandField'] != "") {
-	            $productData['brand'] = $this->_pullDataFromField(
-		            $productVariant,
-		            $settings['productBrandField'],
-		            true
-	            );
-	            if (empty($productData['brand']) && $isVariant) {
-		            $productData['brand'] = $this->_pullDataFromField(
-			            $productVariant,
-			            $settings['productBrandField'],
-			            true
-		            );
-	            }
+                $productData['brand'] = $this->_pullDataFromField(
+                    $productVariant,
+                    $settings['productBrandField'],
+                    true
+                );
+                if (empty($productData['brand']) && $isVariant) {
+                    $productData['brand'] = $this->_pullDataFromField(
+                        $productVariant,
+                        $settings['productBrandField'],
+                        true
+                    );
+                }
             }
 
             $result = $productData;
@@ -651,13 +651,13 @@ class InstantAnalyticsService extends BaseApplicationComponent
                         case ElementType::Tag:
                             break;
 
-	                    case ElementType::Category: {
+                        case ElementType::Category: {
                             $cats = [];
-	                        if ($isBrand) {
+                            if ($isBrand) {
                                 // Because we can only have one brand, we'll get
                                 // the very last category. This means if our
-		                        // brand is a sub-category, we'll get the child
-		                        // not the parent.
+                                // brand is a sub-category, we'll get the child
+                                // not the parent.
                                 /** @var CategoryModel $cat */
                                 foreach ($srcField as $cat) {
                                     $cats = [$cat->getTitle()];
@@ -676,7 +676,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
                             // Join separate categories with a pipe.
                             $result = implode("|", $cats);
                             break;
-	                    }
+                        }
 
                         default:
                             $result = strip_tags($srcField);

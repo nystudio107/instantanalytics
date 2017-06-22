@@ -105,6 +105,16 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("45\n", Psr7\readline($s));
     }
 
+    public function testReadLinesEof()
+    {
+        // Should return empty string on EOF
+        $s = Psr7\stream_for("foo\nbar");
+        while (!$s->eof()) {
+            Psr7\readline($s);
+        }
+        $this->assertSame('', Psr7\readline($s));
+    }
+
     public function testReadsLineUntilFalseReturnedFromRead()
     {
         $s = $this->getMockBuilder('GuzzleHttp\Psr7\Stream')
@@ -323,12 +333,24 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
     {
         $res = "HTTP/1.0 200 OK\r\nFoo: Bar\r\nBaz: Bam\r\nBaz: Qux\r\n\r\nTest";
         $response = Psr7\parse_response($res);
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('OK', $response->getReasonPhrase());
-        $this->assertEquals('1.0', $response->getProtocolVersion());
-        $this->assertEquals('Bar', $response->getHeaderLine('Foo'));
-        $this->assertEquals('Bam, Qux', $response->getHeaderLine('Baz'));
-        $this->assertEquals('Test', (string) $response->getBody());
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('OK', $response->getReasonPhrase());
+        $this->assertSame('1.0', $response->getProtocolVersion());
+        $this->assertSame('Bar', $response->getHeaderLine('Foo'));
+        $this->assertSame('Bam, Qux', $response->getHeaderLine('Baz'));
+        $this->assertSame('Test', (string) $response->getBody());
+    }
+
+    public function testParsesResponseWithoutReason()
+    {
+        $res = "HTTP/1.0 200\r\nFoo: Bar\r\nBaz: Bam\r\nBaz: Qux\r\n\r\nTest";
+        $response = Psr7\parse_response($res);
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('OK', $response->getReasonPhrase());
+        $this->assertSame('1.0', $response->getProtocolVersion());
+        $this->assertSame('Bar', $response->getHeaderLine('Foo'));
+        $this->assertSame('Bam, Qux', $response->getHeaderLine('Baz'));
+        $this->assertSame('Test', (string) $response->getBody());
     }
 
     /**

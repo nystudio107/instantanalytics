@@ -11,9 +11,9 @@
 
 namespace Jaybizzle\CrawlerDetect;
 
+use Jaybizzle\CrawlerDetect\Fixtures\Headers;
 use Jaybizzle\CrawlerDetect\Fixtures\Crawlers;
 use Jaybizzle\CrawlerDetect\Fixtures\Exclusions;
-use Jaybizzle\CrawlerDetect\Fixtures\Headers;
 
 class CrawlerDetect
 {
@@ -60,6 +60,20 @@ class CrawlerDetect
     protected $uaHttpHeaders;
 
     /**
+     * The compiled regex string.
+     *
+     * @var string
+     */
+    protected $compiledRegex;
+
+    /**
+     * The compiled exclusions regex string.
+     *
+     * @var string
+     */
+    protected $compiledExclusions;
+
+    /**
      * Class constructor.
      */
     public function __construct(array $headers = null, $userAgent = null)
@@ -68,16 +82,31 @@ class CrawlerDetect
         $this->exclusions = new Exclusions();
         $this->uaHttpHeaders = new Headers();
 
+        $this->compiledRegex = $this->compileRegex($this->crawlers->getAll());
+        $this->compiledExclusions = $this->compileRegex($this->exclusions->getAll());
+
         $this->setHttpHeaders($headers);
-        $this->setUserAgent($userAgent);
+        $this->userAgent = $this->setUserAgent($userAgent);
+    }
+
+    /**
+     * Compile the regex patterns into one regex string.
+     *
+     * @param array
+     * 
+     * @return string
+     */
+    public function compileRegex($patterns)
+    {
+        return '('.implode('|', $patterns).')';
     }
 
     /**
      * Set HTTP headers.
      *
-     * @param array $httpHeaders
+     * @param array|null $httpHeaders
      */
-    public function setHttpHeaders($httpHeaders = null)
+    public function setHttpHeaders($httpHeaders)
     {
         // Use global _SERVER if $httpHeaders aren't defined.
         if (! is_array($httpHeaders) || ! count($httpHeaders)) {
@@ -90,7 +119,7 @@ class CrawlerDetect
         // Only save HTTP headers. In PHP land, that means
         // only _SERVER vars that start with HTTP_.
         foreach ($httpHeaders as $key => $value) {
-            if (substr($key, 0, 5) === 'HTTP_') {
+            if (strpos($key, 'HTTP_') === 0) {
                 $this->httpHeaders[$key] = $value;
             }
         }
@@ -111,46 +140,23 @@ class CrawlerDetect
      *
      * @param string $userAgent
      */
-    public function setUserAgent($userAgent = null)
+    public function setUserAgent($userAgent)
     {
-        if (false === empty($userAgent)) {
-            $this->userAgent = $userAgent;
-        } else {
-            $this->userAgent = null;
+        if (is_null($userAgent)) {
             foreach ($this->getUaHttpHeaders() as $altHeader) {
-                if (false === empty($this->httpHeaders[$altHeader])) { // @todo: should use getHttpHeader(), but it would be slow.
-                    $this->userAgent .= $this->httpHeaders[$altHeader].' ';
+                if (isset($this->httpHeaders[$altHeader])) {
+                    $userAgent .= $this->httpHeaders[$altHeader].' ';
                 }
             }
-
-            $this->userAgent = (! empty($this->userAgent) ? trim($this->userAgent) : null);
         }
-    }
 
-    /**
-     * Build the user agent regex.
-     *
-     * @return string
-     */
-    public function getRegex()
-    {
-        return '('.implode('|', $this->crawlers->getAll()).')';
-    }
-
-    /**
-     * Build the replacement regex.
-     *
-     * @return string
-     */
-    public function getExclusions()
-    {
-        return '('.implode('|', $this->exclusions->getAll()).')';
+        return $userAgent;
     }
 
     /**
      * Check user agent string against the regex.
      *
-     * @param string $userAgent
+     * @param string|null $userAgent
      *
      * @return bool
      */
@@ -158,13 +164,13 @@ class CrawlerDetect
     {
         $agent = $userAgent ?: $this->userAgent;
 
-        $agent = preg_replace('/'.$this->getExclusions().'/i', '', $agent);
+        $agent = preg_replace('/'.$this->compiledExclusions.'/i', '', $agent);
 
         if (strlen(trim($agent)) == 0) {
             return false;
         }
 
-        $result = preg_match('/'.$this->getRegex().'/i', trim($agent), $matches);
+        $result = preg_match('/'.$this->compiledRegex.'/i', trim($agent), $matches);
 
         if ($matches) {
             $this->matches = $matches;

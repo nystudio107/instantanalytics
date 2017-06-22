@@ -61,6 +61,7 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $stream->seek(0);
         $this->assertEquals('data', $stream->getContents());
         $this->assertEquals('', $stream->getContents());
+        $stream->close();
     }
 
     public function testChecksEof()
@@ -68,8 +69,9 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $handle = fopen('php://temp', 'w+');
         fwrite($handle, 'data');
         $stream = new Stream($handle);
-        $this->assertFalse($stream->eof());
-        $stream->read(4);
+        $this->assertSame(4, $stream->tell(), 'Stream cursor already at the end');
+        $this->assertFalse($stream->eof(), 'Stream still not eof');
+        $this->assertSame('', $stream->read(1), 'Need to read one more byte to reach eof');
         $this->assertTrue($stream->eof());
         $stream->close();
     }
@@ -110,55 +112,58 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $stream->close();
     }
 
-    public function testCanDetachStream()
+    public function testDetachStreamAndClearProperties()
     {
-        $r = fopen('php://temp', 'w+');
-        $stream = new Stream($r);
-        $stream->write('foo');
-        $this->assertTrue($stream->isReadable());
-        $this->assertSame($r, $stream->detach());
-        $stream->detach();
+        $handle = fopen('php://temp', 'r');
+        $stream = new Stream($handle);
+        $this->assertSame($handle, $stream->detach());
+        $this->assertTrue(is_resource($handle), 'Stream is not closed');
+        $this->assertNull($stream->detach());
 
-        $this->assertFalse($stream->isReadable());
-        $this->assertFalse($stream->isWritable());
-        $this->assertFalse($stream->isSeekable());
+        $this->assertStreamStateAfterClosedOrDetached($stream);
 
-        $throws = function (callable $fn) use ($stream) {
-            try {
-                $fn($stream);
-                $this->fail();
-            } catch (\Exception $e) {}
-        };
-
-        $throws(function ($stream) { $stream->read(10); });
-        $throws(function ($stream) { $stream->write('bar'); });
-        $throws(function ($stream) { $stream->seek(10); });
-        $throws(function ($stream) { $stream->tell(); });
-        $throws(function ($stream) { $stream->eof(); });
-        $throws(function ($stream) { $stream->getSize(); });
-        $throws(function ($stream) { $stream->getContents(); });
-        $this->assertSame('', (string) $stream);
         $stream->close();
     }
 
-    public function testCloseClearProperties()
+    public function testCloseResourceAndClearProperties()
     {
-        $handle = fopen('php://temp', 'r+');
+        $handle = fopen('php://temp', 'r');
         $stream = new Stream($handle);
         $stream->close();
 
-        $this->assertFalse($stream->isSeekable());
-        $this->assertFalse($stream->isReadable());
-        $this->assertFalse($stream->isWritable());
-        $this->assertNull($stream->getSize());
-        $this->assertEmpty($stream->getMetadata());
+        $this->assertFalse(is_resource($handle));
+
+        $this->assertStreamStateAfterClosedOrDetached($stream);
     }
 
-    public function testDoesNotThrowInToString()
+    private function assertStreamStateAfterClosedOrDetached(Stream $stream)
     {
-        $s = \GuzzleHttp\Psr7\stream_for('foo');
-        $s = new NoSeekStream($s);
-        $this->assertEquals('foo', (string) $s);
+        $this->assertFalse($stream->isReadable());
+        $this->assertFalse($stream->isWritable());
+        $this->assertFalse($stream->isSeekable());
+        $this->assertNull($stream->getSize());
+        $this->assertSame([], $stream->getMetadata());
+        $this->assertNull($stream->getMetadata('foo'));
+
+        $throws = function (callable $fn) {
+            try {
+                $fn();
+            } catch (\Exception $e) {
+                $this->assertContains('Stream is detached', $e->getMessage());
+
+                return;
+            }
+
+            $this->fail('Exception should be thrown after the stream is detached.');
+        };
+
+        $throws(function () use ($stream) { $stream->read(10); });
+        $throws(function () use ($stream) { $stream->write('bar'); });
+        $throws(function () use ($stream) { $stream->seek(10); });
+        $throws(function () use ($stream) { $stream->tell(); });
+        $throws(function () use ($stream) { $stream->eof(); });
+        $throws(function () use ($stream) { $stream->getContents(); });
+        $this->assertSame('', (string) $stream);
     }
 
     public function testStreamReadingWithZeroLength()

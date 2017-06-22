@@ -1,6 +1,6 @@
 Google Analytics Measurement Protocol library for PHP
 ===========================
-[![Build Status](https://travis-ci.org/theiconic/php-ga-measurement-protocol.svg?branch=v2.3.0)](https://travis-ci.org/theiconic/php-ga-measurement-protocol) [![Coverage Status](https://coveralls.io/repos/theiconic/php-ga-measurement-protocol/badge.svg?branch=master&service=github)](https://coveralls.io/github/theiconic/php-ga-measurement-protocol?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/?branch=master) [![Latest Stable Version](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/v/stable)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Total Downloads](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/downloads)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![License](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/license)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Documentation Status](https://readthedocs.org/projects/php-ga-measurement-protocol/badge/?version=latest)](http://php-ga-measurement-protocol.readthedocs.org/en/latest/) [![Dependency Status](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068)
+[![Build Status](https://travis-ci.org/theiconic/php-ga-measurement-protocol.svg?branch=master)](https://travis-ci.org/theiconic/php-ga-measurement-protocol) [![Coverage Status](https://coveralls.io/repos/theiconic/php-ga-measurement-protocol/badge.svg?branch=master&service=github)](https://coveralls.io/github/theiconic/php-ga-measurement-protocol?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/?branch=master) [![Latest Stable Version](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/v/stable)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Total Downloads](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/downloads)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![License](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/license)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Documentation Status](https://readthedocs.org/projects/php-ga-measurement-protocol/badge/?version=latest)](http://php-ga-measurement-protocol.readthedocs.org/en/latest/) [![Dependency Status](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068)
 
 ## Description
 
@@ -58,7 +58,7 @@ You can use this package on its own, or use a convenient framework integration:
 Feel free to create an integration with your favourite framework, let us know so we list it here.
 
 ## Usage
-The required parameters for all hits are Protocol Version, Tracking ID and Client ID. Some optional ones like IP Override are recommended if you don't want all hits to seem like coming from your servers.
+The required parameters for all hits are Protocol Version, Tracking ID and at least one of these: Client ID or User ID. Some optional ones like IP Override are recommended if you don't want all hits to seem like coming from your servers.
 ```php
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
@@ -107,7 +107,7 @@ $analytics
     ->setAsyncRequest(true)
     ->sendPageview();
 ```
-This means that we are sending the request and not waiting for a response. The AnalyticsResponse object that you will get back has NULL for HTTP status code.
+This means that we are sending the request and not waiting for a response. The AnalyticsResponseInterface object that you will get back has NULL for HTTP status code.
 ### Order Tracking with simple E-commerce
 ```php
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
@@ -168,7 +168,7 @@ $analytics->setTransactionId('7778922')
     ->setShipping(15.0)
     ->setCouponCode('MY_COUPON');
 
-// Include a product, only required fields are SKU and Name
+// Include a product
 $productData1 = [
     'sku' => 'AAAA-6666',
     'name' => 'Test Product 2',
@@ -229,6 +229,18 @@ print_r($debugResponse);
 
 GA actually returns a JSON that is parsed into an associative array. Read ([here](https://developers.google.com/analytics/devguides/collection/protocol/v1/validating-hits)) to understand how to interpret response.
 
+### Disable library hits for Staging/Dev environments
+
+In your app configuration, you can have a flag for enabling or disabling the library, this in order to not actually
+send hits to GA, in this case the lib returns a AnalyticsResponseInterface object that returns empty values.
+
+This is specially useful in dev or staging environments.
+
+```php
+// Instantiate the Analytics object by passing the second parameter in the constructor as TRUE
+$analytics = new Analytics(true, true);
+```
+
 ## Contributors
 
 * Jorge A. Borges - Lead Developer ([http://jorgeborges.me](http://jorgeborges.me))
@@ -238,7 +250,11 @@ GA actually returns a JSON that is parsed into an associative array. Read ([here
 * Martín Palombo - [lombo](https://github.com/lombo)
 * Amit Rana - [amit0rana](https://github.com/amit0rana)
 * Stefan Zweifel - [stefanzweifel](https://github.com/stefanzweifel)
-* Titouan BENOIT - [nightbr](https://github.com/Nightbr)
+* Titouan Benoit - [nightbr](https://github.com/Nightbr)
+* Hayashi Ryo - [ryo88c](https://github.com/ryo88c)
+* Radek Hřebeček - [http://www.hrebecek.cz/](http://www.hrebecek.cz)
+* edim24 - [ryo88c](https://github.com/edim24)
+* venyii - [venyii](https://github.com/venyii)
 
 ## License
 

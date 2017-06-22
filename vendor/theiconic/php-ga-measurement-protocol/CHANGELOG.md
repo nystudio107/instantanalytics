@@ -1,4 +1,23 @@
 ## Version 2
+### 2.7.0 (2017-05-13)
+ * Adding timeout option, by @venyii
+
+### 2.6.0 (2017-04-10)
+ * Adding Disabling library feature, by @edim24
+
+### 2.5.1 (2017-03-20)
+ * Fixing required params for all hits, either Client ID or User ID
+
+### 2.5.0 (2017-03-20)
+ * Fixing required params for Products, by @rhrebecek
+ * Making Analytics class completely extensible
+
+### 2.4.1 (2017-01-19)
+ * Fixing URL encoding for Japanese characters by using RFC3986, by @ryo88c
+
+### 2.4.0 (2017-10-14)
+ * Adding get params methods by @Nightbr
+
 ### 2.3.0 (2016-08-20)
  * Adding getting URL method by @stefanzweifel
 

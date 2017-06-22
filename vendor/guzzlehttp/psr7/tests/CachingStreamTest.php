@@ -15,13 +15,13 @@ class CachingStreamTest extends \PHPUnit_Framework_TestCase
     /** @var Stream */
     private $decorated;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->decorated = Psr7\stream_for('testing');
         $this->body = new CachingStream($this->decorated);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         $this->decorated->close();
         $this->body->close();

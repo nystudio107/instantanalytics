@@ -150,7 +150,7 @@ class InstantAnalyticsPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.1.7';
+        return '1.1.8';
     }
 
     /**
@@ -334,7 +334,7 @@ class InstantAnalyticsPlugin extends BasePlugin
                 case "RichText":
                 case "RedactorI":
                 case "PreparseField_Preparse":
-	            case "Categories":
+                case "Categories":
                     $result[$field->handle] = $field->name;
                     break;
 

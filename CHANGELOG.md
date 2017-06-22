@@ -1,5 +1,13 @@
 # Instant Analytics Changelog
 
+## 1.1.8 - 2017.06.22
+### Changed
+* [Fixed] Fix for error when passing variant to `addCommerceProductDetailView`
+* [Improved] Installed the latest Composer dependencies
+
+### Added
+* [Added] Added support for category fields in products
+
 ## 1.1.7 - 2017.03.21
 
 * [Improved] Wrap calls to `sendHit()` in a `try` / `catch` block to avoid hard errors

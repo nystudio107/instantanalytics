@@ -18,7 +18,7 @@ class LimitStreamTest extends \PHPUnit_Framework_TestCase
     /** @var Stream */
     private $decorated;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->decorated = Psr7\stream_for(fopen(__FILE__, 'r'));
         $this->body = new LimitStream($this->decorated, 10, 3);
