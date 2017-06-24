@@ -1,6 +1,6 @@
 # Instant Analytics Changelog
 
-## 1.1.8 - 2017.06.22
+## 1.1.8 - 2017.06.24
 ### Changed
 * [Fixed] Fix for error when passing variant to `addCommerceProductDetailView`
 * [Improved] Installed the latest Composer dependencies
