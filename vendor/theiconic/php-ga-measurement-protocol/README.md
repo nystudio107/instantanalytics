@@ -47,7 +47,7 @@ Or if you are using ```PHP 5.4 or above``` and ```Guzzle 5``` then:
 }
 ```
 
-Take notice v1 won't receive more updates, you are encourage to update to v2.
+Take notice v1 is no longer maintained and lacks newer features (such as Debug and Hit validation), you are encourage to update to v2.
 
 ## Integrations
 You can use this package on its own, or use a convenient framework integration:
@@ -98,16 +98,6 @@ $analytics->get<ParameterName>();
 All methods for setting parameters should **Autocomplete** if you use an IDE such as PHPStorm, which makes building the Analytics object very easy.
 
 ## Use Cases
-### Asynchronous Requests (Non-Blocking)
-By default, sending a hit to GA will be a synchronous request, and block the execution of the script until it gets a response from the server or timeouts after 100 secs (throwing a Guzzle exception). However, an asynchronous non-blocking request can be sent by calling setAsyncRequest(true) before sending the hit:
-```php
-// When building the Analytics hit, just make a call to the setAsyncRequest method passing true
-// now sending the hit won't block the execution of the script
-$analytics
-    ->setAsyncRequest(true)
-    ->sendPageview();
-```
-This means that we are sending the request and not waiting for a response. The AnalyticsResponseInterface object that you will get back has NULL for HTTP status code.
 ### Order Tracking with simple E-commerce
 ```php
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
@@ -255,6 +245,7 @@ $analytics = new Analytics(true, true);
 * Radek Hřebeček - [http://www.hrebecek.cz/](http://www.hrebecek.cz)
 * edim24 - [ryo88c](https://github.com/edim24)
 * venyii - [venyii](https://github.com/venyii)
+* Peter Jaap Blaakmeer - [peterjaap](https://github.com/peterjaap)
 
 ## License
 

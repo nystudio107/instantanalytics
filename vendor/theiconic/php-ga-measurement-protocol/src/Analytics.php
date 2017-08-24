@@ -647,16 +647,16 @@ class Analytics
         ];
 
         foreach ($minimumRequiredParameters as $parameterName => $isParamPresent) {
-            if (in_array($parameterName, array_keys($this->singleParameters))) {
+            if (array_key_exists($parameterName, $this->singleParameters)) {
                 $minimumRequiredParameters[$parameterName] = true;
             }
         }
 
-        if ((!$minimumRequiredParameters['cid'] && $minimumRequiredParameters['uid'])) {
+        if (!$minimumRequiredParameters['cid'] && $minimumRequiredParameters['uid']) {
             $minimumRequiredParameters['cid'] = true;
         }
 
-        if ((!$minimumRequiredParameters['uid'] && $minimumRequiredParameters['cid'])) {
+        if (!$minimumRequiredParameters['uid'] && $minimumRequiredParameters['cid']) {
             $minimumRequiredParameters['uid'] = true;
         }
 
@@ -806,7 +806,7 @@ class Analytics
             $fullParameterCollectionClass = $fullParameterClass . 'Collection';
 
             // Test if the class Collection exist
-            if (class_exists($fullParameterCollectionClass)) {
+            if (class_exists($fullParameterCollectionClass, false)) {
                 return null;
             }
             // If not, it's a SingleParameter Object, continue the magic

@@ -1,17 +1,17 @@
 [
     {
         "name": "composer/installers",
-        "version": "v1.3.0",
-        "version_normalized": "1.3.0.0",
+        "version": "v1.4.0",
+        "version_normalized": "1.4.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/composer/installers.git",
-            "reference": "79ad876c7498c0bbfe7eed065b8651c93bfd6045"
+            "reference": "9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/79ad876c7498c0bbfe7eed065b8651c93bfd6045",
-            "reference": "79ad876c7498c0bbfe7eed065b8651c93bfd6045",
+            "url": "https://api.github.com/repos/composer/installers/zipball/9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b",
+            "reference": "9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b",
             "shasum": ""
         },
         "require": {
@@ -25,7 +25,7 @@
             "composer/composer": "1.0.*@dev",
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2017-04-24T06:37:16+00:00",
+        "time": "2017-08-09T07:53:48+00:00",
         "type": "composer-plugin",
         "extra": {
             "class": "Composer\\Installers\\Plugin",
@@ -59,6 +59,7 @@
             "Hurad",
             "ImageCMS",
             "Kanboard",
+            "Lan Management System",
             "MODX Evo",
             "Mautic",
             "Maya",
@@ -82,6 +83,7 @@
             "croogo",
             "dokuwiki",
             "drupal",
+            "eZ Platform",
             "elgg",
             "expressionengine",
             "fuelphp",
@@ -98,6 +100,7 @@
             "mediawiki",
             "modulework",
             "moodle",
+            "osclass",
             "phpbb",
             "piwik",
             "ppi",
@@ -174,12 +177,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/psr7.git",
-            "reference": "526d8ef63e8701e02216b621e4a3a16085e2286f"
+            "reference": "811b676fbab9c99e359885032e5ebc70e442f5b8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/psr7/zipball/526d8ef63e8701e02216b621e4a3a16085e2286f",
-            "reference": "526d8ef63e8701e02216b621e4a3a16085e2286f",
+            "url": "https://api.github.com/repos/guzzle/psr7/zipball/811b676fbab9c99e359885032e5ebc70e442f5b8",
+            "reference": "811b676fbab9c99e359885032e5ebc70e442f5b8",
             "shasum": ""
         },
         "require": {
@@ -192,7 +195,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2017-06-19T13:30:27+00:00",
+        "time": "2017-07-17T09:11:21+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -289,17 +292,17 @@
     },
     {
         "name": "guzzlehttp/guzzle",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "6.3.0",
+        "version_normalized": "6.3.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "065287bc14f3e606fe6aec6ecfeac9616afbd3cb"
+            "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/065287bc14f3e606fe6aec6ecfeac9616afbd3cb",
-            "reference": "065287bc14f3e606fe6aec6ecfeac9616afbd3cb",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
+            "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
             "shasum": ""
         },
         "require": {
@@ -315,14 +318,14 @@
         "suggest": {
             "psr/log": "Required for using the Log middleware"
         },
-        "time": "2017-06-10T14:17:14+00:00",
+        "time": "2017-06-22T18:50:49+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
                 "dev-master": "6.2-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "files": [
                 "src/functions_include.php"
@@ -356,17 +359,17 @@
     },
     {
         "name": "theiconic/php-ga-measurement-protocol",
-        "version": "v2.7.0",
-        "version_normalized": "2.7.0.0",
+        "version": "v2.7.1",
+        "version_normalized": "2.7.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/theiconic/php-ga-measurement-protocol.git",
-            "reference": "88eaba4b7c6bdc6ce7a1e31890f544a881a2c5a6"
+            "reference": "26c09a43a25235da85131c0fa060ec1fe2b2f16f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/theiconic/php-ga-measurement-protocol/zipball/88eaba4b7c6bdc6ce7a1e31890f544a881a2c5a6",
-            "reference": "88eaba4b7c6bdc6ce7a1e31890f544a881a2c5a6",
+            "url": "https://api.github.com/repos/theiconic/php-ga-measurement-protocol/zipball/26c09a43a25235da85131c0fa060ec1fe2b2f16f",
+            "reference": "26c09a43a25235da85131c0fa060ec1fe2b2f16f",
             "shasum": ""
         },
         "require": {
@@ -377,7 +380,7 @@
             "phpunit/phpunit": "4.7.*",
             "satooshi/php-coveralls": "1.0.1"
         },
-        "time": "2017-05-13T12:36:04+00:00",
+        "time": "2017-06-30T02:41:52+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -399,26 +402,27 @@
     },
     {
         "name": "jaybizzle/crawler-detect",
-        "version": "v1.2.46",
-        "version_normalized": "1.2.46.0",
+        "version": "v1.2.51",
+        "version_normalized": "1.2.51.0",
         "source": {
             "type": "git",
             "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-            "reference": "55e98a6c733a7f99912f6239c8d7ee25ed4f9eb5"
+            "reference": "be9074b1206ba7b5ac5662f900295edc088a9da8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/55e98a6c733a7f99912f6239c8d7ee25ed4f9eb5",
-            "reference": "55e98a6c733a7f99912f6239c8d7ee25ed4f9eb5",
+            "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/be9074b1206ba7b5ac5662f900295edc088a9da8",
+            "reference": "be9074b1206ba7b5ac5662f900295edc088a9da8",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
         "require-dev": {
-            "phpunit/phpunit": "4.*"
+            "phpunit/phpunit": "4.8.*",
+            "satooshi/php-coveralls": "1.*"
         },
-        "time": "2017-06-19T21:29:50+00:00",
+        "time": "2017-08-07T18:48:00+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

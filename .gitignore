@@ -1,21 +1,24 @@
-# LOCAL CONFIG SETTINGS
-# Exclude local config files so we don't overwrite other local setups.
-# Leave example files that can be copied to get setup
-# ------------------------------------------------------------
-/craft/config/local/*
-!/craft/config/local/db.php.example
-!/craft/config/local/general.php.example
+# Craft .gitignore
+#
+# Example .gitignore file for Craft CMS projects
+#
+# @author    nystudio107
+# @copyright Copyright (c) 2017 nystudio107
+# @link      https://nystudio107.com/
+# @package   craft-scripts
+# @since     1.1.0
+# @license   MIT
 
-# CRAFT STORAGE
-# http://buildwithcraft.com/help/craft-storage-gitignore
-# ------------------------------------------------------------
-/craft/storage/*
-!/craft/storage/.gitignore
-!/craft/storage/logo/*
+# This file should be renamed to '.gitignore' and placed in your
+# Craft CMS project root directory
+
+# BUILD FILES
+/bower_components/*
+/node_modules/*
+/build/*
+/yarn-error.log
 
 # MISC FILES
-# https://github.com/github/gitignore/tree/master/Global
-# ------------------------------------------------------------
 .cache
 .DS_Store
 .idea
@@ -26,12 +29,10 @@
 *.sublime-project
 *.tmproj
 *.tmproject
-Thumbs.db
-/logs/*
-
-# BUILD FILES
-# aaw -- 2015-09-27
-/bower_components/*
-/node_modules/*
-/build/*
-/dump.sql
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+config.codekit3
+prepros-6.config
