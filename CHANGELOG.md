@@ -1,5 +1,10 @@
 # Instant Analytics Changelog
 
+## 1.1.9 - 2017.08.24
+### Changed
+* [Fixed] Fixed the default DocumentReferrer that could have caused spurious analytic results in some cases
+* [Improved] Updated to the latest composer dependencies
+
 ## 1.1.8 - 2017.06.24
 ### Changed
 * [Fixed] Fix for error when passing variant to `addCommerceProductDetailView`

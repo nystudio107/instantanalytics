@@ -1,5 +1,14 @@
 [
     {
+        "version": "1.1.9",
+        "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
+        "date": "2017-08-24T17:29:17.496Z",
+        "notes": [
+            "[Fixed] Fixed the default DocumentReferrer that could have caused spurious analytic results in some cases",
+            "[Improved] Updated to the latest composer dependencies"
+        ]
+    },
+    {
         "version": "1.1.8",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2017-06-24T17:29:17.496Z",

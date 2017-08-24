@@ -1,5 +1,17 @@
 # Change Log
 
+## [Unreleased]
+
+## v1.4.0 - 2017-08-09
+### Added
+* Installer for eZ Platform.
+* Installer for UserFrosting.
+* Installer for Osclass.
+* Installer for Lan Management System.
+
+### Changed
+* Added vendor name to package path for Lavalite.
+
 ## v1.3.0 - 2017-04-24
 ### Added
 * Kanboard plugins installer.
@@ -13,9 +25,6 @@
 * Vgmcp installer.
 * OntoWiki installer.
 * The requirements for contributing (CONTRIBUTING.md).
-
-### Changed
-* Concrete5: block & theme install location updates.
 
 ## v1.2.0 - 2016-08-13
 ### Added

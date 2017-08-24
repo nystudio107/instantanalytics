@@ -55,6 +55,7 @@ is not needed to install packages with these frameworks:
 | Elgg         | `elgg-plugin`
 | Eliasis      | `eliasis-module`
 | ExpressionEngine 3         | `ee3-addon`<br>`ee3-theme`
+| eZ Platform  | `ezplatform-assets`<br>`ezplatform-meta-assets`
 | FuelPHP v1.x | `fuel-module`<br>`fuel-package`<br/>`fuel-theme`
 | FuelPHP v2.x | `fuelphp-component`
 | Grav         | `grav-plugin`<br>`grav-theme`
@@ -66,6 +67,7 @@ is not needed to install packages with these frameworks:
 | Kirby        | **`kirby-plugin`**<br>`kirby-field`<br>`kirby-tag`
 | KodiCMS      | `kodicms-plugin`<br>`kodicms-media`
 | Kohana       | **`kohana-module`**
+| Lan Management System | `lms-plugin`<br>`lms-template`<br>`lms-document-template`<br>`lms-userpanel-module`
 | Laravel      | `laravel-library`
 | Lavalite     | `lavalite-theme`<br>`lavalite-package`
 | Lithium      | **`lithium-library`<br>`lithium-source`**
@@ -78,6 +80,7 @@ is not needed to install packages with these frameworks:
 | October      | **`october-module`<br>`october-plugin`<br>`october-theme`**
 | OntoWiki     | `ontowiki-extension`<br>`ontowiki-theme`<br>`ontowiki-translation`
 | OXID         | `oxid-module`<br>`oxid-theme`<br>`oxid-out`
+| Osclass      | `osclass-plugin`<br>`osclass-theme`<br>`osclass-language`
 | MODULEWork   | `modulework-module`
 | Moodle       | `moodle-*` (Please [check source](https://raw.githubusercontent.com/composer/installers/master/src/Composer/Installers/MoodleInstaller.php) for all supported types)
 | Piwik        | `piwik-plugin`
@@ -99,6 +102,7 @@ is not needed to install packages with these frameworks:
 | Tusk         | `tusk-task`<br>`tusk-command`<br>`tusk-asset`
 | TYPO3 Flow   | `typo3-flow-package`<br>`typo3-flow-framework`<br>`typo3-flow-plugin`<br>`typo3-flow-site`<br>`typo3-flow-boilerplate`<br>`typo3-flow-build`
 | TYPO3 CMS    | `typo3-cms-extension` (Deprecated in this package, use the [TYPO3 CMS Installers](https://packagist.org/packages/typo3/cms-composer-installers) instead)
+| UserFrosting | `userfrosting-sprinkle`
 | Vanilla      | `vanilla-plugin`<br>`vanilla-theme`
 | Vgmcp        | `vgmcp-bundle`<br>`vgmcp-theme`
 | Wolf CMS     | `wolfcms-plugin`

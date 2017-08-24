@@ -713,7 +713,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     $userAgent = $_SERVER['HTTP_USER_AGENT'];
                 $referrer = "";
                 if (isset($_SERVER['HTTP_REFERER']))
-                    $referrer = $_SERVER['HTTP_REFERER'];
+                    $referrer = craft()->request->getUrlReferrer();
                 $analytics->setProtocolVersion('1')
                     ->setTrackingId($settings['googleAnalyticsTracking'])
                     ->setIpOverride($_SERVER['REMOTE_ADDR'])
