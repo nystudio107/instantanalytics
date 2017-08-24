@@ -150,7 +150,7 @@ class InstantAnalyticsPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.1.8';
+        return '1.1.9';
     }
 
     /**
