@@ -184,7 +184,7 @@ class InstantAnalyticsService extends BaseApplicationComponent
                 $productType = property_exists($productVariant, "typeId")
                     ? craft()->commerce_productTypes->getProductTypeById($productVariant->typeId)
                     : null;
-                
+
                 if ($productType && $productType->hasVariants)
                 {
                     $productVariant = ArrayHelper::getFirstValue($productVariant->getVariants());
@@ -213,8 +213,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     }
                     else
                     {
-                        $category = $productVariant->product->getType()['name'];
-                        $name = $productVariant->product->title;
+                        $category = $productVariant->getType()['name'];
+                        $name = $productVariant->title;
                         $variant = $productVariant->title;
                     }
                 }
