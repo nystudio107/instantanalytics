@@ -1,5 +1,9 @@
 # Instant Analytics Changelog
 
+## 1.1.10 - 2017.09.21
+### Changed
+* [Fixed] Fixed an issue with Digital Products (and potentially other types of third-party purchasables)
+
 ## 1.1.9 - 2017.08.24
 ### Changed
 * [Fixed] Fixed the default DocumentReferrer that could have caused spurious analytic results in some cases
