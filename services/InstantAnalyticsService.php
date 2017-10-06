@@ -213,8 +213,13 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     }
                     else
                     {
-                        $category = $productVariant->getType()['name'];
-                        $name = $productVariant->title;
+                        if (isset($productVariant->product)) {
+                            $category = $productVariant->product->getType()['name'];
+                            $name = $productVariant->product->title;
+                        } else {
+                            $category = $productVariant->getType()['name'];
+                            $name = $productVariant->title;
+                        }
                         $variant = $productVariant->title;
                     }
                 }

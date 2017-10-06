@@ -1,5 +1,9 @@
 # Instant Analytics Changelog
 
+## 1.1.11 - 2017.10.06
+### Changed
+* [Fixed] Fixed a regression with product variants
+
 ## 1.1.10 - 2017.09.21
 ### Changed
 * [Fixed] Fixed an issue with Digital Products (and potentially other types of third-party purchasables)

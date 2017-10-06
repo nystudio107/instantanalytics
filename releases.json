@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.1.11",
+        "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
+        "date": "2017-10-06T17:29:17.496Z",
+        "notes": [
+            "[Fixed] Fixed a regression with product variants"
+        ]
+    },
+    {
         "version": "1.1.10",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2017-09-21T17:29:17.496Z",
