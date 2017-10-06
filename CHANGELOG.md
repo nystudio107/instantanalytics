@@ -1,6 +1,6 @@
 # Instant Analytics Changelog
 
-## 1.1.11 - 2017.10.05
+## 1.1.11 - 2017.10.06
 ### Changed
 * [Fixed] Fixed a regression with product variants
 
