@@ -1,6 +1,6 @@
 # Instant Analytics Changelog
 
-## 1.1.11 - 2017.10.27
+## 1.1.12 - 2017.10.27
 ### Changed
 * [Added] Added support for automatic parsing of UTM query string parameters
 
