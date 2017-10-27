@@ -2,6 +2,8 @@
 
 Instant Analytics brings full Google Analytics support to your Twig templates and automatic Craft Commerce integration with Google Enhanced Ecommerce.
 
+Related: [Instant Analytics for Craft 3.x](https://github.com/nystudio107/craft3-instantanalytics)
+
 ![Screenshot](resources/screenshots/ia_screenshot01.png)
 
 ## Installation
@@ -117,6 +119,8 @@ That's it!  Once you have added this hook, Instant Analytics will start sending 
 * If you have `sendAnalyticsData` set to false in the `config.php` file
 
 By default, the "title" used for your pages is the current template path; if you have [SEOmatic](https://github.com/nystudio107/seomatic) installed, Instant Analytics will automatically grab the current page title from it.
+
+Instant Analytics will also automatically parse and set any [UTM query string parameters](https://blog.kissmetrics.com/how-to-use-utm-parameters/) such as `utm_campaign`, `utm_source`, `utm_medium`, and `utm_content` in the analytics object.
 
 #### Advanced Page Tracking
 

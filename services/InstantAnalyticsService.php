@@ -731,11 +731,30 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     ->setAsyncRequest(false)
                     ->setClientId($this->_gaParseCookie());
 
+                // Set the gclid
                 $gclid = $this->_getGclid();
                 if ($gclid)
                     $analytics->setGoogleAdwordsId($gclid);
 
-/* -- If SEOmatic is installed, set the affiliation as well */
+                // Handle UTM parameters
+                $utm_source = craft()->request->getParam('utm_source');
+                if (!empty($utm_source)) {
+                    $analytics->setCampaignSource($utm_source);
+                }
+                $utm_medium = craft()->request->getParam('utm_medium');
+                if (!empty($utm_medium)) {
+                    $analytics->setCampaignMedium($utm_medium);
+                }
+                $utm_campaign = craft()->request->getParam('utm_campaign');
+                if (!empty($utm_campaign)) {
+                    $analytics->setCampaignName($utm_campaign);
+                }
+                $utm_content = craft()->request->getParam('utm_content');
+                if (!empty($utm_content)) {
+                    $analytics->setCampaignContent($utm_content);
+                }
+
+                /* -- If SEOmatic is installed, set the affiliation as well */
 
                 $seomatic = craft()->plugins->getPlugin('Seomatic');
                 if ($seomatic && $seomatic->isInstalled && $seomatic->isEnabled)
