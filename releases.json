@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.1.12",
+        "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
+        "date": "2017-10-27T17:29:17.496Z",
+        "notes": [
+            "[Added] Added support for automatic parsing of UTM query string parameters"
+        ]
+    },
+    {
         "version": "1.1.11",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2017-10-06T17:29:17.496Z",
