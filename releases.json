@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.1.13",
+        "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
+        "date": "2017-11-08T17:29:17.496Z",
+        "notes": [
+            "[Improved] Don't set the `referrer` if it's the same as the `serverName`"
+        ]
+    },
+    {
         "version": "1.1.12",
         "downloadUrl": "https://github.com/nystudio107/instantanalytics/archive/master.zip",
         "date": "2017-10-27T17:29:17.496Z",

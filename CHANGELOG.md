@@ -1,5 +1,9 @@
 # Instant Analytics Changelog
 
+## 1.1.13 - 2017.11.08
+### Changed
+* [Improved] Don't set the `referrer` if it's the same as the `serverName`
+
 ## 1.1.12 - 2017.10.27
 ### Changed
 * [Added] Added support for automatic parsing of UTM query string parameters
