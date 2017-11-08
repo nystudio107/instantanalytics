@@ -719,7 +719,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     $userAgent = "User-Agent:Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13\r\n";
                 }
                 $referrer = craft()->request->getUrlReferrer();
-                if (empty($referrer)) {
+
+                if (empty($referrer) || ($referrer == craft()->request->getServerName())) {
                     $referrer = "";
                 }
                 $analytics->setProtocolVersion('1')
