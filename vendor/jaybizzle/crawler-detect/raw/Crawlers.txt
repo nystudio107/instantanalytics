@@ -9,6 +9,7 @@
 ^DangDang
 ^DavClnt
 ^FDM 
+^Grabber
 ^git\/
 ^Goose\/
 ^HTTPClient\/
@@ -46,6 +47,7 @@ AHC
 aihit
 aiohttp\/
 Airmail
+akka-http\/
 akula\/
 alertra
 alexa site audit
@@ -55,13 +57,16 @@ alyze\.info
 amagit
 AndroidDownloadManager
 Anemone
+AngleSharp\/
 Ant\.com
 Anturis Agent
 AnyEvent-HTTP\/
 ApacheBench\/
 Apache-HttpAsyncClient\/
 Apache-HttpClient\/
+APIs-Google
 AportWorm\/[0-9]
+AppBeat\/[0-9]
 AppEngine-Google
 Arachmo
 arachnode
@@ -122,8 +127,10 @@ Charlotte
 CheckHost
 checkprivacy
 chkme\.com
+Chirp\/[0-9]
 CirrusExplorer\/
 CISPA Vulnerability Notification
+Citoid
 CJNetworkQuality
 Clarsentia
 clips\.ua\.ac\.be
@@ -133,6 +140,7 @@ CloudFlare-AlwaysOnline
 Cloudinary\/[0-9]
 cmcm\.com
 coccoc
+colly -
 CommaFeed
 Commons-HttpClient
 Comodo SSL Checker
@@ -182,6 +190,7 @@ eContext\/
 ElectricMonk
 elefent
 EMail Exractor
+Email%20Extractor%20Lite
 EmailWolf
 Embed PHP Library
 Embedly
@@ -195,6 +204,7 @@ ExaleadCloudview
 Excel\/
 Exif Viewer
 Exploratodo
+Express WebPictures
 ezooms
 facebookexternalhit
 facebookplatform
@@ -247,6 +257,7 @@ GIS-LABS
 github\.com\/
 Go [\d\.]* package http
 Go-http-client
+gobyus
 gofetch
 GomezAgent
 gooblog
@@ -277,11 +288,12 @@ GoScraper
 GoSpotCheck
 GoSquared-Status-Checker
 gosquared-thumbnailer
-GotSiteMonitor
 grabify
 Grammarly
 grouphigh
+grokkit
 grub-client
+gSOAP\/
 GTmetrix
 GuzzleHttp
 gvfs\/
@@ -312,6 +324,7 @@ HttpComponents
 httphr
 HTTPMon
 PEAR HTTPRequest
+http\.rb\/
 httpscheck
 httpssites_power
 httpunit
@@ -322,6 +335,7 @@ huaweisymantec
 HubPages.*crawlingpolicy
 HubSpot Connect
 HubSpot Marketing Grader
+HubSpot Page Screenshot Service
 HyperZbozi.cz Feeder
 i2kconnect\/
 ichiro
@@ -333,6 +347,7 @@ igdeSpyder
 IlTrovatore
 ImageEngine\/
 Imagga
+imgsizer
 InAGist
 inbound\.li parser
 InDesign%20CC
@@ -360,14 +375,21 @@ iskanie
 iZSearch
 janforman
 Jaunt\/
+Jersey\/
 Jigsaw
 Jobboerse
+JobFeed discovery
+Jobg8 URL Monitor
 jobo
 Jobrapido
+JoinVision Generic
 JS-Kit
 Kaspersky Lab CFR link resolver
 KeepRight OpenStreetMap Checker
+Kelny\/
+Kerrigan\/
 KeyCDN
+Keyword Extractor
 Keywords Research
 KickFire
 KimonoLabs\/
@@ -394,6 +416,7 @@ linkdex
 LinkExaminer
 linkfluence
 linkpeek
+LinkPreviewGenerator
 LinkTiger
 LinkWalker
 Lipperhey
@@ -430,6 +453,7 @@ Mindjet
 Miniflux
 mixdata dot com
 mixed-content-scan
+mixnode
 Mnogosearch
 mogimogi
 Mojolicious \(Perl\)
@@ -458,6 +482,7 @@ NetTrack
 Netvibes
 Neustar WPM
 NeutrinoAPI
+NewRelicPinger\/1.0 \(\d+\)
 NewsBlur .*Finder
 NewsGator
 newsme
@@ -479,6 +504,7 @@ nWormFeedFinder
 Nymesis
 Ocelli\/[0-9]
 oegp
+Offline Explorer
 okhttp
 Omea Reader
 omgili
@@ -508,6 +534,7 @@ Pcore-HTTP
 Pearltrees
 peerindex
 Peew
+Perlu -
 PhantomJS\/
 PhantomJS Screenshoter
 Photon\/
@@ -515,6 +542,7 @@ phpcrawl
 phpservermon
 Pi-Monster
 ping\.blo\.gs\/
+Pingability
 Pingdom
 Pingoscope
 PingSpot
@@ -523,6 +551,7 @@ Pizilla
 Ploetz \+ Zeller
 Plukkie
 PocketParser
+POE-Component-Client-HTTP\/
 Pompos
 Porkbun
 Port Monitor
@@ -539,6 +568,7 @@ Promotion_Tools_www.searchenginepromotionhelp.com
 prospectb2b
 Protopage
 proximic
+PRTG Network Monitor
 pshtt, https scanning
 PTST 
 PTST\/[0-9]+
@@ -557,6 +587,7 @@ RankSonicSiteAuditor
 Readability
 RealPlayer%20Downloader
 RebelMouse
+RecurPost\/
 redback\/
 Redirect Checker Tool
 ReederForMac
@@ -573,6 +604,7 @@ RPT-HTTPClient
 RSSOwl
 safe-agent-scanner
 SalesIntelligent
+Saleslift
 SauceNAO
 SBIder
 scalaj-http
@@ -584,6 +616,7 @@ Scrapy
 ScreenShotService\/[0-9]
 Scrubby
 search\.thunderstone
+Search37\/
 SearchSight
 Seeker
 semanticdiscovery
@@ -606,8 +639,10 @@ ShopWiki
 ShortLinkTranslate
 shrinktheweb
 SilverReader
+Sideqik
 SimplePie
 SimplyFast
+SiteIndexed
 Site-Shot\/
 Site24x7
 SiteBar
@@ -616,7 +651,9 @@ siteexplorer\.info
 SiteGuardian
 Siteimprove\.com
 Sitemap(s)? Generator
+SiteMonitor
 Siteshooter B0t
+SiteSucker
 SiteTruth
 sitexy\.com
 SkypeUriPreview
@@ -629,6 +666,7 @@ Snappy
 SniffRSS
 sniptracker
 Snoopy
+SnowHaze Search
 sogou web
 SortSite
 sovereign\.ai
@@ -680,6 +718,7 @@ topster
 touche.com
 Traackr.com
 TrapitAgent
+trendspottr\.com
 truwoGPS
 TulipChain
 tweetedtimes\.com
@@ -697,6 +736,7 @@ UnwindFetchor
 updated
 Upflow
 Uptimia
+URL Verifier
 URLChecker
 URLitor.com
 urlresolver
@@ -712,6 +752,7 @@ voltron
 voyager\/
 VSAgent\/[0-9]
 VSB-TUO\/[0-9]
+Vulnbusters Meter
 VYU2
 w3af\.org
 W3C-checklink
@@ -719,6 +760,7 @@ W3C-mobileOK
 W3C_I18n-Checker
 W3C_Unicorn
 wangling
+Wappalyzer
 WatchMouse
 WbSrch\/
 web-capture\.net
@@ -729,6 +771,7 @@ WebCapture
 WebClient\/
 webcollage
 WebCookies
+WebCopier
 WebCorp
 WebDoc
 WebFetch
@@ -756,6 +799,7 @@ WhatsMyIP
 WhatWeb
 WhereGoes\?
 Whibse
+WhoRunsCoinHive
 Whynder Magnet
 Windows-RSS-Platform
 WinHttpRequest
@@ -766,6 +810,7 @@ Word\/
 WordPress\/
 wotbox
 WP Engine Install Performance API
+wpif
 wprecon\.com survey
 WPScan
 wscheck

@@ -91,11 +91,6 @@ class EachPromise implements PromisorInterface
         $this->mutex = false;
         $this->aggregate = new Promise(function () {
             reset($this->pending);
-            if (empty($this->pending) && !$this->iterable->valid()) {
-                $this->aggregate->resolve(null);
-                return;
-            }
-
             // Consume a potentially fluctuating list of promises while
             // ensuring that indexes are maintained (precluding array_shift).
             while ($promise = current($this->pending)) {
@@ -151,21 +146,27 @@ class EachPromise implements PromisorInterface
         }
 
         $promise = promise_for($this->iterable->current());
-        $idx = $this->iterable->key();
+        $key = $this->iterable->key();
+
+        // Iterable keys may not be unique, so we add the promises at the end
+        // of the pending array and retrieve the array index being used
+        $this->pending[] = null;
+        end($this->pending);
+        $idx = key($this->pending);
 
         $this->pending[$idx] = $promise->then(
-            function ($value) use ($idx) {
+            function ($value) use ($idx, $key) {
                 if ($this->onFulfilled) {
                     call_user_func(
-                        $this->onFulfilled, $value, $idx, $this->aggregate
+                        $this->onFulfilled, $value, $key, $this->aggregate
                     );
                 }
                 $this->step($idx);
             },
-            function ($reason) use ($idx) {
+            function ($reason) use ($idx, $key) {
                 if ($this->onRejected) {
                     call_user_func(
-                        $this->onRejected, $reason, $idx, $this->aggregate
+                        $this->onRejected, $reason, $key, $this->aggregate
                     );
                 }
                 $this->step($idx);
