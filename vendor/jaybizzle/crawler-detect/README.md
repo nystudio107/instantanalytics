@@ -49,7 +49,7 @@ Failing that, just create an issue with the user agent you have found, and we'll
 If you would like to use this with Laravel 4/5, please see [Laravel-Crawler-Detect](https://github.com/JayBizzle/Laravel-Crawler-Detect)
 
 ### Symfony Bundle
-To use this library with Symfony 2/3, check out the [CrawlerDetectBundle](https://github.com/nicolasmure/CrawlerDetectBundle).
+To use this library with Symfony 2/3/4, check out the [CrawlerDetectBundle](https://github.com/nicolasmure/CrawlerDetectBundle).
 
 ### YII2 Extension
 To use this library with the YII2 framework, check out [yii2-crawler-detect](https://github.com/AlikDex/yii2-crawler-detect).
@@ -57,3 +57,6 @@ To use this library with the YII2 framework, check out [yii2-crawler-detect](htt
 _Parts of this class are based on the brilliant [MobileDetect](https://github.com/serbanghita/Mobile-Detect)_
 
 [![Analytics](https://ga-beacon.appspot.com/UA-72430465-1/Crawler-Detect/readme?pixel)](https://github.com/JayBizzle/Crawler-Detect)
+
+### ES6 Library
+To use this library with NodeJS or any ES6 application based, check out [es6-crawler-detect](https://github.com/JefferyHus/es6-crawler-detect).

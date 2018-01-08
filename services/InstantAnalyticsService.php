@@ -719,7 +719,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
                     $userAgent = "User-Agent:Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13\r\n";
                 }
                 $referrer = craft()->request->getUrlReferrer();
-                if (empty($referrer)) {
+
+                if (empty($referrer) || ($referrer == craft()->request->getServerName())) {
                     $referrer = "";
                 }
                 $analytics->setProtocolVersion('1')
@@ -794,9 +795,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
     {
         if (isset($_COOKIE['_ga']))
         {
-            list($version, $domainDepth, $cid1, $cid2) = preg_split('[\.]', $_COOKIE["_ga"], 4);
-            $contents = array('version' => $version, 'domainDepth' => $domainDepth, 'cid' => $cid1 . '.' . $cid2);
-            $cid = $contents['cid'];
+            $parts = preg_split('[\.]', $_COOKIE["_ga"], 4);
+            $cid = implode(array_slice($parts, 2), '.');
         }
         else
         {
