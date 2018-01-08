@@ -795,9 +795,8 @@ class InstantAnalyticsService extends BaseApplicationComponent
     {
         if (isset($_COOKIE['_ga']))
         {
-            list($version, $domainDepth, $cid1, $cid2) = preg_split('[\.]', $_COOKIE["_ga"], 4);
-            $contents = array('version' => $version, 'domainDepth' => $domainDepth, 'cid' => $cid1 . '.' . $cid2);
-            $cid = $contents['cid'];
+            $parts = preg_split('[\.]', $_COOKIE["_ga"], 4);
+            $cid = implode(array_slice($parts, 2), '.');
         }
         else
         {
