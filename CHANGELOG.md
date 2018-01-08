@@ -1,5 +1,9 @@
 # Instant Analytics Changelog
 
+## 1.1.14 - 2018.01.08
+### Changed
+* [Improved] Fixed an issue with parsing of the `_ga`_ cookie
+
 ## 1.1.13 - 2017.11.08
 ### Changed
 * [Improved] Don't set the `referrer` if it's the same as the `serverName`
